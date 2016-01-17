@@ -1,10 +1,10 @@
 <?php
 
-namespace mtooolkit\core;
+namespace mtoolkit\core;
 
 if (session_id() == '')
 {
-    session_start();
+    @session_start();
 }
 
 /*
