@@ -20,7 +20,7 @@ namespace mtoolkit\core;
  * 
  * @author  Michele Pagnin
  */
-use mtooolkit\core\MSession;
+
 
 /**
  * The MCoreApplication class provides an event loop for console MToolkit 
@@ -41,17 +41,19 @@ class MCoreApplication
     /**
      * Set the debug mode.
      * 
-     * @param string $bool
+     * @param bool $bool
      */
     public static function setIsDebug( $bool )
     {
+        MDataType::mustBe(array(MDataType::BOOLEAN));
         MSession::set( MCoreApplication::DEBUG, $bool );
     }
 
     /**
-     * Return if the debug mode is actived.
+     * Return if the debug mode is actived.<br>
+     * Default: <i>false</i>.
      * 
-     * @return string|null
+     * @return bool
      */
     public static function isDebug()
     {
@@ -62,7 +64,7 @@ class MCoreApplication
             return false;
         }
 
-        return $debug;
+        return boolval($debug);
     }
 
     /**
