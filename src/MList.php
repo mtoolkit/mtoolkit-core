@@ -171,7 +171,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
     }
 
     /**
-     * Returns true if this list is not empty and its last item is equal to 
+     * Returns <i>true</i> if this list is not empty and its last item is equal to
      * <i>$value</i>; otherwise returns false.
      * 
      * @param mixed $value
