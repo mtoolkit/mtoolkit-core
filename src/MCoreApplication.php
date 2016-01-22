@@ -21,6 +21,7 @@ namespace mtoolkit\core;
  * @author  Michele Pagnin
  */
 
+require_once __DIR__.'/MCore.php';
 
 /**
  * The MCoreApplication class provides an event loop for console MToolkit 
@@ -68,10 +69,20 @@ class MCoreApplication
     }
 
     /**
-     * Set the root path of the project.
+     * Set the root path of the project and the namespace.<br>
+     * If you use PSR-4 standard you must pass both parameters:
+     * <code>
+     *      MCoreApplication::setApplicationDirPath( $sourceRootFolder, $namespacePrefix );
+     * </code>
+     * If you use PSR-0 standard you can pass only the $path parameter:
+     * <code>
+     *      MCoreApplication::setApplicationDirPath( $sourceRootFolder );
+     * </code>
+     * If you use composer and its psr-0 or psr-4 properties, you could not call
+     * <i>setApplicationDirPath</i> method.
      *
-     * @param string $path
-     * @param string $namespace
+     * @param string $path The root folder of the source.
+     * @param string $namespace Optional.
      */
     public static function setApplicationDirPath( $path, $namespace="" )
     {

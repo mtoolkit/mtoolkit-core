@@ -19,6 +19,11 @@
  * @author  Michele Pagnin
  */
 
+if( class_exists( "MToolkit\Core\MString" ) === false )
+{
+    require_once __DIR__ . '/MString.php';
+}
+
 if( class_exists( "MToolkit\Core\MCoreApplication" ) === false )
 {
     require_once __DIR__ . '/MCoreApplication.php';
@@ -31,6 +36,12 @@ if( class_exists( "MToolkit\Core\MCoreApplication" ) === false )
  */
 spl_autoload_register( function( $rawName )
 {
+    // Don't load an already defined class.
+    if( class_exists( $rawName ) === true )
+    {
+        return;
+    }
+
     $name=$rawName;
     $applicationDir = MToolkit\Core\MCoreApplication::getApplicationDirPath();
     $classCompleteName=new \MToolkit\Core\MString($rawName);
@@ -48,7 +59,7 @@ spl_autoload_register( function( $rawName )
     );
 
     // If the file exists and id the class is not declared
-    if( file_exists( $classPath ) === true && class_exists( $rawName ) === false )
+    if( file_exists( $classPath ) === true )
     {
         require_once $classPath;
     }
