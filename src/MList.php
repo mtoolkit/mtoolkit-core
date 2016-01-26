@@ -20,6 +20,7 @@ namespace mtoolkit\core;
  * 
  * @author  Michele Pagnin
  */
+use mtoolkit\core\exception\MOutOfBoundsException;
 use mtoolkit\core\exception\MWrongTypeException;
 
 /**
@@ -44,90 +45,95 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param array|MList $list
      * @param string|null $type
      */
-    public function __construct( array $list = array(), $type = null )
+    public function __construct(array $list = array(), $type = null)
     {
-        parent::__construct( $type );
+        parent::__construct($type);
 
-        $this->list = array_values( $list );
+        foreach ($list as $item) {
+            $this->append($item);
+        }
     }
 
     /**
      * Inserts <i>$value</i> at the end of the list.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
-    public function append( $value )
+    public function append($value)
     {
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
         $this->list[] = $value;
     }
 
     /**
-     * Inserts array <i>$value</i> at the end of the list.
-     * 
-     * @param array $value
+     * Inserts array <i>$list</i> at the end of the list.
+     *
+     * @param array $list
      */
-    public function appendArray( array $value )
+    public function appendArray(array $list)
     {
-        $this->list = array_merge( $this->list, $value );
-    }
-
-    /**
-     * Inserts MList <i>$value</i> at the end of the list.
-     * 
-     * @param \MToolkit\Core\MList $value
-     */
-    public function appendList( MList $value )
-    {
-        for( $i = 0; $i < $value->count(); $i++ )
-        {
-            $this->append( $value->at( $i ) );
+        foreach ($list as $item) {
+            $this->append($item);
         }
     }
 
     /**
-     * Returns the item at index position <i>$i</i> in the list. <i>$i</i> must 
+     * Inserts MList <i>$value</i> at the end of the list.
+     *
+     * @param \MToolkit\Core\MList $value
+     */
+    public function appendList(MList $value)
+    {
+        if ($value->getType() == $this->getType()) {
+            $this->list = array_merge($this->list, $value->toArray());
+            return;
+        }
+
+        foreach ($value as $item) {
+            $this->append($item);
+        }
+    }
+
+    /**
+     * Returns the item at index position <i>$i</i> in the list. <i>$i</i> must
      * be a valid index position in the list (i.e., 0 <= <i>$i</i> < size()).
-     * 
+     *
      * @param int $i
      * @return mixed
      * @throws MWrongTypeException
-     * @throws \OutOfBoundsException
+     * @throws MOutOfBoundsException
      */
-    public function &at( $i )
+    public function &at($i)
     {
         MDataType::mustBe(array(MDataType::INT));
 
-        if( $i >= $this->count() )
-        {
-            throw new \OutOfBoundsException();
+        if ($i >= $this->count() || $i < 0) {
+            throw new MOutOfBoundsException(0, $this->count() - 1, $i);
         }
 
         return $this->list[$i];
     }
 
     /**
-     * This function is provided for STL compatibility. 
-     * It is equivalent to last(). 
-     * The list must not be empty. 
-     * If the list can be empty, call isEmpty() before calling this function.
-     * 
+     * This function is provided for STL compatibility.<br>
+     * It is equivalent to {@link last()}.<br>
+     * The list must not be empty.<br>
+     * If the list can be empty, call {@link isEmpty()} before calling this function.
+     *
      * @return mixed
      * @throws \OutOfBoundsException
      */
     public function back()
     {
-        if( count( $this->list ) <= 0 )
-        {
+        if ($this->count() <= 0) {
             throw new \OutOfBoundsException();
         }
 
-        return $this->list[count( $this->list ) - 1];
+        return $this->list[count($this->list) - 1];
     }
 
     /**
@@ -139,67 +145,65 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
     }
 
     /**
-     * Returns true if the list contains an occurrence of value; otherwise returns false.
-     * 
+     * Returns <i>true</i> if the list contains an occurrence of value; otherwise returns <i>false</i>.
+     *
      * @param mixed $value
      * @return bool
      */
-    public function contains( $value )
+    public function contains($value)
     {
-        return in_array( $value, $this->list );
+        return in_array($value, $this->list);
     }
 
     /**
-     * Returns the number of items in the list. This is effectively the same as 
-     * size().
-     * 
+     * Returns the number of items in the list. This is effectively the same as
+     * {@link size()}.
+     *
      * @return int
      */
     public function count()
     {
-        return count( $this->list );
+        return count($this->list);
     }
 
     /**
-     * Returns true if the list contains no items; otherwise returns false.
-     * 
+     * Returns <i>true</i> if the list contains no items; otherwise returns <i>false</i>.
+     *
      * @return boolean
      */
     public function isEmpty()
     {
-        return ( count( $this->list ) <= 0 );
+        return (count($this->list) <= 0);
     }
 
     /**
      * Returns <i>true</i> if this list is not empty and its last item is equal to
-     * <i>$value</i>; otherwise returns false.
-     * 
+     * <i>$value</i>; otherwise returns <i>false</i>.
+     *
      * @param mixed $value
      * @return boolean
      */
-    public function endsWith( $value )
+    public function endsWith($value)
     {
-        if( $this->count() <= 0 )
-        {
+        if ($this->count() <= 0) {
             return false;
         }
 
         $lastValue = $this->list[$this->count() - 1];
 
-        return ( $lastValue == $value );
+        return ($lastValue == $value);
     }
 
     /**
-     * Returns the value of the first item in the list. The list must not be 
-     * empty. If the list can be empty, call isEmpty() before calling this 
+     * Returns the value of the first item in the list. The list must not be
+     * empty. If the list can be empty, call isEmpty() before calling this
      * function.
-     * 
+     *
      * @return mixed
      */
     public function first()
     {
-        if( count( $this->list ) <= 0 )
-        {
+        if (count($this->list) <= 0) {
             return null;
         }
 
@@ -207,16 +211,15 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
     }
 
     /**
-     * This function is provided for STL compatibility. It is equivalent to 
-     * first(). The list must not be empty. If the list can be empty, call 
+     * This function is provided for STL compatibility. It is equivalent to
+     * first(). The list must not be empty. If the list can be empty, call
      * isEmpty() before calling this function.
-     * 
+     *
      * @return mixed
      */
     public function front()
     {
-        if( count( $this->list ) <= 0 )
-        {
+        if (count($this->list) <= 0) {
             return null;
         }
 
@@ -224,35 +227,31 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
     }
 
     /**
-     * Returns the index position of the first occurrence of <i>$value</i> in 
-     * the list, searching forward from index position <i>$from</i>. Returns -1 
+     * Returns the index position of the first occurrence of <i>$value</i> in
+     * the list, searching forward from index position <i>$from</i>. Returns -1
      * if no item matched.
-     * 
+     *
      * @param mixed $value
      * @param int $from
      * @return int
      * @throws MWrongTypeException
      */
-    public function indexOf( $value, $from = 0 )
+    public function indexOf($value, $from = 0)
     {
         MDataType::mustBe(array(MDataType::MIXED, MDataType::INT));
 
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
         $to = $this->count() - 1;
 
-        if( $from == -1 )
-        {
+        if ($from == -1) {
             $to = $from;
         }
 
-        for( $i = 0; $i == $to; $i++ )
-        {
-            if( $this->list[$i] == $value )
-            {
+        for ($i = 0; $i == $to; $i++) {
+            if ($this->list[$i] == $value) {
                 return $i;
             }
         }
@@ -261,31 +260,30 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
     }
 
     /**
-     * Inserts value at index position <i>$i</i> in the list. If i is 0, the 
-     * <i>$value</i> is prepended to the list. If i is size(), the value is appended to 
+     * Inserts value at index position <i>$i</i> in the list. If i is 0, the
+     * <i>$value</i> is prepended to the list. If i is size(), the value is appended to
      * the list.
-     * 
+     *
      * @param int $i
      * @param mixed $value
      * @throws MWrongTypeException
      */
-    public function insert( $i, $value )
+    public function insert($i, $value)
     {
         MDataType::mustBe(array(MDataType::INT, MDataType::MIXED));
 
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
-        array_splice( $this->list, $i, 0, $value );
+        array_splice($this->list, $i, 0, $value);
     }
 
     /**
-     * Returns a reference to the last item in the list. The list must not be 
-     * empty. If the list can be empty, call isEmpty() before calling this 
+     * Returns a reference to the last item in the list. The list must not be
+     * empty. If the list can be empty, call isEmpty() before calling this
      * function.
-     * 
+     *
      * @return mixed
      */
     public function last()
@@ -293,29 +291,34 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
         return $this->back();
     }
 
-    public function lastIndexOf( $value, $from = -1 )
+    /**
+     * Returns the index position of the last occurrence of value in the list,
+     * searching backward from index position from. If from is -1 (the default),
+     * the search starts at the last item. Returns -1 if no item matched.
+     *
+     * @param mixed $value
+     * @param int $from
+     * @return int
+     */
+    public function lastIndexOf($value, $from = -1)
     {
         MDataType::mustBe(array(MDataType::MIXED, MDataType::INT));
 
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
-        MDataType::mustBeInt( $from );
+        MDataType::mustBeInt($from);
 
         $position = -1;
         $to = $this->count() - 1;
 
-        if( $from == -1 )
-        {
+        if ($from == -1) {
             $to = $from;
         }
 
-        for( $i = 0; $i == $to; $i++ )
-        {
-            if( $this->list[$i] == $value )
-            {
+        for ($i = 0; $i == $to; $i++) {
+            if ($this->list[$i] == $value) {
                 $position = $i;
             }
         }
@@ -323,26 +326,43 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
         return $position;
     }
 
+    /**
+     * This function is identical to {@link count()}.
+     *
+     * @return int
+     */
     public function length()
     {
         return $this->count();
     }
 
-    public function move( $from, $to )
+    /**
+     * Moves the item at index position <i>$from</i> to index position <i>$to</i>.
+     *
+     * @param int $from
+     * @param int $to
+     */
+    public function move($from, $to)
     {
         MDataType::mustBe(array(MDataType::INT, MDataType::INT));
 
         $value = $this->list[$from];
 
-        unset( $this->list[$from] );
+        unset($this->list[$from]);
 
-        array_splice( $this->list, $to, 0, $value );
+        array_splice($this->list, $to, 0, $value);
     }
 
+    /**
+     * This function is provided for STL compatibility. It is equivalent to removeLast().
+     * The list must not be empty. If the list can be empty, call isEmpty() before
+     * calling this function.
+     *
+     * @return mixed
+     */
     public function pop_back()
     {
-        if( $this->count() <= 0 )
-        {
+        if ($this->count() <= 0) {
             throw new \OutOfBoundsException();
         }
 
@@ -353,10 +373,16 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
         return $item;
     }
 
+    /**
+     * This function is provided for STL compatibility. It is equivalent to {@link removeFirst()}.
+     * The list must not be empty. If the list can be empty, call isEmpty() before calling
+     * this function.
+     *
+     * @return mixed
+     */
     public function pop_front()
     {
-        if( $this->count() <= 0 )
-        {
+        if ($this->count() <= 0) {
             throw new \OutOfBoundsException();
         }
 
@@ -367,174 +393,245 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
         return $item;
     }
 
-    public function prepend( $value )
+    /**
+     * Inserts <i>$value</i> at the beginning of the list.
+     *
+     * @param $value
+     */
+    public function prepend($value)
     {
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
-        array_unshift( $this->list, $value );
+        array_unshift($this->list, $value);
     }
 
-    public function push_back( $value )
+    /**
+     * This function is provided for STL compatibility. It is equivalent to {@link append($value)}.
+     *
+     * @param $value mixed
+     */
+    public function push_back($value)
     {
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
         $this->list[] = $value;
     }
 
-    public function push_front( $value )
+    /**
+     * This function is provided for STL compatibility. It is equivalent to prepend($value).
+     *
+     * @param $value mixed
+     */
+    public function push_front($value)
     {
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
-        $this->prepend( $value );
+        $this->prepend($value);
     }
 
-    public function removeAt( $i )
+    /**
+     * Removes the item at index position i. i must be a valid index
+     * position in the list (i.e., 0 <= <i>$i</i> < size()).
+     *
+     * @param int $i
+     */
+    public function removeAt($i)
     {
         MDataType::mustBe(array(MDataType::INT));
 
-        if( count( $this->list ) >= $i )
-        {
+        if (count($this->list) >= $i) {
             throw new \OutOfBoundsException();
         }
 
-        unset( $this->list[$i] );
+        unset($this->list[$i]);
     }
 
+    /**
+     * Removes the first item in the list. Calling this function is equivalent to
+     * calling removeAt(0). The list must not be empty. If the list can be empty,
+     * call isEmpty() before calling this function.
+     */
     public function removeFirst()
     {
-        if( count( $this->list ) <= 0 )
-        {
+        if (count($this->list) <= 0) {
             throw new \OutOfBoundsException();
         }
 
-        unset( $this->list[0] );
+        unset($this->list[0]);
     }
 
+    /**
+     * Removes the last item in the list. Calling this function is equivalent to
+     * calling removeAt(size() - 1). The list must not be empty. If the list can
+     * be empty, call isEmpty() before calling this function.
+     */
     public function removeLast()
     {
-        if( count( $this->list ) <= 0 )
-        {
+        if (count($this->list) <= 0) {
             throw new \OutOfBoundsException();
         }
 
-        unset( $this->list[$this->count() - 1] );
+        unset($this->list[$this->count() - 1]);
     }
 
-    public function removeOne( $value )
+    /**
+     * Removes the first occurrence of value in the list and returns true on success;
+     * otherwise returns false.
+     *
+     * @param $value mixed
+     * @return bool
+     */
+    public function removeOne($value)
     {
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
-        $result = array_search( $value, $this->list );
+        $result = array_search($value, $this->list);
 
-        if( $result === false )
-        {
+        if ($result === false) {
             throw new \OutOfBoundsException();
         }
 
-        unset( $this->list[$result] );
+        unset($this->list[$result]);
 
         return true;
     }
 
-    public function replace( $i, $value )
+    /**
+     * Replaces the item at index position i with value. i must be a valid index position
+     * in the list (i.e., 0 <= i < size()).
+     *
+     * @param int $i
+     * @param mixed $value
+     */
+    public function replace($i, $value)
     {
         MDataType::mustBe(array(MDataType::INT, MDataType::MIXED));
 
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
         $this->list[$i] = $value;
     }
 
+    /**
+     * Returns the number of items in the list.
+     *
+     * @return int
+     */
     public function size()
     {
         return $this->count();
     }
 
-    public function startsWith( $value )
+    /**
+     * Returns true if this list is not empty and its first item is equal
+     * to value; otherwise returns false.
+     *
+     * @param mixed $value
+     * @return bool
+     */
+    public function startsWith($value)
     {
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
-        if( $this->count() <= 0 )
-        {
+        if ($this->count() <= 0) {
             return false;
         }
 
         $lastValue = $this->list[0];
 
-        return ( $lastValue == $value );
+        return ($lastValue == $value);
     }
 
-    //void	swap ( QList<T> & other )
-    //void	swap ( int i, int j )
-
-    public function takeAt( $i )
+    /**
+     * Removes the item at index position i and returns it. i must be a valid index
+     * position in the list (i.e., 0 <= i < size()).
+     *
+     * @param int $i
+     * @return mixed
+     */
+    public function takeAt($i)
     {
         MDataType::mustBe(array(MDataType::INT));
 
         $value = $this->list[$i];
 
-        unset( $this->list[$i] );
+        unset($this->list[$i]);
 
         return $value;
     }
 
+    /**
+     * Removes the first item in the list and returns it. This is the same as takeAt(0).
+     * This function assumes the list is not empty. To avoid failure, call isEmpty()
+     * before calling this function.
+     *
+     * @return mixed
+     */
     public function takeFirst()
     {
-        if( count( $this->list ) <= 0 )
-        {
+        if (count($this->list) <= 0) {
             return null;
         }
 
         $value = $this->list[0];
 
-        unset( $this->list[0] );
+        unset($this->list[0]);
 
         return $value;
     }
-    
+
+    /**
+     * Reverses the order of the items in the list.
+     *
+     * @return MList
+     */
     public function reverse()
     {
-        return new MList( array_reverse($this->list) );
+        return new MList(array_reverse($this->list));
     }
 
+    /**
+     * Removes the last item in the list and returns it. This is the same as takeAt(size() - 1).
+     * This function assumes the list is not empty. To avoid failure, call isEmpty() before
+     * calling this function.
+     *
+     * @return mixed|null
+     */
     public function takeLast()
     {
-        if( count( $this->list ) <= 0 )
-        {
+        if (count($this->list) <= 0) {
             return null;
         }
 
         $value = $this->last();
 
-        unset( $this->list[$this->count() - 1] );
+        unset($this->list[$this->count() - 1]);
 
         return $value;
     }
 
-    public function getValue( $i, $defaultValue = null )
+    /**
+     * @param int $i
+     * @param null|mixed $defaultValue
+     * @return mixed|null
+     */
+    public function getValue($i, $defaultValue = null)
     {
-        MDataType::mustBeInt( $i );
+        MDataType::mustBeInt($i);
 
-        if( $i >= $this->count() )
-        {
+        if ($i >= $this->count()) {
             $exception = new \OutOfBoundsException();
 
             throw $exception;
@@ -542,8 +639,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
 
         $value = $this->list[$i];
 
-        if( is_null( $value ) === true && is_null( $defaultValue ) === false )
-        {
+        if (is_null($value) === true && is_null($defaultValue) === false) {
             $value = $defaultValue;
         }
 
@@ -553,11 +649,10 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
     /**
      * @param array $array
      */
-    public function fromArray( array $array )
+    public function fromArray(array $array)
     {
-        for( $i = 0; $i < count( $array ); $i++ )
-        {
-            $this->append( $array[$i] );
+        for ($i = 0; $i < count($array); $i++) {
+            $this->append($array[$i]);
         }
     }
 
@@ -571,27 +666,26 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
 
     /**
      * Return if a key exists.
-     * 
+     *
      * @param int $offset
      * @return bool
      */
-    public function offsetExists( $offset )
+    public function offsetExists($offset)
     {
         MDataType::mustBe(array(MDataType::INT));
 
-        return (array_key_exists( $offset, $this->list ) === true);
+        return (array_key_exists($offset, $this->list) === true);
     }
 
     /**
      * @param int $offset
      * @return mixed
      */
-    public function offsetGet( $offset )
+    public function offsetGet($offset)
     {
         MDataType::mustBe(array(MDataType::INT));
 
-        if( $this->offsetExists( $offset ) )
-        {
+        if ($this->offsetExists($offset)) {
             return $this->list[$offset];
         }
 
@@ -602,21 +696,17 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param int $offset
      * @param mixed $value
      */
-    public function offsetSet( $offset, $value )
+    public function offsetSet($offset, $value)
     {
         MDataType::mustBe(array(MDataType::INT, MDataType::MIXED));
 
-        if( $this->isValidType( $value ) === false )
-        {
-            throw new MWrongTypeException( "\$value", $this->getType(), $value );
+        if ($this->isValidType($value) === false) {
+            throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
 
-        if( $offset == null )
-        {
+        if ($offset == null) {
             $this->list[] = $value;
-        }
-        else
-        {
+        } else {
             $this->list[$offset] = $value;
         }
     }
@@ -624,19 +714,18 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
     /**
      * @param int $offset
      */
-    public function offsetUnset( $offset )
+    public function offsetUnset($offset)
     {
         MDataType::mustBe(array(MDataType::INT));
 
-        if( $this->offsetExists( $offset ) )
-        {
-            unset( $this->list[$offset] );
+        if ($this->offsetExists($offset)) {
+            unset($this->list[$offset]);
         }
     }
 
     public function current()
     {
-        return $this->at( $this->pos );
+        return $this->at($this->pos);
     }
 
     public function key()
@@ -656,7 +745,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
 
     public function valid()
     {
-        return ( $this->pos >= 0 && $this->pos < $this->count() );
+        return ($this->pos >= 0 && $this->pos < $this->count());
     }
 
     /**
@@ -664,12 +753,12 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param int $end
      * @return \MToolkit\Core\MList
      */
-    public function slice( $start, $end )
+    public function slice($start, $end)
     {
         MDataType::mustBe(array(MDataType::INT, MDataType::INT));
-        
-        $list = array_slice( $this->list, $start, $end );
-        return new MList( $list );
+
+        $list = array_slice($this->list, $start, $end);
+        return new MList($list);
     }
 
 }
