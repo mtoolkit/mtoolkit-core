@@ -46,16 +46,24 @@ class MString
     }
 
     /**
-     * Appends the string <i>$text</i> onto the end of this string.
+     * Appends the string <i>$str</i> at the end of this string. It is possible to use <i>$args</i>.<br>
+     * Example:
+     * <pre>
+     *  $helloWorld = new MString();
+     *  $helloWorld->append('Hello world %s', 'user');
+     *  echo $helloWorld;
+     * </pre>
      *
      * @param string $str
+     * @param mixed $args [optional]
      * @return MString
      */
-    public function append( $str )
+    public function append( $str, $args = null )
     {
-        $string = (string) $str;
+        MDataType::mustBeString( $str );
+        $this->text .= sprintf( $str, $args );
 
-        return new MString( $this->text . $string );
+        return new MString( $this->text );
     }
 
     public function __toString()
