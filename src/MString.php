@@ -108,7 +108,7 @@ class MString
 
         $result = substr( $this->text, 0, strlen( $this->text ) - $n );
 
-        if( $result === true )
+        if( $result !== false )
         {
             $this->text = $result;
         }
@@ -125,7 +125,7 @@ class MString
     /**
      * Compares this string with <i>$other</i> and returns an integer less than,
      * equal to, or greater than zero if this string is less than, equal to, or greater than <i>$other</i>.
-     * If <i>$cs</i> is Qt::CaseSensitive, the comparison is case sensitive;
+     * If <i>$cs</i> is CaseSensitivity::CASE_SENSITIVE, the comparison is case sensitive;
      * otherwise the comparison is case insensitive.
      *
      * @param MString|string $other
@@ -157,11 +157,11 @@ class MString
     /**
      * Returns true if this string contains an occurrence of the string <i>$str</i>; otherwise returns false.
      *
-     * @param MString $str
+     * @param MString|string $str
      * @param int|CaseSensitivity $cs
      * @return bool
      */
-    public function contains( MString $str, $cs = CaseSensitivity::CASE_SENSITIVE )
+    public function contains( $str, $cs = CaseSensitivity::CASE_SENSITIVE )
     {
         $text = (string) $this->text;
         $s = (string) $str;
