@@ -286,7 +286,7 @@ class MString
     /**
      * Replaces every occurrence of the string before with the string after and
      * returns a reference to this string.
-     * If cs is Qt::CaseSensitive (default), the search is case sensitive;
+     * If cs is CaseSensitive (default), the search is case sensitive;
      * otherwise the search is case insensitive:
      *
      * @param MString|string $before
@@ -455,7 +455,7 @@ class MString
     /**
      * Removes every occurrence of the given str string in this string, and
      * returns a reference to this string.
-     * If cs is Qt::CaseSensitive (default), the search is case sensitive;
+     * If cs is CaseSensitive (default), the search is case sensitive;
      * otherwise the search is case insensitive.
      * This is the same as replace(str, "", cs).
      *
