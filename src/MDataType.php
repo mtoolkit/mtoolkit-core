@@ -41,70 +41,81 @@ use mtoolkit\core\exception\MWrongTypeException;
  *      <li>nullable null</li>
  * </ul>
  * <br />
- * If the data type is not corrected a <i>MWrongTypeException</i> will be 
+ * If the data type is not corrected a <i>MWrongTypeException</i> will be
  * throwed.
  */
 class MDataType
 {
-    const INT=1;
-    const LONG=2;
-    const BOOLEAN=4;
-    const FLOAT=8;
-    const DOUBLE=16;
-    const STRING=32;
-    const NULL=64;
-    const __ARRAY=128;
-    const OBJECT=256;
-    const RESOURCE=512;
-    const MIXED=2048;
-    const UNKNOWN=1024;
-    
+    const INT = 1;
+    const LONG = 2;
+    const BOOLEAN = 4;
+    const FLOAT = 8;
+    const DOUBLE = 16;
+    const STRING = 32;
+    const NULL = 64;
+    const __ARRAY = 128;
+    const OBJECT = 256;
+    const RESOURCE = 512;
+    const MIXED = 2048;
+    const UNKNOWN = 1024;
+
     /**
-     * Checks the type of the arguments of the method caller with the type passed 
+     * Checks the type of the arguments of the method caller with the type passed
      * in <i>$dataTypes</i>.<br>
      * If the number of elements in <i>$dataTypes</i> isn't the same of the number
      * of the arguments of the caller, it will throw an exception.<br>
      * If the type mismatch then it will be throw a {@link MWrongTypeException MWrongTypeException}.
-     * 
-     * @param array $dataTypes The possible value of the elements of the array are: case MDataType::INT, 
-     *                         MDataType::LONG, MDataType::BOOLEAN, MDataType::FLOAT: return "MDataType::FLOAT, 
-     *                         MDataType::DOUBLE, MDataType::STRING, MDataType::NULL, MDataType::__ARRAY, 
-     *                         MDataType::OBJECT, MDataType::RESOURCE, MDataType::MIXED
+     *
+     * @param array|int $dataTypes,... unlimited OPTIONAL The possible values of the elements of the array are: case
+     *                                 MDataType::INT, MDataType::LONG, MDataType::BOOLEAN, MDataType::FLOAT: return
+     *                                 "MDataType::FLOAT, MDataType::DOUBLE, MDataType::STRING, MDataType::NULL,
+     *                                 MDataType::__ARRAY, MDataType::OBJECT, MDataType::RESOURCE, MDataType::MIXED
      * @throws \Exception|MWrongTypeException
      */
-    public static function mustBe( array $dataTypes )
-    {        
-        $trace=debug_backtrace();
-        $caller=$trace[1];
-        $args=$caller["args"];
-        
-        for( $i=0; $i<count($args); $i++ )
+    public static function mustBe( $dataTypes )
+    {
+        $params = func_get_args();
+        if( isset($params[0]) && is_array( $params[0] ) )
         {
-            $dataType=$dataTypes[$i];
+            $dataTypeArray = $params[0];
+        }
+        else
+        {
+            $dataTypeArray = $params;
+        }
 
-            if( $dataType === MDataType::MIXED ){
+        $trace = debug_backtrace();
+        $caller = $trace[1];
+        $args = $caller["args"];
+
+        for( $i = 0; $i < count( $args ); $i++ )
+        {
+            $dataType = $dataTypeArray[$i];
+
+            if( $dataType === MDataType::MIXED )
+            {
                 continue;
             }
-            
+
             if( ($dataType) & MDataType::getType( $args[$i] ) )
             {
                 continue;
             }
-            
-            $callerName= ( isset( $caller["class"] ) ? $caller["class"]."::".$caller["function"] : $caller["function"] );
-            $mustBe=MDataType::getTypeName( $dataType );
-            $itIs=MDataType::getTypeName( MDataType::getType( $args[$i] ) );
 
-            $message="Argument " . ($i+1) . " passed to " . $callerName . " must be of the type " . $mustBe . ", " . $itIs 
-                    . " given, called in " . $caller["file"] . " on line " . $caller["line"] . " and defined";
+            $callerName = (isset($caller["class"]) ? $caller["class"] . "::" . $caller["function"] : $caller["function"]);
+            $mustBe = MDataType::getTypeName( $dataType );
+            $itIs = MDataType::getTypeName( MDataType::getType( $args[$i] ) );
 
-            throw new MWrongTypeException($message);
+            $message = "Argument " . ($i + 1) . " passed to " . $callerName . " must be of the type " . $mustBe . ", " . $itIs
+                . " given, called in " . $caller["file"] . " on line " . $caller["line"] . " and defined";
+
+            throw new MWrongTypeException( $message );
         }
     }
-    
-    public static function getTypeName($value)
+
+    public static function getTypeName( $value )
     {
-        $types=array();
+        $types = array();
         if( MDataType::INT & $value )
         {
             $types[] = "MDataType::INT";
@@ -146,277 +157,277 @@ class MDataType
             $types[] = "MDataType::RESOURCE";
         }
 
-        if( count($types)<=0 )
+        if( count( $types ) <= 0 )
         {
             return "MDataType::UNKNOWN";
         }
 
-        return implode(" or ", $types);
+        return implode( " or ", $types );
     }
-    
+
     /**
      * Returns the type of <i>$value</i>.
-     * 
+     *
      * @param mixed $value
      * @return int MDataType::INT, MDataType::LONG, MDataType::BOOLEAN, etc
      */
-    public static function getType($value)
+    public static function getType( $value )
     {
         if( is_int( $value ) )
         {
             return MDataType::INT;
         }
-        
+
         if( is_long( $value ) )
         {
             return MDataType::LONG;
         }
-        
+
         if( is_bool( $value ) )
         {
             return MDataType::BOOLEAN;
         }
-        
+
         if( is_float( $value ) )
         {
             return MDataType::FLOAT;
         }
-        
+
         if( is_double( $value ) )
         {
             return MDataType::DOUBLE;
         }
-        
+
         if( is_string( $value ) )
         {
             return MDataType::STRING;
         }
-        
-        if( $value==null )
+
+        if( $value == null )
         {
             return MDataType::NULL;
         }
-        
+
         if( is_array( $value ) )
         {
             return MDataType::__ARRAY;
         }
-        
+
         if( is_object( $value ) )
         {
             return MDataType::OBJECT;
         }
-        
+
         if( is_resource( $value ) )
         {
             return MDataType::RESOURCE;
         }
-        
+
         return MDataType::UNKNOWN;
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not an int.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeInt( $value )
-    {        
-        if( is_int( $value )===false )
-        { 
-            throw new MWrongTypeException('\$value', 'int', gettype( $value ));
+    {
+        if( is_int( $value ) === false )
+        {
+            throw new MWrongTypeException( '\$value', 'int', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a long.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeLong( $value )
     {
-        if( is_long( $value )===false )
-        { 
-            throw new MWrongTypeException('\$value', 'long', gettype( $value ));
+        if( is_long( $value ) === false )
+        {
+            throw new MWrongTypeException( '\$value', 'long', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a boolean.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeBoolean( $value )
     {
-        if( is_bool( $value )===false )
+        if( is_bool( $value ) === false )
         {
-            throw new MWrongTypeException('\$value', 'boolean', gettype( $value ));
+            throw new MWrongTypeException( '\$value', 'boolean', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a float.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeFloat( $value )
     {
-        if( is_float( $value )===false )
+        if( is_float( $value ) === false )
         {
-            throw new MWrongTypeException('\$value', 'float', gettype( $value ));
+            throw new MWrongTypeException( '\$value', 'float', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a double.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeDouble( $value )
     {
-        if( is_double( $value )===false )
+        if( is_double( $value ) === false )
         {
-            throw new MWrongTypeException('\$value', 'double', gettype( $value ));
+            throw new MWrongTypeException( '\$value', 'double', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a string.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeString( $value )
     {
-        if( is_string( $value )===false )
+        if( is_string( $value ) === false )
         {
-            throw new MWrongTypeException('\$value', 'string', gettype( $value ));
+            throw new MWrongTypeException( '\$value', 'string', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a null.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeNull( $value )
     {
-        if( $value!=null )
+        if( $value != null )
         {
-            throw new MWrongTypeException('\$value', 'null', gettype( $value ));
+            throw new MWrongTypeException( '\$value', 'null', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not an int or null.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeNullableInt( $value )
     {
-        if( is_int( $value )===false && $value!=null )
+        if( is_int( $value ) === false && $value != null )
         {
-            throw new MWrongTypeException('\$value', 'int|null', gettype( $value ));
+            throw new MWrongTypeException( '\$value', 'int|null', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a long or null.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeNullableLong( $value )
     {
-        if( is_long( $value )===false && $value!=null )
-        { 
-            throw new MWrongTypeException('\$value', 'long|null', gettype( $value ));
+        if( is_long( $value ) === false && $value != null )
+        {
+            throw new MWrongTypeException( '\$value', 'long|null', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a boolean or null.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeNullableBoolean( $value )
     {
-        if( is_bool( $value )===false && $value!=null )
+        if( is_bool( $value ) === false && $value != null )
         {
-            throw new MWrongTypeException('\$value', 'boolean|null', gettype( $value ));
+            throw new MWrongTypeException( '\$value', 'boolean|null', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a float or null.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeNullableFloat( $value )
     {
-        if( is_float( $value )===false && $value!=null )
+        if( is_float( $value ) === false && $value != null )
         {
-            throw new MWrongTypeException('\$value', 'float|null', gettype( $value ));
+            throw new MWrongTypeException( '\$value', 'float|null', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a double or null.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeNullableDouble( $value )
     {
-        if( is_double( $value )===false && $value!=null )
+        if( is_double( $value ) === false && $value != null )
         {
-            throw new MWrongTypeException('\$value', 'double|null', gettype( $value ));
+            throw new MWrongTypeException( '\$value', 'double|null', gettype( $value ) );
         }
     }
-    
+
     /**
      * Throw an exception if <i>$value</i> is not a string or null.
-     * 
+     *
      * @param mixed $value
      * @throws MWrongTypeException
      */
     public static function mustBeNullableString( $value )
     {
-        if( is_string( $value )===false && $value!=null )
+        if( is_string( $value ) === false && $value != null )
         {
-            throw new MWrongTypeException('\$value', 'string|null', gettype( $value ));
+            throw new MWrongTypeException( '\$value', 'string|null', gettype( $value ) );
         }
     }
-    
+
     public static function convert( $value, $type )
-    {        
+    {
         switch( $type )
         {
             case MDataType::BOOLEAN:
-                return settype($value, "boolean");
+                return settype( $value, "boolean" );
             case MDataType::DOUBLE:
-                return settype($value, "float");
+                return settype( $value, "float" );
             case MDataType::FLOAT:
-                return settype($value, "float");
+                return settype( $value, "float" );
             case MDataType::INT:
-                return settype($value, "integer");
+                return settype( $value, "integer" );
             case MDataType::LONG:
-                return settype($value, "integer");
+                return settype( $value, "integer" );
             case MDataType::NULL:
                 return null;
             case MDataType::STRING:
-                return settype($value, "string");
+                return settype( $value, "string" );
         }
-        
+
         return $value;
     }
 }
