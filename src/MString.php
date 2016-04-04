@@ -24,7 +24,7 @@ use mtoolkit\core\enum\CaseSensitivity;
 use mtoolkit\core\exception\MWrongTypeException;
 
 /**
- * The MString class provides a php string. 
+ * The MString class provides a php string.
  */
 class MString
 {
@@ -36,13 +36,13 @@ class MString
     private $text = "";
 
     /**
-     * 
+     *
      * @param MString|string $text
      * @throws MWrongTypeException
      */
     public function __construct( $text = MString::EMPTY_STRING )
     {
-        $this->text = (string) $text;
+        $this->text = (string)$text;
     }
 
     /**
@@ -68,13 +68,18 @@ class MString
 
     public function toString()
     {
-        return (string) $this->text;
+        return (string)$this->text;
+    }
+
+    public function __toString()
+    {
+        return $this->toString();
     }
 
     /**
      * Returns the character at the given <i>$i</i> position in the string.
      * The position must be a valid index position in the string (i.e., 0 <= position < size()).
-     * 
+     *
      * @param int $i
      * @return string|null
      * @throws MWrongTypeException
@@ -94,7 +99,7 @@ class MString
     /**
      * Removes <i>$n</i> characters from the end of the string.
      * If <i>$n</i> is greater than size(), the result is an empty string.
-     * 
+     *
      * @param int $n
      * @throws MWrongTypeException
      */
@@ -115,7 +120,7 @@ class MString
     }
 
     /**
-     * Clears the contents of the string and makes it empty. 
+     * Clears the contents of the string and makes it empty.
      */
     public function clear()
     {
@@ -134,8 +139,8 @@ class MString
      */
     public function compare( $other, $cs = CaseSensitivity::CASE_SENSITIVE )
     {
-        $text = (string) $this->text;
-        $o = (string) $other;
+        $text = (string)$this->text;
+        $o = (string)$other;
 
         switch( $cs )
         {
@@ -163,8 +168,8 @@ class MString
      */
     public function contains( $str, $cs = CaseSensitivity::CASE_SENSITIVE )
     {
-        $text = (string) $this->text;
-        $s = (string) $str;
+        $text = (string)$this->text;
+        $s = (string)$str;
 
         switch( $cs )
         {
@@ -179,14 +184,14 @@ class MString
                 break;
         }
 
-        return ( $result !== false );
+        return ($result !== false);
     }
 
     /**
      * Returns the number of characters in this string.
-     * The last character in the string is at position size() - 1. 
-     * 
-     * @return int 
+     * The last character in the string is at position size() - 1.
+     *
+     * @return int
      */
     public function size()
     {
@@ -209,7 +214,7 @@ class MString
      */
     public function indexOf( $str, $from = 0, $cs = CaseSensitivity::CASE_INSENSITIVE )
     {
-        $toSearch = (string) $str;
+        $toSearch = (string)$str;
 
         switch( $cs )
         {
@@ -235,7 +240,8 @@ class MString
     /**
      * Returns the index position of the last occurrence of the string str in this string,
      * searching backward from index position from. If from is -1 (default),
-     * the search starts at the last character; if from is -2, at the next to last character and so on. Returns -1 if str is not found.
+     * the search starts at the last character; if from is -2, at the next to last character and so on. Returns -1 if
+     * str is not found.
      *
      * @param string|MString $str
      * @param int $from
@@ -244,7 +250,7 @@ class MString
      */
     public function lastIndexOf( $str, $from = 0, $cs = CaseSensitivity::CASE_INSENSITIVE )
     {
-        $toSearch = (string) $str;
+        $toSearch = (string)$str;
 
         switch( $cs )
         {
@@ -269,14 +275,14 @@ class MString
 
     /**
      * Inserts the string str at the given index position and returns a reference to this string.
-     * 
+     *
      * @param int $position
      * @param string|MString $str
      * @return MString
      */
     public function insert( $position, $str )
     {
-        $string = (string) $str;
+        $string = (string)$str;
 
         $string = substr_replace( $this->text, $string, $position, 0 );
 
@@ -299,10 +305,10 @@ class MString
         switch( $cs )
         {
             case CaseSensitivity::CASE_SENSITIVE:
-                $string = str_replace( (string) $before, (string) $after, (string) $this );
+                $string = str_replace( (string)$before, (string)$after, (string)$this );
                 break;
             case CaseSensitivity::CASE_INSENSITIVE:
-                $string = str_ireplace( (string) $before, (string) $after, (string) $this );
+                $string = str_ireplace( (string)$before, (string)$after, (string)$this );
                 break;
             default:
                 throw new MWrongTypeException( "\$cs", "CaseSensitivity", $cs );
@@ -315,7 +321,7 @@ class MString
     /**
      * Returns a substring that contains the n leftmost characters of the string.
      * The entire string is returned if n is greater than size() or less than zero.
-     * 
+     *
      * @param int $n
      * @return null|MString
      */
@@ -339,7 +345,7 @@ class MString
     /**
      * Returns a substring that contains the n rightmost characters of the string.
      * The entire string is returned if n is greater than size() or less than zero.
-     * 
+     *
      * @param int $n
      * @return MString|null
      */
@@ -367,39 +373,39 @@ class MString
      */
     public static function isNullOrEmpty( $string )
     {
-        $str = (string) $string;
+        $str = (string)$string;
 
-        return ( $str == null || $str == MString::EMPTY_STRING );
+        return ($str == null || $str == MString::EMPTY_STRING);
     }
 
     /**
      * Returns true if this string is null; otherwise returns false.
-     * 
+     *
      * @return boolean
      */
     public function isNull()
     {
-        return ( $this->text == null );
+        return ($this->text == null);
     }
 
     /**
      * Returns true if the string has no characters; otherwise returns false.
-     * 
+     *
      * @return boolean
      */
     public function isEmpty()
     {
-        return ( $this->text == MString::EMPTY_STRING );
+        return ($this->text == MString::EMPTY_STRING);
     }
 
     /**
-     * Returns a string that contains <i>$n</i> characters of this string, 
+     * Returns a string that contains <i>$n</i> characters of this string,
      * starting at the specified <i>$position</i> index.<br />
      * <br />
-     * Returns a null string if the position index exceeds the length of the string. 
-     * If there are less than n characters available in the string starting at the given position, 
+     * Returns a null string if the position index exceeds the length of the string.
+     * If there are less than n characters available in the string starting at the given position,
      * or if n is -1 (default), the function returns all characters that are available from the specified position.
-     * 
+     *
      * @param int $position
      * @param int $n
      * @return null|MString
@@ -422,13 +428,13 @@ class MString
 
     /**
      * Prepends the string <i>$str</i> to the beginning of this string and returns a reference to this string.
-     * 
+     *
      * @param string|MString $str
      * @return MString
      */
     public function prepend( $str )
     {
-        $string = (string) $str;
+        $string = (string)$str;
 
         $string = $string . $this->text;
 
@@ -436,19 +442,19 @@ class MString
     }
 
     /**
-     * Removes n characters from the string, starting at the given position 
+     * Removes n characters from the string, starting at the given position
      * index, and returns a reference to the string.
-     * If the specified position index is within the string, but position + n is 
-     * beyond the end of the string, the string is truncated at the specified 
+     * If the specified position index is within the string, but position + n is
+     * beyond the end of the string, the string is truncated at the specified
      * position.
-     * 
+     *
      * @param int $pos
      * @param int $n
      * @return \MToolkit\Core\MString
      */
     public function remove( $pos, $n )
     {
-        $subString = substr( (string) $this, $pos, $n );
+        $subString = substr( (string)$this, $pos, $n );
         return $this->replace( $subString, MString::EMPTY_STRING );
     }
 
@@ -470,48 +476,48 @@ class MString
 
     /**
      * Truncates the string at the given position index.
-     * If the specified position index is beyond the end of the string, nothing 
+     * If the specified position index is beyond the end of the string, nothing
      * happens.
-     * 
+     *
      * @param int $position
      * @return \MToolkit\Core\MString
      */
     public function truncate( $position )
     {
-        return new MString( substr( (string) $this, 0, $position ) );
+        return new MString( substr( (string)$this, 0, $position ) );
     }
 
     /**
      * Returns an uppercase copy of the string.
-     * 
+     *
      * @return \MToolkit\Core\MString
      */
     public function toUpper()
     {
-        return new MString( strtoupper( (string) $this ) );
+        return new MString( strtoupper( (string)$this ) );
     }
 
     /**
      * Returns a lowercase copy of the string.
-     * 
+     *
      * @return \MToolkit\Core\MString
      */
     public function toLower()
     {
-        return new MString( strtolower( (string) $this ) );
+        return new MString( strtolower( (string)$this ) );
     }
 
     /**
      * Returns a string that has whitespace removed from the start and the end.
-     * Whitespace means any character for which QChar::isSpace() returns true. 
+     * Whitespace means any character for which QChar::isSpace() returns true.
      * This includes the ASCII characters '\t', '\n', '\v', '\f', '\r', and ' '.
-     * 
+     *
      * @param MString|string $charlist
      * @return \MToolkit\Core\MString
      */
     public function trimmed( $charlist = null )
     {
-        return new MString( trim( (string) $this, (string) $charlist ) );
+        return new MString( trim( (string)$this, (string)$charlist ) );
     }
 
     /**
