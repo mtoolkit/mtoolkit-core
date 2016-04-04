@@ -58,7 +58,7 @@ class MString
         return new MString( $this->text . $string );
     }
 
-    public function __toString()
+    public function toString()
     {
         return (string) $this->text;
     }
