@@ -74,7 +74,7 @@ class MString
     /**
      * Returns the character at the given <i>$i</i> position in the string.
      * The position must be a valid index position in the string (i.e., 0 <= position < size()).
-     * 
+     *
      * @param int $i
      * @return string|null
      * @throws MWrongTypeException
@@ -94,7 +94,7 @@ class MString
     /**
      * Removes <i>$n</i> characters from the end of the string.
      * If <i>$n</i> is greater than size(), the result is an empty string.
-     * 
+     *
      * @param int $n
      * @throws MWrongTypeException
      */
@@ -115,7 +115,7 @@ class MString
     }
 
     /**
-     * Clears the contents of the string and makes it empty. 
+     * Clears the contents of the string and makes it empty.
      */
     public function clear()
     {
@@ -184,9 +184,9 @@ class MString
 
     /**
      * Returns the number of characters in this string.
-     * The last character in the string is at position size() - 1. 
-     * 
-     * @return int 
+     * The last character in the string is at position size() - 1.
+     *
+     * @return int
      */
     public function size()
     {
@@ -269,7 +269,7 @@ class MString
 
     /**
      * Inserts the string str at the given index position and returns a reference to this string.
-     * 
+     *
      * @param int $position
      * @param string|MString $str
      * @return MString
@@ -315,7 +315,7 @@ class MString
     /**
      * Returns a substring that contains the n leftmost characters of the string.
      * The entire string is returned if n is greater than size() or less than zero.
-     * 
+     *
      * @param int $n
      * @return null|MString
      */
@@ -339,7 +339,7 @@ class MString
     /**
      * Returns a substring that contains the n rightmost characters of the string.
      * The entire string is returned if n is greater than size() or less than zero.
-     * 
+     *
      * @param int $n
      * @return MString|null
      */
@@ -374,7 +374,7 @@ class MString
 
     /**
      * Returns true if this string is null; otherwise returns false.
-     * 
+     *
      * @return boolean
      */
     public function isNull()
@@ -384,7 +384,7 @@ class MString
 
     /**
      * Returns true if the string has no characters; otherwise returns false.
-     * 
+     *
      * @return boolean
      */
     public function isEmpty()
@@ -393,13 +393,13 @@ class MString
     }
 
     /**
-     * Returns a string that contains <i>$n</i> characters of this string, 
+     * Returns a string that contains <i>$n</i> characters of this string,
      * starting at the specified <i>$position</i> index.<br />
      * <br />
-     * Returns a null string if the position index exceeds the length of the string. 
-     * If there are less than n characters available in the string starting at the given position, 
+     * Returns a null string if the position index exceeds the length of the string.
+     * If there are less than n characters available in the string starting at the given position,
      * or if n is -1 (default), the function returns all characters that are available from the specified position.
-     * 
+     *
      * @param int $position
      * @param int $n
      * @return null|MString
@@ -422,7 +422,7 @@ class MString
 
     /**
      * Prepends the string <i>$str</i> to the beginning of this string and returns a reference to this string.
-     * 
+     *
      * @param string|MString $str
      * @return MString
      */
@@ -436,12 +436,12 @@ class MString
     }
 
     /**
-     * Removes n characters from the string, starting at the given position 
+     * Removes n characters from the string, starting at the given position
      * index, and returns a reference to the string.
-     * If the specified position index is within the string, but position + n is 
-     * beyond the end of the string, the string is truncated at the specified 
+     * If the specified position index is within the string, but position + n is
+     * beyond the end of the string, the string is truncated at the specified
      * position.
-     * 
+     *
      * @param int $pos
      * @param int $n
      * @return \MToolkit\Core\MString
@@ -470,9 +470,9 @@ class MString
 
     /**
      * Truncates the string at the given position index.
-     * If the specified position index is beyond the end of the string, nothing 
+     * If the specified position index is beyond the end of the string, nothing
      * happens.
-     * 
+     *
      * @param int $position
      * @return \MToolkit\Core\MString
      */
@@ -483,7 +483,7 @@ class MString
 
     /**
      * Returns an uppercase copy of the string.
-     * 
+     *
      * @return \MToolkit\Core\MString
      */
     public function toUpper()
@@ -493,7 +493,7 @@ class MString
 
     /**
      * Returns a lowercase copy of the string.
-     * 
+     *
      * @return \MToolkit\Core\MString
      */
     public function toLower()
@@ -503,9 +503,9 @@ class MString
 
     /**
      * Returns a string that has whitespace removed from the start and the end.
-     * Whitespace means any character for which QChar::isSpace() returns true. 
+     * Whitespace means any character for which QChar::isSpace() returns true.
      * This includes the ASCII characters '\t', '\n', '\v', '\f', '\r', and ' '.
-     * 
+     *
      * @param MString|string $charlist
      * @return \MToolkit\Core\MString
      */
