@@ -92,7 +92,7 @@ class MDataType
         {
             $dataType = $dataTypeArray[$i];
 
-            if( $dataType === MDataType::MIXED )
+            if( $dataType === MDataType::MIXED || $dataType === MDataType::OBJECT )
             {
                 continue;
             }
