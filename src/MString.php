@@ -24,7 +24,7 @@ use mtoolkit\core\enum\CaseSensitivity;
 use mtoolkit\core\exception\MWrongTypeException;
 
 /**
- * The MString class provides a php string. 
+ * The MString class provides a php string.
  */
 class MString
 {
@@ -36,13 +36,13 @@ class MString
     private $text = "";
 
     /**
-     * 
+     *
      * @param MString|string $text
      * @throws MWrongTypeException
      */
     public function __construct( $text = MString::EMPTY_STRING )
     {
-        $this->text = (string) $text;
+        $this->text = (string)$text;
     }
 
     /**
@@ -68,7 +68,12 @@ class MString
 
     public function toString()
     {
-        return (string) $this->text;
+        return (string)$this->text;
+    }
+
+    public function __toString()
+    {
+        return $this->toString();
     }
 
     /**
@@ -134,8 +139,8 @@ class MString
      */
     public function compare( $other, $cs = CaseSensitivity::CASE_SENSITIVE )
     {
-        $text = (string) $this->text;
-        $o = (string) $other;
+        $text = (string)$this->text;
+        $o = (string)$other;
 
         switch( $cs )
         {
@@ -163,8 +168,8 @@ class MString
      */
     public function contains( $str, $cs = CaseSensitivity::CASE_SENSITIVE )
     {
-        $text = (string) $this->text;
-        $s = (string) $str;
+        $text = (string)$this->text;
+        $s = (string)$str;
 
         switch( $cs )
         {
@@ -179,7 +184,7 @@ class MString
                 break;
         }
 
-        return ( $result !== false );
+        return ($result !== false);
     }
 
     /**
@@ -209,7 +214,7 @@ class MString
      */
     public function indexOf( $str, $from = 0, $cs = CaseSensitivity::CASE_INSENSITIVE )
     {
-        $toSearch = (string) $str;
+        $toSearch = (string)$str;
 
         switch( $cs )
         {
@@ -235,7 +240,8 @@ class MString
     /**
      * Returns the index position of the last occurrence of the string str in this string,
      * searching backward from index position from. If from is -1 (default),
-     * the search starts at the last character; if from is -2, at the next to last character and so on. Returns -1 if str is not found.
+     * the search starts at the last character; if from is -2, at the next to last character and so on. Returns -1 if
+     * str is not found.
      *
      * @param string|MString $str
      * @param int $from
@@ -244,7 +250,7 @@ class MString
      */
     public function lastIndexOf( $str, $from = 0, $cs = CaseSensitivity::CASE_INSENSITIVE )
     {
-        $toSearch = (string) $str;
+        $toSearch = (string)$str;
 
         switch( $cs )
         {
@@ -276,7 +282,7 @@ class MString
      */
     public function insert( $position, $str )
     {
-        $string = (string) $str;
+        $string = (string)$str;
 
         $string = substr_replace( $this->text, $string, $position, 0 );
 
@@ -299,10 +305,10 @@ class MString
         switch( $cs )
         {
             case CaseSensitivity::CASE_SENSITIVE:
-                $string = str_replace( (string) $before, (string) $after, (string) $this );
+                $string = str_replace( (string)$before, (string)$after, (string)$this );
                 break;
             case CaseSensitivity::CASE_INSENSITIVE:
-                $string = str_ireplace( (string) $before, (string) $after, (string) $this );
+                $string = str_ireplace( (string)$before, (string)$after, (string)$this );
                 break;
             default:
                 throw new MWrongTypeException( "\$cs", "CaseSensitivity", $cs );
@@ -367,9 +373,9 @@ class MString
      */
     public static function isNullOrEmpty( $string )
     {
-        $str = (string) $string;
+        $str = (string)$string;
 
-        return ( $str == null || $str == MString::EMPTY_STRING );
+        return ($str == null || $str == MString::EMPTY_STRING);
     }
 
     /**
@@ -379,7 +385,7 @@ class MString
      */
     public function isNull()
     {
-        return ( $this->text == null );
+        return ($this->text == null);
     }
 
     /**
@@ -389,7 +395,7 @@ class MString
      */
     public function isEmpty()
     {
-        return ( $this->text == MString::EMPTY_STRING );
+        return ($this->text == MString::EMPTY_STRING);
     }
 
     /**
@@ -428,7 +434,7 @@ class MString
      */
     public function prepend( $str )
     {
-        $string = (string) $str;
+        $string = (string)$str;
 
         $string = $string . $this->text;
 
@@ -448,7 +454,7 @@ class MString
      */
     public function remove( $pos, $n )
     {
-        $subString = substr( (string) $this, $pos, $n );
+        $subString = substr( (string)$this, $pos, $n );
         return $this->replace( $subString, MString::EMPTY_STRING );
     }
 
@@ -478,7 +484,7 @@ class MString
      */
     public function truncate( $position )
     {
-        return new MString( substr( (string) $this, 0, $position ) );
+        return new MString( substr( (string)$this, 0, $position ) );
     }
 
     /**
@@ -488,7 +494,7 @@ class MString
      */
     public function toUpper()
     {
-        return new MString( strtoupper( (string) $this ) );
+        return new MString( strtoupper( (string)$this ) );
     }
 
     /**
@@ -498,7 +504,7 @@ class MString
      */
     public function toLower()
     {
-        return new MString( strtolower( (string) $this ) );
+        return new MString( strtolower( (string)$this ) );
     }
 
     /**
@@ -511,7 +517,7 @@ class MString
      */
     public function trimmed( $charlist = null )
     {
-        return new MString( trim( (string) $this, (string) $charlist ) );
+        return new MString( trim( (string)$this, (string)$charlist ) );
     }
 
     /**
