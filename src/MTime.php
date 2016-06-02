@@ -59,7 +59,7 @@ class MTime
      * than the time of this object (or earlier if ms is negative).
      *
      * @param int $ms
-     * @return {@link MTime}
+     * @return MTime 
      */
     public function addMSecs($ms)
     {
@@ -80,7 +80,7 @@ class MTime
      * the time of this object (or earlier if s is negative).
      *
      * @param $s
-     * @return {@link MTime}
+     * @return MTime
      */
     public function addSecs($s)
     {
@@ -185,7 +185,7 @@ class MTime
      * Returns the number of seconds from this time to <i>$t</i>. If <i>$t</i> is earlier than this time,
      * the number of seconds returned is negative.
      *
-     * @param {@link MTime} $t
+     * @param MTime $t
      * @return int
      */
     public function secsTo(MTime $t)
@@ -241,7 +241,7 @@ class MTime
     /**
      * Returns the current time as reported by the system clock.
      *
-     * @return {@link MTime}
+     * @return MTime
      */
     public static function currentTime()
     {
