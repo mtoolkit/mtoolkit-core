@@ -69,9 +69,9 @@ class MCookie
      * @param string $path
      * @param string $domain
      * @param bool $secure
-     * @param bool $httponly
+     * @param bool $httpOnly
      */
-    public static function set( $key, $value, $expire = 0, $path = "/", $domain = null, $secure = false, $httponly = false )
+    public static function set( $key, $value, $expire = 0, $path = "/", $domain = null, $secure = false, $httpOnly = false )
     {
         if( $domain == null )
         {
@@ -79,7 +79,7 @@ class MCookie
         }
         else
         {
-            setcookie( $key, serialize( $value ), $expire, $path, $domain, $secure, $httponly );
+            setcookie( $key, serialize( $value ), $expire, $path, $domain, $secure, $httpOnly );
         }
     }
 

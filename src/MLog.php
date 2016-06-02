@@ -28,7 +28,7 @@ namespace mtoolkit\core;
  */
 final class MLog
 {
-    const MESSAGES = "MToolkit\Core\MLog\Messages";
+    const MESSAGES = 'MToolkit\Core\MLog\Messages';
     const INFO = "INFO";
     const WARNING = "WARNING";
     const ERROR = "ERROR";
@@ -78,7 +78,7 @@ final class MLog
             return;
         }
 
-        if( $text instanceof MList || $text instanceof MMap || $text instanceof MVector )
+        if( $text instanceof MList || $text instanceof MMap )
         {
             $text = json_encode( $text->__toArray() );
         }

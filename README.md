@@ -20,7 +20,7 @@ composer require mpstyle/mtoolkit-core
 ```
 
 #<a name="intro"></a>Into
-The core module contains some utility classes like: MList, MGet, MPost, MSession.
+The core module contains some utility classes like: MList, MGet, MPost.
 
 Theese wrap the core functionalities of PHP in a class. Let me explain.
 
@@ -47,3 +47,5 @@ $post=new MPost();
 $id=$post->getValue('id');
 ```
 If 'id' is not set, it returns null.
+
+

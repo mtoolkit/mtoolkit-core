@@ -18,7 +18,7 @@ class MListTest extends \PHPUnit_Framework_TestCase
     /**
      * @var MList
      */
-    private $untypeList;
+    private $untypedList;
 
     public function testAppend()
     {
@@ -44,23 +44,23 @@ class MListTest extends \PHPUnit_Framework_TestCase
     public function testUntypeAppend()
     {
         try {
-            $countPreAppend = $this->untypeList->count();
+            $countPreAppend = $this->untypedList->count();
 
-            $this->untypeList->append("ciao");
+            $this->untypedList->append("ciao");
             $this->assertTrue(true);
 
-            $this->assertEquals($countPreAppend + 1, $this->untypeList->count());
+            $this->assertEquals($countPreAppend + 1, $this->untypedList->count());
         } catch (MWrongTypeException $ex) {
             $this->assertTrue(false);
         }
 
         try {
-            $countPreAppend = $this->untypeList->count();
+            $countPreAppend = $this->untypedList->count();
 
-            $this->untypeList->append(RandomPersonGenerator::builder());
+            $this->untypedList->append(RandomPersonGenerator::builder());
             $this->assertTrue(true);
 
-            $this->assertEquals($countPreAppend + 1, $this->untypeList->count());
+            $this->assertEquals($countPreAppend + 1, $this->untypedList->count());
         } catch (MWrongTypeException $ex) {
             $this->assertTrue(false);
         }
@@ -91,24 +91,24 @@ class MListTest extends \PHPUnit_Framework_TestCase
     public function testUntypeAppendArray()
     {
         try {
-            $countPreAppend = $this->untypeList->count();
+            $countPreAppend = $this->untypedList->count();
             $newPerson=RandomPersonGenerator::builderALot(40);
 
-            $this->untypeList->appendArray($newPerson);
+            $this->untypedList->appendArray($newPerson);
             $this->assertTrue(true);
 
-            $this->assertEquals($countPreAppend + count($newPerson), $this->untypeList->count());
+            $this->assertEquals($countPreAppend + count($newPerson), $this->untypedList->count());
         } catch (MWrongTypeException $ex) {
             $this->assertTrue(false);
         }
 
         try {
-            $countPreAppend = $this->untypeList->count();
+            $countPreAppend = $this->untypedList->count();
 
-            $this->untypeList->appendArray(array(RandomPersonGenerator::builder(), "ciao"));
+            $this->untypedList->appendArray(array(RandomPersonGenerator::builder(), "ciao"));
             $this->assertTrue(true);
 
-            $this->assertEquals($countPreAppend + 2, $this->untypeList->count());
+            $this->assertEquals($countPreAppend + 2, $this->untypedList->count());
         } catch (MWrongTypeException $ex) {
             $this->assertTrue(false);
         }
@@ -139,41 +139,41 @@ class MListTest extends \PHPUnit_Framework_TestCase
     public function testUntypeAppendList()
     {
         try {
-            $countPreAppend = $this->untypeList->count();
+            $countPreAppend = $this->untypedList->count();
             $new=RandomPersonGenerator::builderALot(40);
 
-            $this->untypeList->appendList(new MList($new));
+            $this->untypedList->appendList(new MList($new));
             $this->assertTrue(true);
 
-            $this->assertEquals($countPreAppend + count($new), $this->untypeList->count());
+            $this->assertEquals($countPreAppend + count($new), $this->untypedList->count());
         } catch (MWrongTypeException $ex) {
             $this->assertTrue(false);
         }
 
         try {
-            $countPreAppend = $this->untypeList->count();
+            $countPreAppend = $this->untypedList->count();
 
-            $this->untypeList->appendList(new MList(array(RandomPersonGenerator::builder(), "ciao")));
+            $this->untypedList->appendList(new MList(array(RandomPersonGenerator::builder(), "ciao")));
             $this->assertTrue(true);
 
-            $this->assertEquals($countPreAppend + 2, $this->untypeList->count());
+            $this->assertEquals($countPreAppend + 2, $this->untypedList->count());
         } catch (MWrongTypeException $ex) {
             $this->assertTrue(false);
         }
     }
 
     public function testAt(){
-        $this->untypeList->clear();
+        $this->untypedList->clear();
         $new=RandomPersonGenerator::builderALot(40);
-        $this->untypeList->appendArray($new);
+        $this->untypedList->appendArray($new);
 
         for($k=0;$k<10;$k++){
             $pos=rand(0, count($new)-1);
-            $this->assertEquals($new[$pos], $this->untypeList->at($pos));
+            $this->assertEquals($new[$pos], $this->untypedList->at($pos));
         }
 
         try{
-            $this->untypeList->at(count($new));
+            $this->untypedList->at(count($new));
             $this->assertTrue(false);
         }
         catch(MOutOfBoundsException $ex){
@@ -190,7 +190,7 @@ class MListTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->list = new MList(RandomPersonGenerator::builderALot(50), Person::class);
-        $this->untypeList = new MList(array("ciao"));
+        $this->untypedList = new MList(array("ciao"));
     }
 
     /**
