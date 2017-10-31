@@ -154,6 +154,119 @@ class MStringTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals( "Hellocreative  world", $helloWorld1->insert( 5, $str2 ) );
     }
 
+    public function testReplace(){
+        $helloWorld = new MString( "Hello world" );
+
+        $helloCity = $helloWorld->replace("hello", "hi", CaseSensitivity::CASE_SENSITIVE);
+        $this->assertEquals("Hello world", $helloCity);
+
+        $helloCity = $helloWorld->replace("hello", "hi", CaseSensitivity::CASE_INSENSITIVE);
+        $this->assertEquals("hi world", $helloCity);
+    }
+
+    public function testLeft(){
+        $helloWorld = new MString( "Hello world" );
+
+        $hello = $helloWorld->left(5);
+        $this->assertEquals("Hello", $hello);
+    }
+
+    public function testRight(){
+        $helloWorld = new MString( "Hello world" );
+
+        $world = $helloWorld->right(5);
+        $this->assertEquals("world", $world);
+    }
+
+    public function testIsNullOrEmpty(){
+        $this->assertTrue(Mstring::isNullOrEmpty(null));
+        $this->assertTrue(Mstring::isNullOrEmpty(new MString()));
+        $this->assertTrue(Mstring::isNullOrEmpty(new MString(null)));
+        $this->assertFalse(Mstring::isNullOrEmpty(new MString("Hello")));
+        $this->assertFalse(Mstring::isNullOrEmpty("Hello"));
+    }
+
+    public function testIsNull(){
+        $this->assertTrue((new MString())->isNull());
+        $this->assertTrue((new MString(null))->isNull());
+        $this->assertFalse((new MString("Hello"))->isNull());
+    }
+
+    public function testIsEmpty(){
+        $this->assertTrue((new MString())->isEmpty());
+        $this->assertTrue((new MString(null))->isEmpty());
+        $this->assertTrue((new MString(""))->isEmpty());
+        $this->assertFalse((new MString("Hello"))->isEmpty());
+    }
+
+    public function testMid(){
+        $helloWorld = new MString( "Hello world" );
+
+        $hello = $helloWorld->mid(6,5);
+        $this->assertEquals("world", $hello);
+    }
+
+    public function testPrepend(){
+        $helloWorld = new MString( "world" );
+
+        $hello = $helloWorld->prepend("Hello ");
+        $this->assertEquals("Hello world", $hello);
+    }
+
+    public function testRemove(){
+        $helloWorld = new MString( "Hello world!!!" );
+
+        $hello = $helloWorld->remove(11,3);
+        $this->assertEquals("Hello world", $hello);
+    }
+
+    public function testRemoveOccurences(){
+        $helloWorld = new MString( "Hello your world" );
+
+        $hello = $helloWorld->removeOccurences(" your");
+        $this->assertEquals("Hello world", $hello);
+    }
+
+    public function testTruncate(){
+        $helloWorld = new MString( "Hello world!!!" );
+
+        $hello = $helloWorld->truncate(11);
+        $this->assertEquals("Hello world", $hello);
+    }
+
+    public function testToUpper(){
+        $helloWorld = new MString( "Hello world" );
+
+        $hello = $helloWorld->toUpper();
+        $this->assertEquals("HELLO WORLD", $hello);
+    }
+
+    public function testToLower(){
+        $helloWorld = new MString( "Hello WOrld" );
+
+        $hello = $helloWorld->toLower();
+        $this->assertEquals("hello world", $hello);
+    }
+
+    public function testTrimmed(){
+        $helloWorld = new MString( "   Hello world  ---" );
+
+        $hello = $helloWorld->trimmed(" -");
+        $this->assertEquals("Hello world", $hello);
+    }
+
+    public function testStartsWith(){
+        $helloWorld = new MString( "Hello world" );
+
+        $this->assertTrue($helloWorld->startsWith("Hello"));
+    }
+
+    public function testEndsWith(){
+        $helloWorld = new MString( "Hello world" );
+
+        $this->assertTrue($helloWorld->endsWith("world"));
+    }
+
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.

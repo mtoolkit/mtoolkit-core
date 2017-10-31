@@ -42,7 +42,12 @@ class MString
      */
     public function __construct( $text = MString::EMPTY_STRING )
     {
-        $this->text = (string)$text;
+        if(is_null($text)){
+            $this->text = $text;
+        }
+        else {
+            $this->text = (string)$text;
+        }
     }
 
     /**
@@ -58,9 +63,8 @@ class MString
      * @param mixed $args [optional]
      * @return MString
      */
-    public function append( $str, $args = null )
+    public function append( string $str, $args = null ):MString
     {
-        MDataType::mustBeString( $str );
         $this->text .= sprintf( $str, $args );
 
         return new MString( $this->text );

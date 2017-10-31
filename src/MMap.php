@@ -68,10 +68,8 @@ class MMap extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @return boolean
      * @throws MWrongTypeException
      */
-    public function contains( $key )
+    public function contains( string $key )
     {
-        MDataType::mustBe(array(MDataType::STRING));
-
         $founded = array_key_exists( $key, $this->map );
 
         return ( $founded !== false );
@@ -106,10 +104,8 @@ class MMap extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param string $pos
      * @throws MWrongTypeException
      */
-    public function erase( $pos )
+    public function erase( string $pos )
     {
-        MDataType::mustBe(array(MDataType::INT));
-
         $keys = array_keys( $this->map );
 
         unset( $this->map[$keys[$pos]] );
@@ -122,10 +118,8 @@ class MMap extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @return mixed
      * @throws MWrongTypeException
      */
-    public function find( $key )
+    public function find( string $key )
     {
-        MDataType::mustBe(array(MDataType::STRING));
-
         $founded = array_key_exists( $key, $this->map );
 
         if ($founded === false)
@@ -147,10 +141,8 @@ class MMap extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param mixed $value
      * @throws MWrongTypeException
      */
-    public function insert( $key, $value )
+    public function insert( string $key, $value )
     {
-        MDataType::mustBe(array(MDataType::STRING, MDataType::MIXED));
-
         if ($this->isValidType( $value ) === false)
         {
             throw new MWrongTypeException( "\$value", $this->getType(), $value );
@@ -169,14 +161,12 @@ class MMap extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @return string
      * @throws MWrongTypeException
      */
-    public function getKey( $value, $defaultKey = null )
+    public function getKey( $value, ?string $defaultKey = null ):string
     {
         if ($this->isValidType( $value ) === false)
         {
             throw new MWrongTypeException( "\$value", $this->getType(), $value );
         }
-
-        MDataType::mustBeNullableString($defaultKey);
 
         $key = array_search( $value, $this->map );
 
@@ -215,10 +205,8 @@ class MMap extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @return int
      * @throws MWrongTypeException
      */
-    public function remove( $key )
+    public function remove( string $key )
     {
-        MDataType::mustBe(array(MDataType::STRING));
-
         unset( $this->map[$key] );
         return 1;
     }
@@ -242,10 +230,8 @@ class MMap extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @return mixed
      * @throws MWrongTypeException
      */
-    public function take( $key )
+    public function take( string $key )
     {
-        MDataType::mustBe(array(MDataType::STRING));
-
         $key = $this->getValue( $key );
         $this->remove( $key );
         return $key;
@@ -256,9 +242,9 @@ class MMap extends MAbstractTemplate implements \ArrayAccess, \Iterator
     /**
      * Returns a list containing all the keys in the map in ascending order. 
      * 
-     * @return array[string]
+     * @return MList
      */
-    public function getUniqueKeys()
+    public function getUniqueKeys():MList
     {
         return $this->getKeys();
     }
@@ -275,7 +261,7 @@ class MMap extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @return mixed
      * @throws MWrongTypeException
      */
-    public function &getValue( $key, $defaultValue = null )
+    public function &getValue( string $key, $defaultValue = null )
     {
         if ($this->isValidType( $defaultValue ) === false)
         {

@@ -53,10 +53,8 @@ class MHash
      * @throws InvalidHashAlgorithmException
      * @throws MWrongTypeException
      */
-    public function __construct($hashAlgorithm)
+    public function __construct(string $hashAlgorithm)
     {
-        MDataType::mustBe(array(MDataType::STRING));
-
         if (in_array($hashAlgorithm, hash_algos()) == false)
         {
             throw new InvalidHashAlgorithmException($hashAlgorithm);
@@ -69,10 +67,8 @@ class MHash
      * @param string $text
      * @return string
      */
-    public function getHash($text)
+    public function getHash(string $text):string
     {
-        MDataType::mustBe(array(MDataType::STRING));
-
         return hash($this->hashAlgorithm, $text);
     }
 
@@ -80,7 +76,7 @@ class MHash
      * @param HashAlgorithm|string $hashAlgorithm
      * @return MHash
      */
-    public static function generate($hashAlgorithm){
+    public static function generate($hashAlgorithm):MHash{
         return new MHash($hashAlgorithm);
     }
 

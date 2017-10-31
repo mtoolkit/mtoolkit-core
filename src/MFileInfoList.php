@@ -59,7 +59,7 @@ class MFileInfoList extends MList
      * @throws MWrongTypeException
      * @throws \OutOfBoundsException
      */
-    public function &at( $i )
+    public function &at( int $i )
     {
         return parent::at($i);
     }
@@ -85,7 +85,7 @@ class MFileInfoList extends MList
      * @param MFileInfo $value
      * @return boolean
      */
-    public function endsWith( MFileInfo $value )
+    public function endsWith( MFileInfo $value ):bool
     {
         return parent::endsWith($value);
     }
@@ -124,7 +124,7 @@ class MFileInfoList extends MList
      * @return int
      * @throws MWrongTypeException
      */
-    public function /* int */ indexOf( MFileInfo $value, $from = 0 )
+    public function /* int */ indexOf( MFileInfo $value, int $from = 0 ):int
     {
         return parent::indexOf($value, $from);
     }
@@ -138,7 +138,7 @@ class MFileInfoList extends MList
      * @param MFileInfo $value
      * @throws MWrongTypeException
      */
-    public function insert( $i, MFileInfo $value )
+    public function insert( int $i, MFileInfo $value )
     {        
         parent::insert($i, $value);
     }
@@ -158,9 +158,9 @@ class MFileInfoList extends MList
     /**
      * @param MFileInfo $value
      * @param int $from
-     * @return MFileInfo
+     * @return int
      */
-    public function lastIndexOf( MFileInfo $value, $from = -1 )
+    public function lastIndexOf( MFileInfo $value, int $from = -1 ):int
     {
         return parent::lastIndexOf($value, $from);
     }
@@ -175,9 +175,9 @@ class MFileInfoList extends MList
 
     /**
      * @param MFileInfo $value
-     * @return MFileInfo
+     * @return bool
      */
-    public function removeOne( MFileInfo $value )
+    public function removeOne( MFileInfo $value ):bool
     {
         return parent::removeOne($value);
     }
@@ -186,25 +186,25 @@ class MFileInfoList extends MList
      * @param int $i
      * @param MFileInfo $value
      */
-    public function replace( $i, MFileInfo $value )
+    public function replace( int $i, MFileInfo $value )
     {
         parent::replace($i, $value);
     }
 
     /**
      * @param MFileInfo $value
-     * @return MFileInfo
+     * @return bool
      */
-    public function startsWith( MFileInfo $value )
+    public function startsWith( MFileInfo $value ):bool
     {
-        return null;
+        return false;
     }
     
     /**
      * @param int $i
      * @return MFileInfo
      */
-    public function takeAt( $i )
+    public function takeAt( int $i )
     {
         return parent::takeAt($i);
     }
@@ -230,7 +230,7 @@ class MFileInfoList extends MList
      * @param MFileInfo $defaultValue
      * @return MFileInfo
      */
-    public function getValue( $i, MFileInfo $defaultValue = null )
+    public function getValue( int $i, MFileInfo $defaultValue = null ):MFileInfo
     {
         return parent::getValue($i, $defaultValue);
     }

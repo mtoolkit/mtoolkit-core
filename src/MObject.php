@@ -105,7 +105,7 @@ class MObject
      */
     public function connect( MObject $sender, $signal, MObject $receiver, $method )
     {
-        if( $sender != $this )
+        if( $sender !== $this )
         {
             $sender->connect( $sender, $signal, $receiver, $method );
             return;
@@ -120,7 +120,7 @@ class MObject
 
     public function connectClosure( MObject $sender, $signal, \Closure $callback )
     {
-        if( $sender != $this )
+        if( $sender !== $this )
         {
             $sender->connectClosure( $sender, $signal, $callback );
             return;
@@ -146,7 +146,7 @@ class MObject
      */
     public function disconnect( MObject $sender, $signal, MObject $receiver, $method )
     {
-        if( $this != $sender )
+        if( $this !== $sender )
         {
             $sender->disconnect( $sender, $signal, $receiver, $method );
             return false;

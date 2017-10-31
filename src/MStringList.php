@@ -60,7 +60,7 @@ class MStringList extends MList
      * @throws MWrongTypeException
      * @throws \OutOfBoundsException
      */
-    public function &at( $i )
+    public function &at( int $i )
     {
         return parent::at($i);
     }
@@ -86,7 +86,7 @@ class MStringList extends MList
      * @param MString $value
      * @return boolean
      */
-    public function endsWith( MString $value )
+    public function endsWith( MString $value ):bool
     {
         return parent::endsWith($value);
     }
@@ -125,7 +125,7 @@ class MStringList extends MList
      * @return int
      * @throws MWrongTypeException
      */
-    public function /* int */ indexOf( MString $value, $from = 0 )
+    public function /* int */ indexOf( MString $value, $from = 0 ):int
     {
         return parent::indexOf($value, $from);
     }
@@ -139,7 +139,7 @@ class MStringList extends MList
      * @param MString $value
      * @throws MWrongTypeException
      */
-    public function insert( $i, MString $value )
+    public function insert( int $i, MString $value )
     {        
         parent::insert($i, $value);
     }
@@ -159,9 +159,9 @@ class MStringList extends MList
     /**
      * @param MString $value
      * @param int $from
-     * @return MFileInfo
+     * @return int
      */
-    public function lastIndexOf( MString $value, $from = -1 )
+    public function lastIndexOf( MString $value, $from = -1 ):int
     {
         return parent::lastIndexOf($value, $from);
     }
@@ -176,9 +176,9 @@ class MStringList extends MList
 
     /**
      * @param MString $value
-     * @return MString
+     * @return bool
      */
-    public function removeOne( MString $value )
+    public function removeOne( MString $value ):bool
     {
         return parent::removeOne($value);
     }
@@ -187,25 +187,25 @@ class MStringList extends MList
      * @param int $i
      * @param MString $value
      */
-    public function replace( $i, MString $value )
+    public function replace( int $i, MString $value )
     {
         parent::replace($i, $value);
     }
 
     /**
      * @param MString $value
-     * @return MString
+     * @return bool
      */
-    public function startsWith( MString $value )
+    public function startsWith( MString $value ):bool
     {
-        return null;
+        return false;
     }
     
     /**
      * @param int $i
      * @return MString
      */
-    public function takeAt( $i )
+    public function takeAt( int $i )
     {
         return parent::takeAt($i);
     }
@@ -231,7 +231,7 @@ class MStringList extends MList
      * @param MString $defaultValue
      * @return MString
      */
-    public function getValue( $i, MString $defaultValue = null )
+    public function getValue( int $i, MString $defaultValue = null ):MString
     {
         return parent::getValue($i, $defaultValue);
     }

@@ -54,7 +54,7 @@ class MPost extends MMap
      * @param string $pos
      * @throws MReadOnlyObjectException
      */
-    public function erase( $pos )
+    public function erase( string $pos )
     {
         throw new MReadOnlyObjectException('MPost','erase( $pos )');
     }
@@ -66,7 +66,7 @@ class MPost extends MMap
      * @param mixed $value
      * @throws MReadOnlyObjectException
      */
-    public function insert( $key, $value )
+    public function insert( string $key, $value )
     {
         throw new MReadOnlyObjectException('MPost','insert( $key, $value )');
     }
@@ -78,7 +78,7 @@ class MPost extends MMap
      * @return int
      * @throws MReadOnlyObjectException
      */
-    public function remove( $key )
+    public function remove( string $key )
     {
         throw new MReadOnlyObjectException('MPost','remove( $key )');
     }
@@ -114,7 +114,7 @@ class MPost extends MMap
      * @param mixed $defaultValue
      * @return mixed
      */
-    public function getValue( $key, $defaultValue = null )
+    public function getValue( string $key, $defaultValue = null )
     {
         return parent::getValue($key, $defaultValue);
     }
