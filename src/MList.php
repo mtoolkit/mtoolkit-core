@@ -107,10 +107,8 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @throws MWrongTypeException
      * @throws MOutOfBoundsException
      */
-    public function &at($i)
+    public function &at(int $i)
     {
-        MDataType::mustBe(array(MDataType::INT));
-
         if ($i >= $this->count() || $i < 0) {
             throw new MOutOfBoundsException(0, $this->count() - 1, $i);
         }
@@ -161,7 +159,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      *
      * @return int
      */
-    public function count()
+    public function count():int
     {
         return count($this->list);
     }
@@ -171,7 +169,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      *
      * @return boolean
      */
-    public function isEmpty()
+    public function isEmpty():bool
     {
         return (count($this->list) <= 0);
     }
@@ -183,7 +181,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param mixed $value
      * @return boolean
      */
-    public function endsWith($value)
+    public function endsWith($value):bool
     {
         if ($this->count() <= 0) {
             return false;
@@ -236,10 +234,8 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @return int
      * @throws MWrongTypeException
      */
-    public function indexOf($value, $from = 0)
+    public function indexOf($value, int $from = 0):int
     {
-        MDataType::mustBe(array(MDataType::MIXED, MDataType::INT));
-
         if ($this->isValidType($value) === false) {
             throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
@@ -268,10 +264,8 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param mixed $value
      * @throws MWrongTypeException
      */
-    public function insert($i, $value)
+    public function insert(int $i, $value)
     {
-        MDataType::mustBe(array(MDataType::INT, MDataType::MIXED));
-
         if ($this->isValidType($value) === false) {
             throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
@@ -300,15 +294,11 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param int $from
      * @return int
      */
-    public function lastIndexOf($value, $from = -1)
+    public function lastIndexOf($value, int $from = -1):int
     {
-        MDataType::mustBe(array(MDataType::MIXED, MDataType::INT));
-
         if ($this->isValidType($value) === false) {
             throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
-
-        MDataType::mustBeInt($from);
 
         $position = -1;
         $to = $this->count() - 1;
@@ -331,7 +321,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      *
      * @return int
      */
-    public function length()
+    public function length():int
     {
         return $this->count();
     }
@@ -342,10 +332,8 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param int $from
      * @param int $to
      */
-    public function move($from, $to)
+    public function move(int $from, int $to)
     {
-        MDataType::mustBe(array(MDataType::INT, MDataType::INT));
-
         $value = $this->list[$from];
 
         unset($this->list[$from]);
@@ -441,10 +429,8 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      *
      * @param int $i
      */
-    public function removeAt($i)
+    public function removeAt(int $i)
     {
-        MDataType::mustBe(array(MDataType::INT));
-
         if (count($this->list) >= $i) {
             throw new \OutOfBoundsException();
         }
@@ -487,7 +473,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param $value mixed
      * @return bool
      */
-    public function removeOne($value)
+    public function removeOne($value):bool
     {
         if ($this->isValidType($value) === false) {
             throw new MWrongTypeException("\$value", $this->getType(), $value);
@@ -511,10 +497,8 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param int $i
      * @param mixed $value
      */
-    public function replace($i, $value)
+    public function replace(int $i, $value)
     {
-        MDataType::mustBe(array(MDataType::INT, MDataType::MIXED));
-
         if ($this->isValidType($value) === false) {
             throw new MWrongTypeException("\$value", $this->getType(), $value);
         }
@@ -539,7 +523,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param mixed $value
      * @return bool
      */
-    public function startsWith($value)
+    public function startsWith($value):bool
     {
         if ($this->isValidType($value) === false) {
             throw new MWrongTypeException("\$value", $this->getType(), $value);
@@ -561,10 +545,8 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param int $i
      * @return mixed
      */
-    public function takeAt($i)
+    public function takeAt(int $i)
     {
-        MDataType::mustBe(array(MDataType::INT));
-
         $value = $this->list[$i];
 
         unset($this->list[$i]);
@@ -627,10 +609,8 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param null|mixed $defaultValue
      * @return mixed|null
      */
-    public function getValue($i, $defaultValue = null)
+    public function getValue(int $i, $defaultValue = null)
     {
-        MDataType::mustBeInt($i);
-
         if ($i >= $this->count()) {
             $exception = new \OutOfBoundsException();
 
@@ -670,7 +650,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param int $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset):bool
     {
         MDataType::mustBe(array(MDataType::INT));
 
@@ -753,10 +733,8 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param int $end
      * @return \MToolkit\Core\MList
      */
-    public function slice($start, $end)
+    public function slice(int $start, int $end)
     {
-        MDataType::mustBe(array(MDataType::INT, MDataType::INT));
-
         $list = array_slice($this->list, $start, $end);
         return new MList($list);
     }

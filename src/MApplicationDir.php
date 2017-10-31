@@ -16,7 +16,7 @@ class MApplicationDir
     /**
      * @return string
      */
-    public function getPath()
+    public function getPath():string
     {
         return $this->path;
     }
@@ -25,7 +25,7 @@ class MApplicationDir
      * @param string $path
      * @return MApplicationDir
      */
-    public function setPath($path)
+    public function setPath(string $path):MApplicationDir
     {
         $this->path = $path;
         return $this;
@@ -34,7 +34,7 @@ class MApplicationDir
     /**
      * @return string
      */
-    public function getNamespace()
+    public function getNamespace():string
     {
         return $this->namespace;
     }
@@ -43,7 +43,7 @@ class MApplicationDir
      * @param string $namespace
      * @return MApplicationDir
      */
-    public function setNamespace($namespace)
+    public function setNamespace(string $namespace):MApplicationDir
     {
         $this->namespace = $namespace;
         return $this;

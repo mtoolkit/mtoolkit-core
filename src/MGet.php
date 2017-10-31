@@ -54,7 +54,7 @@ class MGet extends MMap
      * @param string $pos
      * @throws MReadOnlyObjectException
      */
-    public function erase( $pos )
+    public function erase( string $pos )
     {
         throw new MReadOnlyObjectException('MGet','erase( $pos )');
     }
@@ -66,7 +66,7 @@ class MGet extends MMap
      * @param mixed $value
      * @throws MReadOnlyObjectException
      */
-    public function insert( $key, $value )
+    public function insert( string $key, $value )
     {
         throw new MReadOnlyObjectException('MGet','insert( $key, $value )');
     }
@@ -78,7 +78,7 @@ class MGet extends MMap
      * @throws MReadOnlyObjectException
      * @return int
      */
-    public function remove( $key )
+    public function remove( string $key )
     {
         throw new MReadOnlyObjectException('MGet','remove( $key )');
     }
@@ -114,7 +114,7 @@ class MGet extends MMap
      * @param mixed $defaultValue
      * @return mixed
      */
-    public function getValue( $key, $defaultValue = null )
+    public function getValue( string $key, $defaultValue = null )
     {
         return parent::getValue($key, $defaultValue);
     }

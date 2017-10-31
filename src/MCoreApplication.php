@@ -24,10 +24,10 @@ namespace mtoolkit\core;
 require_once __DIR__.'/MCore.php';
 
 /**
- * The MCoreApplication class provides an event loop for console MToolkit 
+ * The MCoreApplication class provides an event loop for console MToolkit
  * applications.<br />
- * This class is used by non-GUI applications to provide their event loop. For 
- * non-GUI application that uses MToolkit, there should be exactly one 
+ * This class is used by non-GUI applications to provide their event loop. For
+ * non-GUI application that uses MToolkit, there should be exactly one
  * MCoreApplication object. For GUI applications, see MApplication.
  */
 class MCoreApplication
@@ -38,25 +38,24 @@ class MCoreApplication
     const ORGANIZATION_NAME='MToolkit\Core\MCoreApplication\OrganizationName';
     const APPLICATION_DIR_PATH = "MToolkit\Core\MCoreApplication\ApplicationDirPath";
     const DEBUG = "MToolkit\Core\MObject\IsDebug";
-    
+
     /**
      * Set the debug mode.
-     * 
+     *
      * @param bool $bool
      */
-    public static function setIsDebug( $bool )
+    public static function setIsDebug( bool $bool )
     {
-        MDataType::mustBe(array(MDataType::BOOLEAN));
         MSession::set( MCoreApplication::DEBUG, $bool );
     }
 
     /**
      * Return if the debug mode is actived.<br>
      * Default: <i>false</i>.
-     * 
+     *
      * @return bool
      */
-    public static function isDebug()
+    public static function isDebug():bool
     {
         $debug = MSession::get( MCoreApplication::DEBUG );
 
@@ -84,7 +83,7 @@ class MCoreApplication
      * @param string $path The root folder of the source.
      * @param string $namespace Optional.
      */
-    public static function setApplicationDirPath( $path, $namespace="" )
+    public static function setApplicationDirPath( string $path, string $namespace="" )
     {
         $applicationDir=new MApplicationDir();
         $applicationDir->setPath($path);
@@ -98,7 +97,7 @@ class MCoreApplication
      *
      * @return MApplicationDir|null
      */
-    public static function getApplicationDirPath()
+    public static function getApplicationDirPath():?MApplicationDir
     {
         $rootPath = MSession::get( MCoreApplication::APPLICATION_DIR_PATH );
         return $rootPath;
@@ -106,102 +105,102 @@ class MCoreApplication
 
     /**
      * This property holds the name of this application.<br />
-     * The value is used by the MSettings class when it is constructed using the 
-     * empty constructor. This saves having to repeat this information each time 
+     * The value is used by the MSettings class when it is constructed using the
+     * empty constructor. This saves having to repeat this information each time
      * a MSettings object is created.
-     * 
+     *
      * @return string|null
      */
-    public static function getApplicationName()
+    public static function getApplicationName():?string
     {
         return MSession::get(MCoreApplication::APPLICATION_NAME);
     }
-    
+
     /**
      * This property holds the version of this application.
-     * 
+     *
      * @return string|null
      */
-    public static function getApplicationVersion()
+    public static function getApplicationVersion():?string
     {
         return MSession::get(MCoreApplication::APPLICATION_VERSION);
     }
-    
+
     /**
-     * This property holds the Internet domain of the organization that wrote 
+     * This property holds the Internet domain of the organization that wrote
      * this application.<br />
-     * The value is used by the MSettings class when it is constructed using the 
-     * empty constructor. This saves having to repeat this information each time 
+     * The value is used by the MSettings class when it is constructed using the
+     * empty constructor. This saves having to repeat this information each time
      * a MSettings object is created.
-     * 
+     *
      * @return string
      */
-    public static function getOrganizationDomain()
+    public static function getOrganizationDomain():string
     {
         return MSession::get(MCoreApplication::ORGANIZATION_DOMAIN);
     }
-    
+
     /**
-     * This property holds the name of the organization that wrote this 
+     * This property holds the name of the organization that wrote this
      * application.<br />
-     * The value is used by the MSettings class when it is constructed using the 
-     * empty constructor. This saves having to repeat this information each time 
+     * The value is used by the MSettings class when it is constructed using the
+     * empty constructor. This saves having to repeat this information each time
      * a MSettings object is created.
-     * 
+     *
      * @return string
      */
-    public static function getOrganizationName()
+    public static function getOrganizationName():string
     {
         return MSession::get(MCoreApplication::ORGANIZATION_NAME);
     }
-    
+
     /**
      * This property holds the name of this application.<br />
-     * The value is used by the MSettings class when it is constructed using the 
-     * empty constructor. This saves having to repeat this information each time 
+     * The value is used by the MSettings class when it is constructed using the
+     * empty constructor. This saves having to repeat this information each time
      * a MSettings object is created.
-     * 
+     *
      * @param string $application
      */
-    public static function setApplicationName ( $application )
+    public static function setApplicationName ( string $application )
     {
         MSession::set(MCoreApplication::APPLICATION_NAME, $application);
     }
-    
+
     /**
      * This property holds the version of this application.
-     * 
+     *
      * @param string $version
      */
-    public static function setApplicationVersion ( $version )
+    public static function setApplicationVersion ( string $version )
     {
         MSession::set(MCoreApplication::APPLICATION_VERSION, $version);
     }
-    
+
     /**
-     * This property holds the Internet domain of the organization that wrote 
+     * This property holds the Internet domain of the organization that wrote
      * this application.<br />
-     * The value is used by the MSettings class when it is constructed using the 
-     * empty constructor. This saves having to repeat this information each time 
+     * The value is used by the MSettings class when it is constructed using the
+     * empty constructor. This saves having to repeat this information each time
      * a MSettings object is created.
-     * 
+     *
      * @param string $orgDomain
      */
-    public static function setOrganizationDomain ( $orgDomain )
+    public static function setOrganizationDomain ( string $orgDomain )
     {
         MSession::set(MCoreApplication::ORGANIZATION_DOMAIN, $orgDomain);
     }
-    
+
     /**
-     * This property holds the name of the organization that wrote this 
+     * This property holds the name of the organization that wrote this
      * application.<br />
-     * The value is used by the MSettings class when it is constructed using the 
-     * empty constructor. This saves having to repeat this information each time 
+     * The value is used by the MSettings class when it is constructed using the
+     * empty constructor. This saves having to repeat this information each time
      * a MSettings object is created.
-     * 
+     *
      * @param string $orgName
      */
-    public static function setOrganizationName ( $orgName )
+    public static function setOrganizationName ( string $orgName )
     {
         MSession::set(MCoreApplication::ORGANIZATION_NAME, $orgName);
     }

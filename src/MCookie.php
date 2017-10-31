@@ -46,7 +46,7 @@ class MCookie
      * @param string $key
      * @return mixed
      */
-    public static function get( $key )
+    public static function get( string $key )
     {
         if( isset( $_COOKIE[$key] ) === false )
         {
@@ -71,7 +71,7 @@ class MCookie
      * @param bool $secure
      * @param bool $httpOnly
      */
-    public static function set( $key, $value, $expire = 0, $path = "/", $domain = null, $secure = false, $httpOnly = false )
+    public static function set( string $key, string $value, int $expire = 0, string $path = "/", ?string $domain = null, bool $secure = false, bool $httpOnly = false )
     {
         if( $domain == null )
         {

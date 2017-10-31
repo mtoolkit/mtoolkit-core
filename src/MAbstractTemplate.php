@@ -43,7 +43,7 @@ abstract class MAbstractTemplate
      * @param mixed $object
      * @return boolean
      */
-    public function isValidType( $object )
+    public function isValidType( $object ):bool
     {
         if ( $this->type==null || $object==null )
         {
@@ -73,7 +73,7 @@ abstract class MAbstractTemplate
      * @param null|int|string $type MDataType constants, or the name of the class, or null.
      * @return \MToolkit\Core\MAbstractTemplate
      */
-    public function setType( $type )
+    public function setType( $type ):MAbstractTemplate
     {
         $this->type = $type;
         return $this;

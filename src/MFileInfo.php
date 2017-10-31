@@ -136,9 +136,8 @@ class MFileInfo
      * 
      * @param string $file
      */
-    public function __construct($file)
+    public function __construct(string $file)
     {
-        MDataType::mustBeString($file);
         $this->file = $file;
     }
 
@@ -799,10 +798,8 @@ class MFileInfo
      * 
      * @param string $file
      */
-    public function setFile($file)
+    public function setFile(string $file)
     {
-        MDataType::mustBeString($file);
-
         $this->file = $file;
         $this->refresh();
     }
@@ -859,10 +856,8 @@ class MFileInfo
      * @param boolean $caching
      * @return \MToolkit\Core\MFileInfo
      */
-    public function setCaching($caching)
+    public function setCaching(bool $caching): MFileInfo
     {
-        MDataType::mustBeBoolean($caching);
-
         $this->caching = $caching;
 
         return $this;

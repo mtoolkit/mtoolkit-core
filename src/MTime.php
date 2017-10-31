@@ -48,9 +48,8 @@ class MTime
      * @param int $s
      * @param int $ms
      */
-    public function __construct($h = 0, $m = 0, $s = 0, $ms = 0)
+    public function __construct(int $h = 0, int $m = 0, int $s = 0, int $ms = 0)
     {
-        MDataType::mustBe(array(MDataType::INT, MDataType::INT, MDataType::INT, MDataType::INT));
         $this->setHMS($h, $m, $s, $ms);
     }
 
