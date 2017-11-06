@@ -23,18 +23,18 @@ namespace mtoolkit\core;
 
 /**
  * The MNetworkCookie class holds one network cookie.<br />
- * Cookies are small bits of information that stateless protocols like HTTP use 
+ * Cookies are small bits of information that stateless protocols like HTTP use
  * to maintain some persistent information across requests.<br />
- * A cookie is set by a remote server when it replies to a request and it 
+ * A cookie is set by a remote server when it replies to a request and it
  * expects the same cookie to be sent back when further requests are sent.<br />
- * MNetworkCookie holds one such cookie as received from the network. A cookie 
- * has a name and a value, but those are opaque to the application (that is, the 
- * information stored in them has no meaning to the application). A cookie has 
- * an associated path name and domain, which indicate when the cookie should be 
+ * MNetworkCookie holds one such cookie as received from the network. A cookie
+ * has a name and a value, but those are opaque to the application (that is, the
+ * information stored in them has no meaning to the application). A cookie has
+ * an associated path name and domain, which indicate when the cookie should be
  * sent again to the server.<br />
- * A cookie can also have an expiration date, indicating its validity. If the 
- * expiration date is not present, the cookie is considered a "session cookie" 
- * and should be discarded when the application exits (or when its concept of 
+ * A cookie can also have an expiration date, indicating its validity. If the
+ * expiration date is not present, the cookie is considered a "session cookie"
+ * and should be discarded when the application exits (or when its concept of
  * session is over).<br />
  */
 class MCookie
@@ -42,19 +42,18 @@ class MCookie
 
     /**
      * Returns the value saved in <i>$_COOKIE</i> with <i>$key</i>.
-     * 
+     *
      * @param string $key
      * @return mixed
      */
-    public static function get( string $key )
+    public static function get(string $key)
     {
-        if( isset( $_COOKIE[$key] ) === false )
-        {
+        if (isset($_COOKIE[$key]) === false) {
             return null;
         }
 
         $serializedValue = $_COOKIE[$key];
-        $value = unserialize( $serializedValue );
+        $value = unserialize($serializedValue);
 
         return $value;
     }
@@ -71,21 +70,21 @@ class MCookie
      * @param bool $secure
      * @param bool $httpOnly
      */
-    public static function set( string $key, string $value, int $expire = 0, string $path = "/", ?string $domain = null, bool $secure = false, bool $httpOnly = false )
+    public static function set(string $key, string $value, int $expire = 0, string $path = "/", ?string $domain = null, bool $secure = false, bool $httpOnly = false): void
     {
-        if( $domain == null )
-        {
-            setcookie( $key, serialize( $value ), $expire, $path );
-        }
-        else
-        {
-            setcookie( $key, serialize( $value ), $expire, $path, $domain, $secure, $httpOnly );
+        if ($domain == null) {
+            setcookie($key, serialize($value), $expire, $path);
+        } else {
+            setcookie($key, serialize($value), $expire, $path, $domain, $secure, $httpOnly);
         }
     }
 
-    public static function delete( $key )
+    /**
+     * @param string $key
+     */
+    public static function delete(string $key): void
     {
-        unset( $_COOKIE[$key] );
+        unset($_COOKIE[$key]);
     }
 
 }

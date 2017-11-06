@@ -20,6 +20,7 @@
  */
 
 namespace mtoolkit\core;
+
 use mtoolkit\core\mdir\Filter;
 use mtoolkit\core\mdir\SortFlag;
 
@@ -72,7 +73,7 @@ class MDir
      * @param string $fileName
      * @return string
      */
-    public function getAbsoluteFilePath(string $fileName):string
+    public function getAbsoluteFilePath(string $fileName): string
     {
         return $this->fileInfo->getAbsoluteFilePath() . MDir::getSeparator() . $fileName;
     }
@@ -84,7 +85,7 @@ class MDir
      *
      * @return string
      */
-    public function getAbsolutePath()
+    public function getAbsolutePath(): string
     {
         return $this->fileInfo->getAbsoluteFilePath();
     }
@@ -103,11 +104,10 @@ class MDir
      * @param string $dirName
      * @return boolean
      */
-    public function cd(string $dirName):bool
+    public function cd(string $dirName): bool
     {
         $fileInfo = new MFileInfo($this->fileInfo->getAbsoluteFilePath() . MDir::getSeparator() . $dirName);
-        if ($fileInfo->exists() === true)
-        {
+        if ($fileInfo->exists() === true) {
             $this->fileInfo = $fileInfo;
             return true;
         }
@@ -123,10 +123,9 @@ class MDir
      *
      * @return boolean
      */
-    public function cdUp()
+    public function cdUp(): bool
     {
-        if ($this->fileInfo->isRoot())
-        {
+        if ($this->fileInfo->isRoot()) {
             return false;
         }
 
@@ -140,18 +139,14 @@ class MDir
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
-        if ($this->count == null)
-        {
+        if ($this->count == null) {
             $this->count = 0;
 
-            if ($handle = opendir($this->fileInfo->getAbsoluteFilePath()))
-            {
-                while (($file = readdir($handle)) !== false)
-                {
-                    if (!in_array($file, array('.', '..')))
-                    {
+            if ($handle = opendir($this->fileInfo->getAbsoluteFilePath())) {
+                while (($file = readdir($handle)) !== false) {
+                    if (!in_array($file, array('.', '..'))) {
                         $this->count++;
                     }
                 }
@@ -174,7 +169,7 @@ class MDir
      *
      * @return string
      */
-    public function getDirName()
+    public function getDirName(): string
     {
         return $this->fileInfo->getFileName();
     }
@@ -199,16 +194,13 @@ class MDir
      */
     public function getEntryInfoList(MStringList $nameFilters = null, $filters = Filter::NO_FILTER, $sort = SortFlag::NO_SORT)
     {
-        if ($this->fileInfo->exists() === false || $this->fileInfo->isReadable() === false)
-        {
+        if ($this->fileInfo->exists() === false || $this->fileInfo->isReadable() === false) {
             return new MFileInfoList();
         }
 
         $files = array();
-        if ($handle = opendir($this->fileInfo->getAbsoluteFilePath()))
-        {
-            while (false !== ($entry = readdir($handle)))
-            {
+        if ($handle = opendir($this->fileInfo->getAbsoluteFilePath())) {
+            while (false !== ($entry = readdir($handle))) {
                 $files[] = $entry;
             }
             closedir($handle);
@@ -219,70 +211,56 @@ class MDir
         // Apply the name filters
         $nameFilteredFiles = array();
 
-        if($nameFilters===null)
-        {
-            $nameFilters=$this->nameFilters;
+        if ($nameFilters === null) {
+            $nameFilters = $this->nameFilters;
         }
 
-        if ($nameFilters != null && $nameFilters->size()>0)
-        {
-            foreach ($nameFilters as $nameFilter)
-            {
-                foreach ($files as $file)
-                {
-                    if (fnmatch($nameFilter, $this->fileInfo->getAbsoluteFilePath() . MDir::getSeparator() . $file))
-                    {
+        if ($nameFilters != null && $nameFilters->size() > 0) {
+            foreach ($nameFilters as $nameFilter) {
+                foreach ($files as $file) {
+                    if (fnmatch($nameFilter, $this->fileInfo->getAbsoluteFilePath() . MDir::getSeparator() . $file)) {
                         $nameFilteredFiles[] = $file;
                     }
                 }
             }
-        }
-        else
-        {
-            $nameFilteredFiles=$files;
+        } else {
+            $nameFilteredFiles = $files;
         }
 
         // Apply the filters        
         $filteredFiles = array();
 
-        foreach ($nameFilteredFiles as $nameFilteredFile)
-        {
+        foreach ($nameFilteredFiles as $nameFilteredFile) {
             $fileInfo = new MFileInfo($this->fileInfo->getAbsoluteFilePath() . MDir::getSeparator() . $nameFilteredFile);
             $toAdd = true;
 
             // Filter::DIRS
-            if ($fileInfo->isDir()===false && ( $filters & Filter::DIRS ))
-            {
+            if ($fileInfo->isDir() === false && ($filters & Filter::DIRS)) {
                 $toAdd = $toAdd && false;
             }
 
             // Filter::FILES
-            if ($fileInfo->isFile()===false && ( $filters & Filter::FILES ))
-            {
+            if ($fileInfo->isFile() === false && ($filters & Filter::FILES)) {
                 $toAdd = $toAdd && false;
             }
 
             // Filter::NO_SYM_LINKS
-            if ($fileInfo->isSymLink()===false && ( $filters & Filter::NO_SYM_LINKS ))
-            {
+            if ($fileInfo->isSymLink() === false && ($filters & Filter::NO_SYM_LINKS)) {
                 $toAdd = $toAdd && false;
             }
 
             // Filter::NO_DOT_AND_DOT_DOT
-            if (( $nameFilteredFile == "." || $nameFilteredFile == ".." ) && ( $filters & Filter::NO_DOT_AND_DOT_DOT ))
-            {
+            if (($nameFilteredFile == "." || $nameFilteredFile == "..") && ($filters & Filter::NO_DOT_AND_DOT_DOT)) {
                 $toAdd = $toAdd && false;
             }
 
             // Filter::NO_DOT
-            if (( $nameFilteredFile == "." ) && ( $filters & Filter::NO_DOT ))
-            {
+            if (($nameFilteredFile == ".") && ($filters & Filter::NO_DOT)) {
                 $toAdd = $toAdd && false;
             }
 
             // Filter::NO_DOT_DOT
-            if (( $nameFilteredFile == ".." ) && ( $filters & Filter::NO_DOT_DOT ))
-            {
+            if (($nameFilteredFile == "..") && ($filters & Filter::NO_DOT_DOT)) {
                 $toAdd = $toAdd && false;
             }
 
@@ -292,39 +270,33 @@ class MDir
 //                $toAdd = $toAdd || true;
 //            }
             // Filter::READABLE
-            if ($fileInfo->isReadable()===false && ( $filters & Filter::READABLE ))
-            {
+            if ($fileInfo->isReadable() === false && ($filters & Filter::READABLE)) {
                 $toAdd = $toAdd && false;
             }
 
             // Filter::WRITABLE
-            if ($fileInfo->isWritable()===false && ( $filters & Filter::WRITABLE ))
-            {
+            if ($fileInfo->isWritable() === false && ($filters & Filter::WRITABLE)) {
                 $toAdd = $toAdd && false;
             }
 
             // Filter::EXECUTABLE
-            if ($fileInfo->isExecutable()===false && ( $filters & Filter::EXECUTABLE ))
-            {
+            if ($fileInfo->isExecutable() === false && ($filters & Filter::EXECUTABLE)) {
                 $toAdd = $toAdd && false;
             }
 
             // Unsupported filter
             if (
-                    ( $filters & Filter::MODIFIED ) || ( $filters & Filter::HIDDEN ) || ( $filters & Filter::SYSTEM ) || ( $filters & Filter::DRIVES )
-            )
-            {
+                ($filters & Filter::MODIFIED) || ($filters & Filter::HIDDEN) || ($filters & Filter::SYSTEM) || ($filters & Filter::DRIVES)
+            ) {
                 throw new \Exception("Filter " . $filters . " not yet supported.");
             }
 
-            if ($toAdd === true)
-            {
+            if ($toAdd === true) {
                 $filteredFiles[] = $nameFilteredFile;
             }
         }
 
-        if (( $filters & Filter::ALL_DIRS))
-        {
+        if (($filters & Filter::ALL_DIRS)) {
             $dirs = array_filter(glob($this->getAbsolutePath() . MDir::getSeparator() . '*'), 'is_dir');
             $filteredFiles = array_merge($filteredFiles, $dirs);
             $filteredFiles = array_unique($filteredFiles);
@@ -332,51 +304,41 @@ class MDir
 
         $filesInfos = array();
 
-        foreach ($filteredFiles as $filteredFile)
-        {
-            $filesInfos[] = new MFileInfo($this->getAbsolutePath() . MDir::getSeparator() .$filteredFile);
+        foreach ($filteredFiles as $filteredFile) {
+            $filesInfos[] = new MFileInfo($this->getAbsolutePath() . MDir::getSeparator() . $filteredFile);
         }
 
         // Sort
-        if ($sort != SortFlag::NO_SORT)
-        {
-            if (( $sort & SortFlag::NAME))
-            {
+        if ($sort != SortFlag::NO_SORT) {
+            if (($sort & SortFlag::NAME)) {
                 usort($filesInfos, array($this, "sortByName"));
             }
 
-            if (( $sort & SortFlag::TIME))
-            {
+            if (($sort & SortFlag::TIME)) {
                 usort($filesInfos, array($this, "sortByTime"));
             }
 
-            if (( $sort & SortFlag::SIZE))
-            {
+            if (($sort & SortFlag::SIZE)) {
                 usort($filesInfos, array($this, "sortBySize"));
             }
 
-            if (( $sort & SortFlag::TYPE))
-            {
+            if (($sort & SortFlag::TYPE)) {
                 usort($filesInfos, array($this, "sortByType"));
             }
 
-            if (( $sort & SortFlag::DIRS_FIRST))
-            {
+            if (($sort & SortFlag::DIRS_FIRST)) {
                 usort($filesInfos, array($this, "sortByDirsFirst"));
             }
 
-            if (( $sort & SortFlag::DIRS_LAST))
-            {
+            if (($sort & SortFlag::DIRS_LAST)) {
                 usort($filesInfos, array($this, "sortByDirsLast"));
             }
 
-            if (( $sort & SortFlag::REVERSED))
-            {
+            if (($sort & SortFlag::REVERSED)) {
                 usort($filesInfos, array($this, "sortReversed"));
             }
 
-            if (( $sort & SortFlag::IGNORE_CASE))
-            {
+            if (($sort & SortFlag::IGNORE_CASE)) {
                 usort($filesInfos, array($this, "sortIgnoreCase"));
             }
         }
@@ -387,56 +349,53 @@ class MDir
         return $toReturn;
     }
 
-    private function sortByName(MFileInfo $a, MFileInfo $b)
+    private function sortByName(MFileInfo $a, MFileInfo $b): int
     {
         return strcmp($a->getFileName(), $b->getFileName());
     }
 
-    private function sortByTime(MFileInfo $a, MFileInfo $b)
+    private function sortByTime(MFileInfo $a, MFileInfo $b): int
     {
         return strcmp($a->getLastModified()->format("YmdHis"), $b->getLastModified()->format("YmdHis"));
     }
 
-    private function sortBySize(MFileInfo $a, MFileInfo $b)
+    private function sortBySize(MFileInfo $a, MFileInfo $b): int
     {
-        if ($a->getSize() == $b->getSize())
-        {
+        if ($a->getSize() == $b->getSize()) {
             return 0;
         }
         return ($a->getSize() < $b->getSize()) ? -1 : 1;
     }
 
-    private function sortByType(MFileInfo $a, MFileInfo $b)
+    private function sortByType(MFileInfo $a, MFileInfo $b): int
     {
         return strcmp($a->getSuffix(), $b->getSuffix());
     }
 
-    private function sortByDirsFirst(MFileInfo $a, MFileInfo $b)
+    private function sortByDirsFirst(MFileInfo $a, MFileInfo $b): int
     {
-        if ($a->isDir() == $b->isDir())
-        {
+        if ($a->isDir() == $b->isDir()) {
             return $this->sortByName($a, $b);
         }
 
         return strcmp(($a->isDir() ? "a" : "b"), ($b->isDir() ? "a" : "b"));
     }
 
-    private function sortByDirsLast(MFileInfo $a, MFileInfo $b)
+    private function sortByDirsLast(MFileInfo $a, MFileInfo $b): int
     {
-        if ($b->isDir() == $a->isDir())
-        {
+        if ($b->isDir() == $a->isDir()) {
             return $this->sortByName($a, $b);
         }
 
         return strcmp(($b->isDir() ? "a" : "b"), ($a->isDir() ? "a" : "b"));
     }
 
-    private function sortReversed(MFileInfo $a, MFileInfo $b)
+    private function sortReversed(MFileInfo $a, MFileInfo $b): int
     {
         return strcmp($b->getFileName(), $a->getFileName());
     }
 
-    private function sortIgnoreCase(MFileInfo $a, MFileInfo $b)
+    private function sortIgnoreCase(MFileInfo $a, MFileInfo $b): int
     {
         return strcmp(strtolower($a->getFileName()), strtolower($b->getFileName()));
     }
@@ -464,9 +423,9 @@ class MDir
 
         $toReturn = new MStringList();
 
-        foreach ($fileInfoList as /* @var $fileInfo MFileInfo */ $fileInfo)
-        {
-            $toAppend=new MString($fileInfo->getAbsoluteFilePath());
+        foreach ($fileInfoList as /* @var $fileInfo MFileInfo */
+                 $fileInfo) {
+            $toAppend = new MString($fileInfo->getAbsoluteFilePath());
             $toReturn->append($toAppend);
         }
 
@@ -480,10 +439,9 @@ class MDir
      * @param string|null $name
      * @return boolean
      */
-    public function exists(?string $name = null):bool
+    public function exists(?string $name = null): bool
     {
-        if ($name != null)
-        {
+        if ($name != null) {
             $fileInfo = new MFileInfo($name);
             return $fileInfo->exists();
         }
@@ -498,7 +456,7 @@ class MDir
      *
      * @return boolean
      */
-    public function isAbsolute()
+    public function isAbsolute(): bool
     {
         return $this->fileInfo->isAbsolute();
     }
@@ -509,7 +467,7 @@ class MDir
      *
      * @return boolean
      */
-    public function isReadable()
+    public function isReadable(): bool
     {
         return $this->fileInfo->isReadable();
     }
@@ -520,7 +478,7 @@ class MDir
      *
      * @return boolean
      */
-    public function isRelative()
+    public function isRelative(): bool
     {
         return $this->fileInfo->isRelative();
     }
@@ -530,7 +488,7 @@ class MDir
      *
      * @return boolean
      */
-    public function isRoot()
+    public function isRoot(): bool
     {
         return $this->fileInfo->isRoot();
     }
@@ -542,7 +500,7 @@ class MDir
      *
      * @return boolean
      */
-    public function makeAbsolute()
+    public function makeAbsolute(): bool
     {
         return $this->fileInfo->makeAbsolute();
     }
@@ -557,7 +515,7 @@ class MDir
      * @param string $dirName
      * @return boolean
      */
-    public function mkdir(string $dirName):bool
+    public function mkdir(string $dirName): bool
     {
         return mkdir($this->fileInfo->getAbsoluteFilePath() . MDir::getSeparator() . $dirName);
     }
@@ -574,16 +532,14 @@ class MDir
      * @param string $path
      * @return boolean
      */
-    public function mkpath(string $path):bool
+    public function mkpath(string $path): bool
     {
         $dirs = explode(MDir::getSeparator(), $path);
         $count = count($dirs);
         $path = '.';
-        for ($i = 0; $i < $count; ++$i)
-        {
+        for ($i = 0; $i < $count; ++$i) {
             $path .= MDir::getSeparator() . $dirs[$i];
-            if (!is_dir($path) && !mkdir($path))
-            {
+            if (!is_dir($path) && !mkdir($path)) {
                 return false;
             }
         }
@@ -598,7 +554,7 @@ class MDir
      *
      * @return boolean
      */
-    public function getPath()
+    public function getPath(): bool
     {
         return $this->fileInfo->getPath();
     }
@@ -606,7 +562,7 @@ class MDir
     /**
      * Refreshes the directory information.
      */
-    public function refresh()
+    public function refresh(): void
     {
         $this->fileInfo->refresh();
         $this->count = null;
@@ -622,7 +578,7 @@ class MDir
      * @param string $fileName
      * @return boolean
      */
-    public function remove($fileName)
+    public function remove($fileName): bool
     {
         return unlink($this->fileInfo->getAbsoluteFilePath() . MDir::getSeparator() . $fileName);
     }
@@ -648,10 +604,9 @@ class MDir
      *
      * @return boolean
      */
-    public function removeRecursively()
+    public function removeRecursively(): bool
     {
-        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->fileInfo->getAbsoluteFilePath(), \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST) as $path)
-        {
+        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->fileInfo->getAbsoluteFilePath(), \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST) as $path) {
             $path->isDir() ? rmdir($path->getPathname()) : unlink($path->getPathname());
         }
         rmdir($this->fileInfo->getAbsoluteFilePath());
@@ -672,7 +627,7 @@ class MDir
      * @param string $newName
      * @return boolean
      */
-    public function rename(string $oldName, string $newName):bool
+    public function rename(string $oldName, string $newName): bool
     {
         return rename($this->fileInfo->getAbsoluteFilePath() . MDir::getSeparator() . $oldName, $this->fileInfo->getAbsoluteFilePath() . MDir::getSeparator() . $newName);
     }
@@ -687,9 +642,9 @@ class MDir
      * @param string $dirName
      * @return boolean
      */
-    public function rmdir(string $dirName):bool
+    public function rmdir(string $dirName): bool
     {
-        return unlink($this->fileInfo->getAbsoluteFilePath().MDir::getSeparator().$dirName);
+        return unlink($this->fileInfo->getAbsoluteFilePath() . MDir::getSeparator() . $dirName);
     }
 
 //    bool	rmpath(const QString & dirPath) const
@@ -709,7 +664,7 @@ class MDir
      *
      * @param string $path
      */
-    public function setPath(string $path)
+    public function setPath(string $path): void
     {
         $this->fileInfo = new MFileInfo($path);
         $this->nameFilters = new MStringList();
@@ -720,13 +675,13 @@ class MDir
      *
      * @param \MToolkit\Core\MDir $other
      */
-    public function swap(MDir $other)
+    public function swap(MDir $other): void
     {
-        $this->count=$other->count;
-        $this->fileInfo=$other->fileInfo;
-        $this->filters=$other->filters;
-        $this->nameFilters=$other->nameFilters;
-        $this->sorting=$other->sorting;
+        $this->count = $other->count;
+        $this->fileInfo = $other->fileInfo;
+        $this->filters = $other->filters;
+        $this->nameFilters = $other->nameFilters;
+        $this->sorting = $other->sorting;
     }
 
 // STATIC 
@@ -742,7 +697,7 @@ class MDir
      *
      * @return \MToolkit\Core\MDir
      */
-    public static function getHome()
+    public static function getHome(): MDir
     {
         return new MDir(MDir::getHomePath());
     }
@@ -752,7 +707,7 @@ class MDir
      *
      * @return string
      */
-    public static function getHomePath()
+    public static function getHomePath(): string
     {
         return getenv("HOME");
     }
@@ -763,9 +718,9 @@ class MDir
      * @param string $path
      * @return boolean
      */
-    public function isAbsolutePath(string $path):bool
+    public function isAbsolutePath(string $path): bool
     {
-        $fileInfo=new MFileInfo($path);
+        $fileInfo = new MFileInfo($path);
         return $fileInfo->isAbsolute();
     }
 
@@ -776,10 +731,10 @@ class MDir
      * @param string $path
      * @return boolean
      */
-    public function isRelativePath(string $path):bool
+    public function isRelativePath(string $path): bool
     {
-        $fileInfo=new MFileInfo($path);
-        return $fileInfo->isAbsolute()===false;
+        $fileInfo = new MFileInfo($path);
+        return $fileInfo->isAbsolute() === false;
     }
 
 //    bool	match(const QString & filter, const QString & fileName)
@@ -794,7 +749,7 @@ class MDir
      *
      * @return string
      */
-    public static function getSeparator()
+    public static function getSeparator(): string
     {
         return DIRECTORY_SEPARATOR;
     }
@@ -807,7 +762,7 @@ class MDir
      *
      * @return \MToolkit\Core\MDir
      */
-    public static function getTemp()
+    public static function getTemp(): MDir
     {
         return new MDir(MDir::getTempPath());
     }
@@ -817,7 +772,7 @@ class MDir
      *
      * @return boolean
      */
-    public static function getTempPath()
+    public static function getTempPath(): bool
     {
         return sys_get_temp_dir();
     }
@@ -827,7 +782,7 @@ class MDir
      *
      * @return MStringList
      */
-    public function getNameFilters()
+    public function getNameFilters(): MStringList
     {
         return $this->nameFilters;
     }
@@ -839,7 +794,7 @@ class MDir
      * @param \MToolkit\Core\MStringList $nameFilters
      * @return \MToolkit\Core\MDir
      */
-    public function setNameFilters(MStringList $nameFilters)
+    public function setNameFilters(MStringList $nameFilters): MDir
     {
         $this->nameFilters = $nameFilters;
         return $this;
@@ -850,7 +805,7 @@ class MDir
      *
      * @return Filter|int
      */
-    public function getFilters()
+    public function getFilters(): int
     {
         return $this->filters;
     }
@@ -863,7 +818,7 @@ class MDir
      * @param Filter|int $filters
      * @return \MToolkit\Core\MDir
      */
-    public function setFilters($filters)
+    public function setFilters($filters): MDir
     {
         $this->filters = $filters;
         return $this;
@@ -874,7 +829,7 @@ class MDir
      *
      * @return SortFlag|int
      */
-    public function getSorting()
+    public function getSorting(): int
     {
         return $this->sorting;
     }

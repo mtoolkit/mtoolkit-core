@@ -1,4 +1,5 @@
 <?php
+
 namespace mtoolkit\core;
 
 /*
@@ -26,49 +27,48 @@ use mtoolkit\core\exception\MReadOnlyObjectException;
  */
 class MGet extends MMap
 {
-    public function __construct(  )
-    {   
-        $array=filter_input_array(INPUT_GET);
-        
-        if( is_array( $array )===false )
-        {
-            $array=array();
+    public function __construct()
+    {
+        $array = filter_input_array(INPUT_GET);
+
+        if (is_array($array) === false) {
+            $array = array();
         }
-        
+
         parent::__construct($array);
     }
-    
+
     /**
      * Throws an exception, because the <i>$this</i> object is read-only.
-     * 
+     *
      * @throws MReadOnlyObjectException
      */
     public function clear()
     {
-        throw new MReadOnlyObjectException('MGet','clear()');
+        throw new MReadOnlyObjectException('MGet', 'clear()');
     }
 
     /**
      * Throws an exception, because the <i>$this</i> object is read-only.
-     * 
+     *
      * @param string $pos
      * @throws MReadOnlyObjectException
      */
-    public function erase( string $pos )
+    public function erase(string $pos)
     {
-        throw new MReadOnlyObjectException('MGet','erase( $pos )');
+        throw new MReadOnlyObjectException('MGet', 'erase( $pos )');
     }
 
     /**
      * Throws an exception, because the <i>$this</i> object is read-only.
-     * 
+     *
      * @param string $key
      * @param mixed $value
      * @throws MReadOnlyObjectException
      */
-    public function insert( string $key, $value )
+    public function insert(string $key, $value)
     {
-        throw new MReadOnlyObjectException('MGet','insert( $key, $value )');
+        throw new MReadOnlyObjectException('MGet', 'insert( $key, $value )');
     }
 
     /**
@@ -78,43 +78,43 @@ class MGet extends MMap
      * @throws MReadOnlyObjectException
      * @return int
      */
-    public function remove( string $key )
+    public function remove(string $key): int
     {
-        throw new MReadOnlyObjectException('MGet','remove( $key )');
+        throw new MReadOnlyObjectException('MGet', 'remove( $key )');
     }
 
     /**
      * Throws an exception, because the <i>$this</i> object is read-only.
-     * 
+     *
      * @param int|string|null $offset
      * @param mixed $value
      * @throws MReadOnlyObjectException
      */
-    public function offsetSet( $offset, $value )
+    public function offsetSet($offset, $value)
     {
-        throw new MReadOnlyObjectException('MGet','offsetSet( $offset, $value )');
+        throw new MReadOnlyObjectException('MGet', 'offsetSet( $offset, $value )');
     }
 
     /**
      * Throws an exception, because the <i>$this</i> object is read-only.
-     * 
+     *
      * @param int|string $offset
      * @throws MReadOnlyObjectException
      */
-    public function offsetUnset( $offset )
+    public function offsetUnset($offset)
     {
         throw new MReadOnlyObjectException('MGet', 'offsetUnset( $offset )');
     }
-    
+
     /**
      * Returns the value for a specific <i>$key</i>.<br />
      * If the <i>$key</i> is not set a <i>$defaultValue</i> will be returned.
-     * 
+     *
      * @param string $key
      * @param mixed $defaultValue
      * @return mixed
      */
-    public function getValue( string $key, $defaultValue = null )
+    public function getValue(string $key, $defaultValue = null)
     {
         return parent::getValue($key, $defaultValue);
     }

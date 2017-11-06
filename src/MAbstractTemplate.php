@@ -31,36 +31,34 @@ abstract class MAbstractTemplate
     /**
      * @param int|null|string $type
      */
-    public function __construct( $type=null )
+    public function __construct($type = null)
     {
-        $this->type=$type;
+        $this->type = $type;
     }
 
     /**
-     * Returns true if the <i>$object</i> has the right data type assigned in 
+     * Returns true if the <i>$object</i> has the right data type assigned in
      * the construct, otherwise false.
-     * 
+     *
      * @param mixed $object
      * @return boolean
      */
-    public function isValidType( $object ):bool
+    public function isValidType($object): bool
     {
-        if ( $this->type==null || $object==null )
-        {
+        if ($this->type == null || $object == null) {
             return true;
         }
 
-        if ( is_object($object) && get_class( $object ) == $this->type )
-        {
+        if (is_object($object) && get_class($object) == $this->type) {
             return true;
         }
-        
-        return ( MDataType::getType( $object )==$this->type );
+
+        return (MDataType::getType($object) == $this->type);
     }
 
     /**
      * Returns MDataType constants, or the name of the class, or null.
-     * 
+     *
      * @return null|int|string
      */
     public function getType()
@@ -69,11 +67,11 @@ abstract class MAbstractTemplate
     }
 
     /**
-     * 
+     *
      * @param null|int|string $type MDataType constants, or the name of the class, or null.
      * @return \MToolkit\Core\MAbstractTemplate
      */
-    public function setType( $type ):MAbstractTemplate
+    public function setType($type): MAbstractTemplate
     {
         $this->type = $type;
         return $this;
