@@ -21,7 +21,7 @@ namespace mtoolkit\core;
  * @author  Michele Pagnin
  */
 
-require_once __DIR__.'/MCore.php';
+require_once __DIR__ . '/MCore.php';
 
 /**
  * The MCoreApplication class provides an event loop for console MToolkit
@@ -32,10 +32,10 @@ require_once __DIR__.'/MCore.php';
  */
 class MCoreApplication
 {
-    const APPLICATION_NAME='MToolkit\Core\MCoreApplication\ApplicationName';
-    const APPLICATION_VERSION='MToolkit\Core\MCoreApplication\ApplicationVersion';
-    const ORGANIZATION_DOMAIN='MToolkit\Core\MCoreApplication\OrganizationDomain';
-    const ORGANIZATION_NAME='MToolkit\Core\MCoreApplication\OrganizationName';
+    const APPLICATION_NAME = 'MToolkit\Core\MCoreApplication\ApplicationName';
+    const APPLICATION_VERSION = 'MToolkit\Core\MCoreApplication\ApplicationVersion';
+    const ORGANIZATION_DOMAIN = 'MToolkit\Core\MCoreApplication\OrganizationDomain';
+    const ORGANIZATION_NAME = 'MToolkit\Core\MCoreApplication\OrganizationName';
     const APPLICATION_DIR_PATH = "MToolkit\Core\MCoreApplication\ApplicationDirPath";
     const DEBUG = "MToolkit\Core\MObject\IsDebug";
 
@@ -44,9 +44,9 @@ class MCoreApplication
      *
      * @param bool $bool
      */
-    public static function setIsDebug( bool $bool )
+    public static function setIsDebug(bool $bool): void
     {
-        MSession::set( MCoreApplication::DEBUG, $bool );
+        MSession::set(MCoreApplication::DEBUG, $bool);
     }
 
     /**
@@ -55,12 +55,11 @@ class MCoreApplication
      *
      * @return bool
      */
-    public static function isDebug():bool
+    public static function isDebug(): bool
     {
-        $debug = MSession::get( MCoreApplication::DEBUG );
+        $debug = MSession::get(MCoreApplication::DEBUG);
 
-        if ($debug === null)
-        {
+        if ($debug === null) {
             return false;
         }
 
@@ -83,13 +82,13 @@ class MCoreApplication
      * @param string $path The root folder of the source.
      * @param string $namespace Optional.
      */
-    public static function setApplicationDirPath( string $path, string $namespace="" )
+    public static function setApplicationDirPath(string $path, string $namespace = ""): void
     {
-        $applicationDir=new MApplicationDir();
+        $applicationDir = new MApplicationDir();
         $applicationDir->setPath($path);
         $applicationDir->setNamespace($namespace);
 
-        MSession::set( MCoreApplication::APPLICATION_DIR_PATH, $applicationDir );
+        MSession::set(MCoreApplication::APPLICATION_DIR_PATH, $applicationDir);
     }
 
     /**
@@ -99,7 +98,7 @@ class MCoreApplication
      */
     public static function getApplicationDirPath():?MApplicationDir
     {
-        $rootPath = MSession::get( MCoreApplication::APPLICATION_DIR_PATH );
+        $rootPath = MSession::get(MCoreApplication::APPLICATION_DIR_PATH);
         return $rootPath;
     }
 
@@ -135,7 +134,7 @@ class MCoreApplication
      *
      * @return string
      */
-    public static function getOrganizationDomain():string
+    public static function getOrganizationDomain(): string
     {
         return MSession::get(MCoreApplication::ORGANIZATION_DOMAIN);
     }
@@ -149,7 +148,7 @@ class MCoreApplication
      *
      * @return string
      */
-    public static function getOrganizationName():string
+    public static function getOrganizationName(): string
     {
         return MSession::get(MCoreApplication::ORGANIZATION_NAME);
     }
@@ -162,7 +161,7 @@ class MCoreApplication
      *
      * @param string $application
      */
-    public static function setApplicationName ( string $application )
+    public static function setApplicationName(string $application): void
     {
         MSession::set(MCoreApplication::APPLICATION_NAME, $application);
     }
@@ -172,7 +171,7 @@ class MCoreApplication
      *
      * @param string $version
      */
-    public static function setApplicationVersion ( string $version )
+    public static function setApplicationVersion(string $version): void
     {
         MSession::set(MCoreApplication::APPLICATION_VERSION, $version);
     }
@@ -186,7 +185,7 @@ class MCoreApplication
      *
      * @param string $orgDomain
      */
-    public static function setOrganizationDomain ( string $orgDomain )
+    public static function setOrganizationDomain(string $orgDomain): void
     {
         MSession::set(MCoreApplication::ORGANIZATION_DOMAIN, $orgDomain);
     }
@@ -200,7 +199,7 @@ class MCoreApplication
      *
      * @param string $orgName
      */
-    public static function setOrganizationName ( string $orgName )
+    public static function setOrganizationName(string $orgName): void
     {
         MSession::set(MCoreApplication::ORGANIZATION_NAME, $orgName);
     }

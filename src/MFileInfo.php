@@ -20,27 +20,28 @@
  */
 
 namespace mtoolkit\core;
+
 use mtoolkit\core\device\FilePermission;
 
 /**
  * The MFileInfo class provides system-independent file information.
- * 
- * MFileInfo provides information about a file's name and position (path) in the 
- * file system, its access rights and whether it is a directory or symbolic 
+ *
+ * MFileInfo provides information about a file's name and position (path) in the
+ * file system, its access rights and whether it is a directory or symbolic
  * link, etc. The file's size and last modified/read times are also available. <br />
  * <br />
- * A MFileInfo can point to a file with either a relative or an absolute file 
- * path. Absolute file paths begin with the directory separator "<i>/</i>" (or with a 
- * drive specification on Windows). Relative file names begin with a directory 
- * name or a file name and specify a path relative to the current working 
- * directory. An example of an absolute path is the string "<i>/tmp/quartz</i>". A 
- * relative path might look like "<i>src/fatlib</i>". You can use the function 
- * {@link isRelative()} to check whether a MFileInfo is using a relative or an absolute 
- * file path. You can call the function makeAbsolute() to convert a relative 
+ * A MFileInfo can point to a file with either a relative or an absolute file
+ * path. Absolute file paths begin with the directory separator "<i>/</i>" (or with a
+ * drive specification on Windows). Relative file names begin with a directory
+ * name or a file name and specify a path relative to the current working
+ * directory. An example of an absolute path is the string "<i>/tmp/quartz</i>". A
+ * relative path might look like "<i>src/fatlib</i>". You can use the function
+ * {@link isRelative()} to check whether a MFileInfo is using a relative or an absolute
+ * file path. You can call the function makeAbsolute() to convert a relative
  * MFileInfo's path to an absolute path.<br />
  * <br />
- * The file that the MFileInfo works on is set in the constructor or later with 
- * {@link setFile()}. Use {@link exists()} to see if the file exists and 
+ * The file that the MFileInfo works on is set in the constructor or later with
+ * {@link setFile()}. Use {@link exists()} to see if the file exists and
  * {@link size()} to get its size.
  */
 class MFileInfo
@@ -131,9 +132,9 @@ class MFileInfo
     private $group = null;
 
     /**
-     * Constructs a new MFileInfo that gives information about the given file. 
+     * Constructs a new MFileInfo that gives information about the given file.
      * The file can also include an absolute or relative path.
-     * 
+     *
      * @param string $file
      */
     public function __construct(string $file)
@@ -146,20 +147,19 @@ class MFileInfo
     /**
      * Returns an absolute path including the file name.<br />
      * <br />
-     * The absolute path name consists of the full path and the file name. On 
-     * Unix this will always begin with the root, '/', directory. On Windows 
-     * this will always begin 'D:/' where D is a drive letter, except for 
-     * network shares that are not mapped to a drive letter, in which case the 
+     * The absolute path name consists of the full path and the file name. On
+     * Unix this will always begin with the root, '/', directory. On Windows
+     * this will always begin 'D:/' where D is a drive letter, except for
+     * network shares that are not mapped to a drive letter, in which case the
      * path will begin '//sharename/'. MFileInfo will uppercase drive letters.<br />
      *  <br />
      * Note that MDir does not do this. The code snippet below shows this.
-     * 
+     *
      * @return string
      */
-    public function getAbsoluteFilePath()
+    public function getAbsoluteFilePath(): string
     {
-        if ($this->isAbsolute() === true)
-        {
+        if ($this->isAbsolute() === true) {
             return $this->file;
         }
 
@@ -168,10 +168,10 @@ class MFileInfo
 
     /**
      * Returns a file's path absolute path. This doesn't include the file name.
-     * 
+     *
      * @return string
      */
-    public function getAbsolutePath()
+    public function getAbsolutePath(): string
     {
         return dirname($this->getAbsoluteFilePath());
     }
@@ -186,25 +186,23 @@ class MFileInfo
     /**
      * Returns the date and time when the file was created.<br />
      * <br />
-     * On most Unix systems, this function returns the time of the last status 
-     * change. A status change occurs when the file is created, but it also 
-     * occurs whenever the user writes or sets inode information (for example, 
+     * On most Unix systems, this function returns the time of the last status
+     * change. A status change occurs when the file is created, but it also
+     * occurs whenever the user writes or sets inode information (for example,
      * changing the file permissions).<br />
      * <br />
-     * If neither creation time nor "last status change" time are not available, 
+     * If neither creation time nor "last status change" time are not available,
      * returns the same as lastModified().
-     * 
+     *
      * @return \DateTime
      */
-    public function created()
+    public function created(): \DateTime
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return \DateTime::createFromFormat("F d Y H:i:s.", date("F d Y H:i:s.", filectime($this->getAbsoluteFilePath())));
         }
 
-        if ($this->created == null)
-        {
+        if ($this->created == null) {
             $this->created = \DateTime::createFromFormat("F d Y H:i:s.", date("F d Y H:i:s.", filectime($this->getAbsoluteFilePath())));
         }
 
@@ -217,15 +215,13 @@ class MFileInfo
      * Returns true if the file exists; otherwise returns false.
      * @return boolean
      */
-    public function exists()
+    public function exists(): bool
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return file_exists($this->getAbsoluteFilePath());
         }
 
-        if ($this->exists == null)
-        {
+        if ($this->exists == null) {
             $this->exists = file_exists($this->getAbsoluteFilePath());
         }
 
@@ -234,38 +230,36 @@ class MFileInfo
 
     /**
      * Returns the name of the file, excluding the path.
-     * 
+     *
      * @return string
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return basename($this->getAbsoluteFilePath());
     }
 
     /**
      * Returns the file name, including the path (which may be absolute or relative).
-     * 
+     *
      * @return string
      */
-    public function getFilePath()
+    public function getFilePath(): string
     {
         return $this->file;
     }
 
     /**
-     * Returns the group of the file. On Windows, on systems where files do not 
+     * Returns the group of the file. On Windows, on systems where files do not
      * have groups, or if an error occurs, an empty string is returned.
-     * 
+     *
      * @return string
      */
-    public function getGroup()
+    public function getGroup(): string
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             $groupId = $this->getGroupId();
 
-            if ($groupId == -2)
-            {
+            if ($groupId == -2) {
                 return "";
             }
 
@@ -274,12 +268,10 @@ class MFileInfo
             return $group["name"];
         }
 
-        if ($this->group == null)
-        {
+        if ($this->group == null) {
             $groupId = $this->getOwnerId();
 
-            if ($groupId == -2)
-            {
+            if ($groupId == -2) {
                 $this->group = "";
             }
 
@@ -294,29 +286,25 @@ class MFileInfo
     /**
      * Returns the id of the group the file belongs to.<br />
      * <br />
-     * On Windows and on systems where files do not have groups this function 
+     * On Windows and on systems where files do not have groups this function
      * always returns (uint) -2.
-     * 
+     *
      * @return int
      */
-    public function getGroupId()
+    public function getGroupId(): int
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             $groupId = filegroup($this->getAbsoluteFilePath());
-            if ($groupId === false)
-            {
+            if ($groupId === false) {
                 return -2;
             }
 
             return $groupId;
         }
 
-        if ($this->groupId == null)
-        {
+        if ($this->groupId == null) {
             $groupId = filegroup($this->getAbsoluteFilePath());
-            if ($groupId === false)
-            {
+            if ($groupId === false) {
                 $this->groupId = -2;
             }
 
@@ -327,48 +315,44 @@ class MFileInfo
     }
 
     /**
-     * Returns true if the file path name is absolute, otherwise returns false 
+     * Returns true if the file path name is absolute, otherwise returns false
      * if the path is relative.
-     * 
+     *
      * @return boolean
      */
-    public function isAbsolute()
+    public function isAbsolute(): bool
     {
-        return ( preg_match("/^(?:\/|\\\|\w\:\\\).$/", $this->file) ==1 );
+        return (preg_match("/^(?:\/|\\\|\w\:\\\).$/", $this->file) == 1);
     }
 
 //    bool	isBundle() const
 
     /**
-     * Returns true if this object points to a directory or to a symbolic link 
+     * Returns true if this object points to a directory or to a symbolic link
      * to a directory; otherwise returns false.
-     * 
+     *
      * @return boolean
      */
-    public function isDir()
+    public function isDir(): bool
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return is_dir($this->getAbsoluteFilePath());
         }
 
-        if ($this->isDir == null)
-        {
+        if ($this->isDir == null) {
             $this->isDir = is_dir($this->getAbsoluteFilePath());
         }
 
         return $this->isDir;
     }
 
-    public function isExecutable()
+    public function isExecutable(): bool
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return is_executable($this->getAbsoluteFilePath());
         }
 
-        if ($this->isExecutable == null)
-        {
+        if ($this->isExecutable == null) {
             $this->isExecutable = is_executable($this->getAbsoluteFilePath());
         }
 
@@ -376,21 +360,19 @@ class MFileInfo
     }
 
     /**
-     * Returns true if this object points to a file or to a symbolic link to a 
-     * file. Returns false if the object points to something which isn't a file, 
+     * Returns true if this object points to a file or to a symbolic link to a
+     * file. Returns false if the object points to something which isn't a file,
      * such as a directory.
-     * 
+     *
      * @return boolean
      */
-    public function isFile()
+    public function isFile(): bool
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return is_file($this->getAbsoluteFilePath());
         }
 
-        if ($this->isFile == null)
-        {
+        if ($this->isFile == null) {
             $this->isFile = is_file($this->getAbsoluteFilePath());
         }
 
@@ -402,18 +384,16 @@ class MFileInfo
 
     /**
      * Returns true if the user can read the file; otherwise returns false.
-     * 
+     *
      * @return boolean
      */
-    public function isReadable()
+    public function isReadable(): bool
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return is_readable($this->getAbsoluteFilePath());
         }
 
-        if ($this->isReadable == null)
-        {
+        if ($this->isReadable == null) {
             $this->isReadable = is_readable($this->getAbsoluteFilePath());
         }
 
@@ -421,47 +401,45 @@ class MFileInfo
     }
 
     /**
-     * Returns true if the file path name is relative, otherwise returns false 
-     * if the path is absolute (e.g. under Unix a path is absolute if it begins 
+     * Returns true if the file path name is relative, otherwise returns false
+     * if the path is absolute (e.g. under Unix a path is absolute if it begins
      * with a "/").
-     * 
+     *
      * @return boolean
      */
-    public function isRelative()
+    public function isRelative(): bool
     {
         return (!$this->isAbsolute());
     }
 
     /**
-     * Returns true if the object points to a directory or to a symbolic link to 
-     * a directory, and that directory is the root directory; otherwise returns 
+     * Returns true if the object points to a directory or to a symbolic link to
+     * a directory, and that directory is the root directory; otherwise returns
      * false.
-     * 
+     *
      * @return boolean
      */
-    public function isRoot()
+    public function isRoot(): bool
     {
-        return ( dirname($this->getAbsoluteFilePath()) == $this->getAbsoluteFilePath() );
+        return (dirname($this->getAbsoluteFilePath()) == $this->getAbsoluteFilePath());
     }
 
     /**
-     * Returns true if this object points to a symbolic link (or to a shortcut 
+     * Returns true if this object points to a symbolic link (or to a shortcut
      * on Windows); otherwise returns false.<br />
      * <br />
-     * On Unix (including Mac OS X), opening a symlink effectively opens the 
+     * On Unix (including Mac OS X), opening a symlink effectively opens the
      * link's target. On Windows, it opens the .lnk file itself.
-     * 
+     *
      * @return boolean
      */
-    public function isSymLink()
+    public function isSymLink(): bool
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return is_link($this->getAbsoluteFilePath());
         }
 
-        if ($this->isSymLink == null)
-        {
+        if ($this->isSymLink == null) {
             $this->isSymLink = is_link($this->getAbsoluteFilePath());
         }
 
@@ -470,18 +448,16 @@ class MFileInfo
 
     /**
      * Returns true if the user can write to the file; otherwise returns false.
-     * 
+     *
      * @return boolean
      */
-    public function isWritable()
+    public function isWritable(): bool
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return is_writable($this->getAbsoluteFilePath());
         }
 
-        if ($this->isWritable == null)
-        {
+        if ($this->isWritable == null) {
             $this->isWritable = is_writable($this->getAbsoluteFilePath());
         }
 
@@ -490,18 +466,16 @@ class MFileInfo
 
     /**
      * Returns the date and time when the file was last modified.
-     * 
+     *
      * @return \DateTime
      */
-    public function getLastModified()
+    public function getLastModified(): \DateTime
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return \DateTime::createFromFormat("F d Y H:i:s.", date("F d Y H:i:s.", filemtime($this->getAbsoluteFilePath())));
         }
 
-        if ($this->lastModified == null)
-        {
+        if ($this->lastModified == null) {
             $this->lastModified = \DateTime::createFromFormat("F d Y H:i:s.", date("F d Y H:i:s.", filemtime($this->getAbsoluteFilePath())));
         }
 
@@ -511,20 +485,18 @@ class MFileInfo
     /**
      * Returns the date and time when the file was last read (accessed).<br />
      * <br />
-     * On platforms where this information is not available, returns the same as 
+     * On platforms where this information is not available, returns the same as
      * {@link lastModified()}.
-     * 
+     *
      * @return \DateTime
      */
-    public function getLastRead()
+    public function getLastRead(): \DateTime
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return \DateTime::createFromFormat("F d Y H:i:s.", date("F d Y H:i:s.", fileatime($this->getAbsoluteFilePath())));
         }
 
-        if ($this->lastRead == null)
-        {
+        if ($this->lastRead == null) {
             $this->lastRead = \DateTime::createFromFormat("F d Y H:i:s.", date("F d Y H:i:s.", fileatime($this->getAbsoluteFilePath())));
         }
 
@@ -532,32 +504,30 @@ class MFileInfo
     }
 
     /**
-     * Converts the file's path to an absolute path if it is not already in that 
-     * form. Returns true to indicate that the path was converted; otherwise 
+     * Converts the file's path to an absolute path if it is not already in that
+     * form. Returns true to indicate that the path was converted; otherwise
      * returns false to indicate that the path was already absolute.
-     * 
+     *
      * @return boolean
      */
-    public function makeAbsolute()
+    public function makeAbsolute(): bool
     {
         $this->file = $this->getAbsoluteFilePath();
         return true;
     }
 
     /**
-     * Returns the owner of the file. On systems where files do not have 
+     * Returns the owner of the file. On systems where files do not have
      * owners, or if an error occurs, an empty string is returned.
-     * 
+     *
      * @return string
      */
-    public function getOwner()
+    public function getOwner(): string
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             $ownerId = $this->getOwnerId();
 
-            if ($ownerId == -2)
-            {
+            if ($ownerId == -2) {
                 return "";
             }
 
@@ -566,12 +536,10 @@ class MFileInfo
             return $owner["name"];
         }
 
-        if ($this->owner == null)
-        {
+        if ($this->owner == null) {
             $ownerId = $this->getOwnerId();
 
-            if ($ownerId == -2)
-            {
+            if ($ownerId == -2) {
                 $this->owner = "";
             }
 
@@ -586,29 +554,25 @@ class MFileInfo
     /**
      * Returns the id of the owner of the file.<br />
      * <br />
-     * On Windows and on systems where files do not have owners this function 
+     * On Windows and on systems where files do not have owners this function
      * returns ((uint) -2).
-     * 
+     *
      * @return int
      */
-    public function getOwnerId()
+    public function getOwnerId(): int
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             $ownerId = fileowner($this->getAbsoluteFilePath());
-            if ($ownerId === false)
-            {
+            if ($ownerId === false) {
                 return -2;
             }
 
             return $ownerId;
         }
 
-        if ($this->ownerId == null)
-        {
+        if ($this->ownerId == null) {
             $ownerId = fileowner($this->getAbsoluteFilePath());
-            if ($ownerId === false)
-            {
+            if ($ownerId === false) {
                 $this->ownerId = -2;
             }
 
@@ -620,29 +584,28 @@ class MFileInfo
 
     /**
      * Returns the file's path. This doesn't include the file name.
-     * 
+     *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return dirname($this->file);
     }
 
     /**
-     * Tests for file permissions. The permissions argument can be several flags 
+     * Tests for file permissions. The permissions argument can be several flags
      * of type FilePermission.<br />
      * <br />
      * On systems where files do not have permissions this function always returns true.
-     * 
+     *
      * @param FilePermission $permission
      * @return boolean
      */
-    public function permission($permission)
+    public function permission($permission): bool
     {
         $perms = fileperms($this->getAbsoluteFilePath());
 
-        switch ($permission)
-        {
+        switch ($permission) {
             case FilePermission::READ_OWNER:
                 return (($perms & 0x0100) ? true : false);
 
@@ -651,8 +614,8 @@ class MFileInfo
 
             case FilePermission::EXE_OWNER:
                 return (($perms & 0x0040) ?
-                                (($perms & 0x0800) ? null /* 's' */ : true ) :
-                                (($perms & 0x0800) ? null /* 'S' */ : false));
+                    (($perms & 0x0800) ? null /* 's' */ : true) :
+                    (($perms & 0x0800) ? null /* 'S' */ : false));
 
             case FilePermission::READ_USER:
                 return $this->isReadable();
@@ -671,8 +634,8 @@ class MFileInfo
 
             case FilePermission::EXE_GROUP:
                 return (($perms & 0x0008) ?
-                                (($perms & 0x0400) ? null /* 's' */ : true ) :
-                                (($perms & 0x0400) ? null /* 'S' */ : false));
+                    (($perms & 0x0400) ? null /* 's' */ : true) :
+                    (($perms & 0x0400) ? null /* 'S' */ : false));
 
             case FilePermission::READ_OTHER:
                 return (($perms & 0x0004) ? true : false);
@@ -682,8 +645,8 @@ class MFileInfo
 
             case FilePermission::EXE_OTHER:
                 return (($perms & 0x0001) ?
-                                (($perms & 0x0200) ? null /* 't' */ : true ) :
-                                (($perms & 0x0200) ? null /* 'T' */ : false));
+                    (($perms & 0x0200) ? null /* 't' */ : true) :
+                    (($perms & 0x0200) ? null /* 'T' */ : false));
         }
 
         return true;
@@ -691,85 +654,73 @@ class MFileInfo
 
     /**
      * Returns the complete MList<FilePermission> for the file.
-     * 
+     *
      * @return \MToolkit\Core\MList
      */
-    public function permissions()
+    public function permissions(): MList
     {
         $perms = fileperms($this->getAbsoluteFilePath());
         $permissions = new MList();
 
         // Owner
-        if ($perms & 0x0100)
-        {
+        if ($perms & 0x0100) {
             $permissions->append(FilePermission::READ_OWNER);
         }
 
-        if ($perms & 0x0080)
-        {
+        if ($perms & 0x0080) {
             $permissions->append(FilePermission::WRITE_OWNER);
         }
 
-        if (($perms & 0x0040) & !($perms & 0x0800))
-        {
+        if (($perms & 0x0040) & !($perms & 0x0800)) {
             $permissions->append(FilePermission::EXE_OWNER);
         }
 
         // Group
-        if ($perms & 0x0020)
-        {
+        if ($perms & 0x0020) {
             $permissions->append(FilePermission::READ_GROUP);
         }
-        
-        if ($perms & 0x0010)
-        {
+
+        if ($perms & 0x0010) {
             $permissions->append(FilePermission::WRITE_GROUP);
         }
-        
-        if (($perms & 0x0008) && !($perms & 0x0400))
-        {
+
+        if (($perms & 0x0008) && !($perms & 0x0400)) {
             $permissions->append(FilePermission::EXE_GROUP);
         }
 
         // World
-        if ($perms & 0x0004)
-        {
+        if ($perms & 0x0004) {
             $permissions->append(FilePermission::READ_OTHER);
         }
-        
-        if ($perms & 0x0002) 
-        {
+
+        if ($perms & 0x0002) {
             $permissions->append(FilePermission::WRITE_OTHER);
         }
-        
-        if (($perms & 0x0001) && !($perms & 0x0200))
-        {
+
+        if (($perms & 0x0001) && !($perms & 0x0200)) {
             $permissions->append(FilePermission::EXE_OTHER);
         }
 
-        if( $this->isWritable() )
-        {
+        if ($this->isWritable()) {
             $permissions->append(FilePermission::READ_USER);
         }
-        
-        if( $this->isReadable() )
-        {
+
+        if ($this->isReadable()) {
             $permissions->append(FilePermission::WRITE_USER);
         }
-        
-        if( $this->isExecutable() )
-        {
+
+        if ($this->isExecutable()) {
             $permissions->append(FilePermission::EXE_USER);
         }
-        
+
         return $permissions;
     }
 
     /**
-     * Refreshes the information about the file, i.e. reads in information from 
+     * Refreshes the information about the file, i.e. reads in information from
      * the file system the next time a cached property is fetched.
      */
-    public function refresh()
+    public function refresh(): void
     {
         $this->size = null;
         $this->lastModified = null;
@@ -789,36 +740,18 @@ class MFileInfo
     }
 
     /**
-     * Sets the file that the QFileInfo provides information about to file.<br />
-     * <br />
-     * The file can also include an absolute or relative file path. Absolute 
-     * paths begin with the directory separator (e.g. "/" under Unix) or a drive 
-     * specification (under Windows). Relative file names begin with a directory 
-     * name or a file name and specify a path relative to the current directory.
-     * 
-     * @param string $file
-     */
-    public function setFile(string $file)
-    {
-        $this->file = $file;
-        $this->refresh();
-    }
-
-    /**
-     * Returns the file size in bytes. If the file does not exist or cannot be 
+     * Returns the file size in bytes. If the file does not exist or cannot be
      * fetched, 0 is returned.
-     * 
+     *
      * @return int
      */
-    public function getSize()
+    public function getSize(): int
     {
-        if ($this->caching == false)
-        {
+        if ($this->caching == false) {
             return filesize($this->getAbsoluteFilePath());
         }
 
-        if ($this->size == null)
-        {
+        if ($this->size == null) {
             $this->size = filesize($this->getAbsoluteFilePath());
         }
 
@@ -826,11 +759,27 @@ class MFileInfo
     }
 
     /**
+     * Sets the file that the QFileInfo provides information about to file.<br />
+     * <br />
+     * The file can also include an absolute or relative file path. Absolute
+     * paths begin with the directory separator (e.g. "/" under Unix) or a drive
+     * specification (under Windows). Relative file names begin with a directory
+     * name or a file name and specify a path relative to the current directory.
+     *
+     * @param string $file
+     */
+    public function setFile(string $file): void
+    {
+        $this->file = $file;
+        $this->refresh();
+    }
+
+    /**
      * Returns the suffix of the file.<br />
      * <br />
-     * The suffix consists of all characters in the file after (but not 
+     * The suffix consists of all characters in the file after (but not
      * including) the last '.'.
-     * 
+     *
      * @return string
      */
     public function getSuffix()
@@ -839,20 +788,20 @@ class MFileInfo
         return $info['extension'];
     }
 
-    public function getCaching()
+    public function getCaching(): bool
     {
         return $this->caching;
     }
 
     /**
-     * If enable is true, enables caching of file information. If enable is 
+     * If enable is true, enables caching of file information. If enable is
      * false caching is disabled.<br />
      * <br />
-     * When caching is enabled, MFileInfo reads the file information from the 
+     * When caching is enabled, MFileInfo reads the file information from the
      * file system the first time it's needed, but generally not later.<br />
      * <br />
      * Caching is enabled by default.
-     * 
+     *
      * @param boolean $caching
      * @return \MToolkit\Core\MFileInfo
      */
@@ -864,24 +813,23 @@ class MFileInfo
     }
 
 //    void	swap(QFileInfo & other)
-    
+
     /**
-     * Returns the absolute path to the file or directory a symlink (or shortcut 
-     * on Windows) points to, or a an empty string if the object isn't a 
+     * Returns the absolute path to the file or directory a symlink (or shortcut
+     * on Windows) points to, or a an empty string if the object isn't a
      * symbolic link.<br />
      * <br />
-     * This name may not represent an existing file; it is only a string. 
+     * This name may not represent an existing file; it is only a string.
      * MFileInfo::exists() returns true if the symlink points to an existing file.
-     * 
+     *
      * @return string
      */
-    public function symLinkTarget()
+    public function symLinkTarget(): string
     {
-        if( $this->isSymLink()===false )
-        {
+        if ($this->isSymLink() === false) {
             return "";
         }
-        
-        return readlink( $this->getAbsoluteFilePath() );
+
+        return readlink($this->getAbsoluteFilePath());
     }
 }
