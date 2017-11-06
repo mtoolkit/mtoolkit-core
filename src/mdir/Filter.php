@@ -27,10 +27,10 @@ namespace mtoolkit\core\mdir;
  * @const FILES                     List files.
  * @const DRIVES                    List disk drives (ignored under Unix).
  * @const NO_SYM_LINKS              Do not list symbolic links (ignored by operating systems that don't support symbolic links).
- * 
+ *
  * @const NO_DOT                    Do not list the special entry ".".
  * @const NO_DOT_DOT                Do not list the special entry "..".
- * 
+ *
  * @const READABLE                  List files for which the application has read access. The Readable value needs to be combined with Dirs or Files.
  * @const WRITABLE                  List files for which the application has write access. The Writable value needs to be combined with Dirs or Files.
  * @const EXECUTABLE                List files for which the application has execute access. The Executable value needs to be combined with Dirs or Files.
@@ -55,5 +55,5 @@ final class Filter
     const MODIFIED = 0x080;
     const HIDDEN = 0x100;
     const SYSTEM = 0x200;
-    const NO_FILTER=0;
+    const NO_FILTER = 0;
 }

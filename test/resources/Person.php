@@ -1,4 +1,5 @@
 <?php
+
 namespace mtoolkit\core\test\resources;
 
 class Person

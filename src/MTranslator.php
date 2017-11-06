@@ -28,7 +28,7 @@ class MTranslator
 
     private $locales = array();
     private $translations = array();
-    private $fileType=array();
+    private $fileType = array();
 
     /**
      * Add a static file containing a PHP array.
@@ -51,18 +51,16 @@ class MTranslator
      * @param string $fileType
      * @throws MTranslationFilePathNotFoundException
      */
-    public function addTranslationFile($filePath, $locale, $fileType=MTranslatorFileType::__ARRAY)
+    public function addTranslationFile($filePath, $locale, $fileType = MTranslatorFileType::__ARRAY)
     {
-        if( file_exists( $filePath )==false )
-        {
+        if (file_exists($filePath) == false) {
             throw new MTranslationFilePathNotFoundException($filePath);
         }
-        
+
         $this->locales[$locale] = $filePath;
         $this->fileType[$locale] = $fileType;
-        
-        switch ($this->fileType[$locale])
-        {
+
+        switch ($this->fileType[$locale]) {
             case MTranslatorFileType::__ARRAY:
                 $this->translations[$locale] = include $filePath;
                 break;
@@ -75,7 +73,7 @@ class MTranslator
 
     /**
      * Remove the file of translations associated with <i>$locale</i>.
-     * 
+     *
      * @param string $locale
      */
     public function removeTranslationFile($locale)
@@ -87,14 +85,13 @@ class MTranslator
 
     /**
      * Return the path of the file of the translations associated with <i>$locale</i>.
-     * 
+     *
      * @param string $locale
      * @return string|null
      */
     public function getTranslationFile($locale)
     {
-        if (isset($this->locales[$locale]) === false)
-        {
+        if (isset($this->locales[$locale]) === false) {
             return null;
         }
 
@@ -103,23 +100,22 @@ class MTranslator
 
     /**
      * Return the translation for the <i>$message</i> and the <i>$locate</i>.
-     * Each "<i>%s</i>" in the <i>$message</i> will be replaced with the value 
+     * Each "<i>%s</i>" in the <i>$message</i> will be replaced with the value
      * of the array of strings <i>$args</i>.
-     * 
+     *
      * @param string $locale
      * @param string $message
      * @param string[] $args
      * @return null|string
      */
-    public function translate($locale, $message, $args=array())
+    public function translate($locale, $message, $args = array())
     {
-        if( isset( $this->translations[$locale] )===false || isset($this->translations[$locale][$message])===false )
-        {
+        if (isset($this->translations[$locale]) === false || isset($this->translations[$locale][$message]) === false) {
             return null;
         }
-        
-        $translation= $this->translations[$locale][$message];
-        
+
+        $translation = $this->translations[$locale][$message];
+
         $sprintfParams = $args;
         array_unshift($sprintfParams, $translation);
 
@@ -128,7 +124,7 @@ class MTranslator
 
     /**
      * Return all locales added.
-     * 
+     *
      * @return string[]
      */
     public function getLocales()
@@ -140,6 +136,6 @@ class MTranslator
 
 final class MTranslatorFileType
 {
-    const __ARRAY='array';
-    const JSON='json';
+    const __ARRAY = 'array';
+    const JSON = 'json';
 }

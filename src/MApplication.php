@@ -1,4 +1,5 @@
 <?php
+
 namespace mtoolkit\core;
 
 /*
@@ -21,11 +22,11 @@ namespace mtoolkit\core;
  */
 
 /**
- * The MApplication class manages the GUI application's control flow and main 
+ * The MApplication class manages the GUI application's control flow and main
  * settings.
  */
 class MApplication extends MCoreApplication
 {
-    
+
 }
 

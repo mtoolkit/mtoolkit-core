@@ -1,17 +1,18 @@
 <?php
+
 namespace mtoolkit\core;
 
 /**
  * Mobile Detect
  * $Id: Mobile_Detect.php 49 2012-06-06 20:46:30Z serbanghita@gmail.com $
- * 
+ *
  * @usage      require_once 'Mobile_Detect.php';
  *             $detect = new Mobile_Detect();
  *             $detect->isMobile() or $detect->isTablet()
- * 
+ *
  *             For more specific usage see the documentation navigate to:
  *             http://code.google.com/p/php-mobile-detect/wiki/Mobile_Detect
- * 
+ *
  * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 class MMobileDetector
@@ -77,7 +78,7 @@ class MMobileDetector
      * HTTP headers in the PHP-flavor. So HTTP_USER_AGENT and SERVER_SOFTWARE.
      * @var array
      */
-    protected $httpHeaders = array( );
+    protected $httpHeaders = array();
 
     /**
      * The detection type, using self::DETECTION_TYPE_MOBILE or self::DETECTION_TYPE_EXTENDED.
@@ -95,14 +96,14 @@ class MMobileDetector
      * @var array
      */
     protected static $mobileHeaders = array(
-        'HTTP_ACCEPT' => array( 'matches' => array(
-                // Opera Mini; @reference: http://dev.opera.com/articles/view/opera-binary-markup-language/
-                'application/x-obml2d',
-                // BlackBerry devices.
-                'application/vnd.rim.html',
-                'text/vnd.wap.wml',
-                'application/vnd.wap.xhtml+xml'
-            ) ),
+        'HTTP_ACCEPT' => array('matches' => array(
+            // Opera Mini; @reference: http://dev.opera.com/articles/view/opera-binary-markup-language/
+            'application/x-obml2d',
+            // BlackBerry devices.
+            'application/vnd.rim.html',
+            'text/vnd.wap.wml',
+            'application/vnd.wap.xhtml+xml'
+        )),
         'HTTP_X_WAP_PROFILE' => null,
         'HTTP_X_WAP_CLIENTID' => null,
         'HTTP_WAP_CONNECTION' => null,
@@ -121,7 +122,7 @@ class MMobileDetector
         // Seend this on HTC Sensation. @ref: SensationXE_Beats_Z715e.
         'HTTP_X_ATT_DEVICEID' => null,
         // Seen this on a HTC.
-        'HTTP_UA_CPU' => array( 'matches' => array( 'ARM' ) ),
+        'HTTP_UA_CPU' => array('matches' => array('ARM')),
     );
 
     /**
@@ -421,18 +422,18 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
         //'BlackBerry'    => array('BlackBerry[VER]', 'BlackBerry [VER];'),
         'Kindle' => 'Kindle/[VER]',
         // Browser
-        'Chrome' => array( 'Chrome/[VER]', 'CriOS/[VER]', 'CrMo/[VER]' ),
-        'Coast' => array( 'Coast/[VER]' ),
+        'Chrome' => array('Chrome/[VER]', 'CriOS/[VER]', 'CrMo/[VER]'),
+        'Coast' => array('Coast/[VER]'),
         'Dolfin' => 'Dolfin/[VER]',
         // @reference: https://developer.mozilla.org/en-US/docs/User_Agent_Strings_Reference
         'Firefox' => 'Firefox/[VER]',
         'Fennec' => 'Fennec/[VER]',
         // @reference: http://msdn.microsoft.com/en-us/library/ms537503(v=vs.85).aspx
-        'IE' => array( 'IEMobile/[VER];', 'IEMobile [VER]', 'MSIE [VER];' ),
+        'IE' => array('IEMobile/[VER];', 'IEMobile [VER]', 'MSIE [VER];'),
         // http://en.wikipedia.org/wiki/NetFront
         'NetFront' => 'NetFront/[VER]',
         'NokiaBrowser' => 'NokiaBrowser/[VER]',
-        'Opera' => array( ' OPR/[VER]', 'Opera Mini/[VER]', 'Version/[VER]' ),
+        'Opera' => array(' OPR/[VER]', 'Opera Mini/[VER]', 'Version/[VER]'),
         'Opera Mini' => 'Opera Mini/[VER]',
         'Opera Mobi' => 'Version/[VER]',
         'UC Browser' => 'UC Browser[VER]',
@@ -440,7 +441,7 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
         'MicroMessenger' => 'MicroMessenger/[VER]',
         // @note: Safari 7534.48.3 is actually Version 5.1.
         // @note: On BlackBerry the Version is overwriten by the OS.
-        'Safari' => array( 'Version/[VER]', 'Safari/[VER]' ),
+        'Safari' => array('Version/[VER]', 'Safari/[VER]'),
         'Skyfire' => 'Skyfire/[VER]',
         'Tizen' => 'Tizen/[VER]',
         'Webkit' => 'webkit[ /][VER]',
@@ -451,18 +452,18 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
         // OS
         'iOS' => ' \bOS\b [VER] ',
         'Android' => 'Android [VER]',
-        'BlackBerry' => array( 'BlackBerry[\w]+/[VER]', 'BlackBerry.*Version/[VER]', 'Version/[VER]' ),
+        'BlackBerry' => array('BlackBerry[\w]+/[VER]', 'BlackBerry.*Version/[VER]', 'Version/[VER]'),
         'BREW' => 'BREW [VER]',
         'Java' => 'Java/[VER]',
         // @reference: http://windowsteamblog.com/windows_phone/b/wpdev/archive/2011/08/29/introducing-the-ie9-on-windows-phone-mango-user-agent-string.aspx
         // @reference: http://en.wikipedia.org/wiki/Windows_NT#Releases
-        'Windows Phone OS' => array( 'Windows Phone OS [VER]', 'Windows Phone [VER]' ),
+        'Windows Phone OS' => array('Windows Phone OS [VER]', 'Windows Phone [VER]'),
         'Windows Phone' => 'Windows Phone [VER]',
         'Windows CE' => 'Windows CE/[VER]',
         // http://social.msdn.microsoft.com/Forums/en-US/windowsdeveloperpreviewgeneral/thread/6be392da-4d2f-41b4-8354-8dcee20c85cd
         'Windows NT' => 'Windows NT [VER]',
-        'Symbian' => array( 'SymbianOS/[VER]', 'Symbian/[VER]' ),
-        'webOS' => array( 'webOS/[VER]', 'hpwOS/[VER];' ),
+        'Symbian' => array('SymbianOS/[VER]', 'Symbian/[VER]'),
+        'webOS' => array('webOS/[VER]', 'hpwOS/[VER];'),
     );
 
     /**
@@ -474,11 +475,11 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      *                          from the $headers array instead.
      */
     public function __construct(
-    array $headers = null, $userAgent = null
+        array $headers = null, $userAgent = null
     )
     {
-        $this->setHttpHeaders( $headers );
-        $this->setUserAgent( $userAgent );
+        $this->setHttpHeaders($headers);
+        $this->setUserAgent($userAgent);
     }
 
     /**
@@ -500,23 +501,20 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      * @param array $httpHeaders The headers to set. If null, then using PHP's _SERVER to extract
      *                           the headers. The default null is left for backwards compatibilty.
      */
-    public function setHttpHeaders( $httpHeaders = null )
+    public function setHttpHeaders($httpHeaders = null)
     {
         //use global _SERVER if $httpHeaders aren't defined
-        if( !is_array( $httpHeaders )||!count( $httpHeaders ) )
-        {
+        if (!is_array($httpHeaders) || !count($httpHeaders)) {
             $httpHeaders = $_SERVER;
         }
 
         //clear existing headers
-        $this->httpHeaders = array( );
+        $this->httpHeaders = array();
 
         //Only save HTTP headers. In PHP land, that means only _SERVER vars that
         //start with HTTP_.
-        foreach( $httpHeaders as $key => $value )
-        {
-            if( substr( $key, 0, 5 )=='HTTP_' )
-            {
+        foreach ($httpHeaders as $key => $value) {
+            if (substr($key, 0, 5) == 'HTTP_') {
                 $this->httpHeaders[$key] = $value;
             }
         }
@@ -542,25 +540,21 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      *
      * @return string|null The value of the header.
      */
-    public function getHttpHeader( $header )
+    public function getHttpHeader($header)
     {
         //are we using PHP-flavored headers?
-        if( strpos( $header, '_' )===false )
-        {
-            $header = str_replace( '-', '_', $header );
-            $header = strtoupper( $header );
+        if (strpos($header, '_') === false) {
+            $header = str_replace('-', '_', $header);
+            $header = strtoupper($header);
         }
 
         //test the alternate, too
         $altHeader = 'HTTP_' . $header;
 
         //Test both the regular and the HTTP_ prefix
-        if( isset( $this->httpHeaders[$header] ) )
-        {
+        if (isset($this->httpHeaders[$header])) {
             return $this->httpHeaders[$header];
-        }
-        elseif( isset( $this->httpHeaders[$altHeader] ) )
-        {
+        } elseif (isset($this->httpHeaders[$altHeader])) {
             return $this->httpHeaders[$altHeader];
         }
 
@@ -589,26 +583,21 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      * @param string|null $userAgent
      * @return null|string
      */
-    public function setUserAgent( $userAgent = null )
+    public function setUserAgent($userAgent = null)
     {
-        if( !empty( $userAgent ) )
-        {
+        if (!empty($userAgent)) {
             return $this->userAgent = $userAgent;
-        }
-        else
-        {
+        } else {
 
             $this->userAgent = null;
 
-            foreach( $this->getUaHttpHeaders() as $altHeader )
-            {
-                if( !empty( $this->httpHeaders[$altHeader] ) )
-                { // @todo: should use getHttpHeader(), but it would be slow. (Serban)
+            foreach ($this->getUaHttpHeaders() as $altHeader) {
+                if (!empty($this->httpHeaders[$altHeader])) { // @todo: should use getHttpHeader(), but it would be slow. (Serban)
                     $this->userAgent .= $this->httpHeaders[$altHeader] . " ";
                 }
             }
 
-            return $this->userAgent = (!empty( $this->userAgent ) ? trim( $this->userAgent ) : null);
+            return $this->userAgent = (!empty($this->userAgent) ? trim($this->userAgent) : null);
         }
     }
 
@@ -631,15 +620,13 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      * @param string $type The type. Must be a self::DETECTION_TYPE_* constant. The default
      *                     parameter is null which will default to self::DETECTION_TYPE_MOBILE.
      */
-    public function setDetectionType( $type = null )
+    public function setDetectionType($type = null)
     {
-        if( $type===null )
-        {
+        if ($type === null) {
             $type = self::DETECTION_TYPE_MOBILE;
         }
 
-        if( $type!=self::DETECTION_TYPE_MOBILE&&$type!=self::DETECTION_TYPE_EXTENDED )
-        {
+        if ($type != self::DETECTION_TYPE_MOBILE && $type != self::DETECTION_TYPE_EXTENDED) {
             return;
         }
 
@@ -707,10 +694,9 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
     {
         static $rules;
 
-        if( !$rules )
-        {
+        if (!$rules) {
             $rules = array_merge(
-                    self::$phoneDevices, self::$tabletDevices, self::$operatingSystems, self::$browsers
+                self::$phoneDevices, self::$tabletDevices, self::$operatingSystems, self::$browsers
             );
         }
 
@@ -731,11 +717,10 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
     {
         static $rules;
 
-        if( !$rules )
-        {
+        if (!$rules) {
             // Merge all rules together.
             $rules = array_merge(
-                    self::$phoneDevices, self::$tabletDevices, self::$operatingSystems, self::$browsers, self::$utilities
+                self::$phoneDevices, self::$tabletDevices, self::$operatingSystems, self::$browsers, self::$utilities
             );
         }
 
@@ -751,12 +736,9 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      */
     public function getRules()
     {
-        if( $this->detectionType==self::DETECTION_TYPE_EXTENDED )
-        {
+        if ($this->detectionType == self::DETECTION_TYPE_EXTENDED) {
             return self::getMobileDetectionRulesExtended();
-        }
-        else
-        {
+        } else {
             return self::getMobileDetectionRules();
         }
     }
@@ -781,23 +763,16 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
     public function checkHttpHeadersForMobile()
     {
 
-        foreach( $this->getMobileHeaders() as $mobileHeader => $matchType )
-        {
-            if( isset( $this->httpHeaders[$mobileHeader] ) )
-            {
-                if( is_array( $matchType['matches'] ) )
-                {
-                    foreach( $matchType['matches'] as $_match )
-                    {
-                        if( strpos( $this->httpHeaders[$mobileHeader], $_match )!==false )
-                        {
+        foreach ($this->getMobileHeaders() as $mobileHeader => $matchType) {
+            if (isset($this->httpHeaders[$mobileHeader])) {
+                if (is_array($matchType['matches'])) {
+                    foreach ($matchType['matches'] as $_match) {
+                        if (strpos($this->httpHeaders[$mobileHeader], $_match) !== false) {
                             return true;
                         }
                     }
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
@@ -810,24 +785,23 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      * Magic overloading method.
      *
      * @method boolean is[...]()
-     * @param  string                 $name
-     * @param  array                  $arguments
+     * @param  string $name
+     * @param  array $arguments
      * @return mixed
      * @throws \BadMethodCallException when the method doesn't exist and doesn't start with 'is'
      */
-    public function __call( $name, $arguments )
+    public function __call($name, $arguments)
     {
         //make sure the name starts with 'is', otherwise
-        if( substr( $name, 0, 2 )!='is' )
-        {
-            throw new \BadMethodCallException( "No such method exists: $name" );
+        if (substr($name, 0, 2) != 'is') {
+            throw new \BadMethodCallException("No such method exists: $name");
         }
 
-        $this->setDetectionType( self::DETECTION_TYPE_MOBILE );
+        $this->setDetectionType(self::DETECTION_TYPE_MOBILE);
 
-        $key = substr( $name, 2 );
+        $key = substr($name, 2);
 
-        return $this->matchUAAgainstKey( $key );
+        return $this->matchUAAgainstKey($key);
     }
 
     /**
@@ -836,17 +810,14 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      * @param null $userAgent deprecated
      * @return boolean
      */
-    protected function matchDetectionRulesAgainstUA( $userAgent = null )
+    protected function matchDetectionRulesAgainstUA($userAgent = null)
     {
         // Begin general search.
-        foreach( $this->getRules() as $_regex )
-        {
-            if( empty( $_regex ) )
-            {
+        foreach ($this->getRules() as $_regex) {
+            if (empty($_regex)) {
                 continue;
             }
-            if( $this->match( $_regex, $userAgent ) )
-            {
+            if ($this->match($_regex, $userAgent)) {
                 return true;
             }
         }
@@ -863,22 +834,20 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      * @param null $userAgent deprecated
      * @return mixed
      */
-    protected function matchUAAgainstKey( $key, $userAgent = null )
+    protected function matchUAAgainstKey($key, $userAgent = null)
     {
         // Make the keys lowercase so we can match: isIphone(), isiPhone(), isiphone(), etc.
-        $key = strtolower( $key );
+        $key = strtolower($key);
 
         //change the keys to lower case
-        $_rules = array_change_key_case( $this->getRules() );
+        $_rules = array_change_key_case($this->getRules());
 
-        if( array_key_exists( $key, $_rules ) )
-        {
-            if( empty( $_rules[$key] ) )
-            {
+        if (array_key_exists($key, $_rules)) {
+            if (empty($_rules[$key])) {
                 return null;
             }
 
-            return $this->match( $_rules[$key], $userAgent );
+            return $this->match($_rules[$key], $userAgent);
         }
 
         return false;
@@ -891,27 +860,22 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      * @param null $httpHeaders deprecated
      * @return bool
      */
-    public function isMobile( $userAgent = null, $httpHeaders = null )
+    public function isMobile($userAgent = null, $httpHeaders = null)
     {
 
-        if( $httpHeaders )
-        {
-            $this->setHttpHeaders( $httpHeaders );
+        if ($httpHeaders) {
+            $this->setHttpHeaders($httpHeaders);
         }
 
-        if( $userAgent )
-        {
-            $this->setUserAgent( $userAgent );
+        if ($userAgent) {
+            $this->setUserAgent($userAgent);
         }
 
-        $this->setDetectionType( self::DETECTION_TYPE_MOBILE );
+        $this->setDetectionType(self::DETECTION_TYPE_MOBILE);
 
-        if( $this->checkHttpHeadersForMobile() )
-        {
+        if ($this->checkHttpHeadersForMobile()) {
             return true;
-        }
-        else
-        {
+        } else {
             return $this->matchDetectionRulesAgainstUA();
         }
     }
@@ -920,18 +884,15 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      * Check if the device is a tablet.
      * Return true if any type of tablet device is detected.
      *
-     * @param  string $userAgent   deprecated
-     * @param  array  $httpHeaders deprecated
+     * @param  string $userAgent deprecated
      * @return bool
      */
-    public function isTablet( $userAgent = null, $httpHeaders = null )
+    public function isTablet($userAgent = null)
     {
-        $this->setDetectionType( self::DETECTION_TYPE_MOBILE );
+        $this->setDetectionType(self::DETECTION_TYPE_MOBILE);
 
-        foreach( self::$tabletDevices as $_regex )
-        {
-            if( $this->match( $_regex, $userAgent ) )
-            {
+        foreach (self::$tabletDevices as $_regex) {
+            if ($this->match($_regex, $userAgent)) {
                 return true;
             }
         }
@@ -945,26 +906,24 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      * @todo: The httpHeaders part is not yet used.
      *
      * @param $key
-     * @param  string        $userAgent   deprecated
-     * @param  string        $httpHeaders deprecated
+     * @param  string $userAgent deprecated
+     * @param  string $httpHeaders deprecated
      * @return bool|int|null
      */
-    public function is( $key, $userAgent = null, $httpHeaders = null )
+    public function is($key, $userAgent = null, $httpHeaders = null)
     {
         // Set the UA and HTTP headers only if needed (eg. batch mode).
-        if( $httpHeaders )
-        {
-            $this->setHttpHeaders( $httpHeaders );
+        if ($httpHeaders) {
+            $this->setHttpHeaders($httpHeaders);
         }
 
-        if( $userAgent )
-        {
-            $this->setUserAgent( $userAgent );
+        if ($userAgent) {
+            $this->setUserAgent($userAgent);
         }
 
-        $this->setDetectionType( self::DETECTION_TYPE_EXTENDED );
+        $this->setDetectionType(self::DETECTION_TYPE_EXTENDED);
 
-        return $this->matchUAAgainstKey( $key );
+        return $this->matchUAAgainstKey($key);
     }
 
     /**
@@ -982,12 +941,12 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      *
      * @todo: search in the HTTP headers too.
      */
-    public function match( $regex, $userAgent = null )
+    public function match($regex, $userAgent = null)
     {
         // Escape the special character which is the delimiter.
-        $regex = str_replace( '/', '\/', $regex );
+        $regex = str_replace('/', '\/', $regex);
 
-        return (bool) preg_match( '/' . $regex . '/is', (!empty( $userAgent ) ? $userAgent : $this->userAgent ) );
+        return (bool)preg_match('/' . $regex . '/is', (!empty($userAgent) ? $userAgent : $this->userAgent));
     }
 
     /**
@@ -1009,17 +968,16 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      *
      * @return float
      */
-    public function prepareVersionNo( $ver )
+    public function prepareVersionNo($ver)
     {
-        $ver = str_replace( array( '_', ' ', '/' ), '.', $ver );
-        $arrVer = explode( '.', $ver, 2 );
+        $ver = str_replace(array('_', ' ', '/'), '.', $ver);
+        $arrVer = explode('.', $ver, 2);
 
-        if( isset( $arrVer[1] ) )
-        {
-            $arrVer[1] = @str_replace( '.', '', $arrVer[1] ); // @todo: treat strings versions.
+        if (isset($arrVer[1])) {
+            $arrVer[1] = @str_replace('.', '', $arrVer[1]); // @todo: treat strings versions.
         }
 
-        return (float) implode( '.', $arrVer );
+        return (float)implode('.', $arrVer);
     }
 
     /**
@@ -1035,43 +993,38 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
      *
      * @return string|float The version of the property we are trying to extract.
      */
-    public function version( $propertyName, $type = self::VERSION_TYPE_STRING )
+    public function version($propertyName, $type = self::VERSION_TYPE_STRING)
     {
-        if( empty( $propertyName ) )
-        {
+        if (empty($propertyName)) {
             return false;
         }
 
         //set the $type to the default if we don't recognize the type
-        if( $type!=self::VERSION_TYPE_STRING&&$type!=self::VERSION_TYPE_FLOAT )
-        {
+        if ($type != self::VERSION_TYPE_STRING && $type != self::VERSION_TYPE_FLOAT) {
             $type = self::VERSION_TYPE_STRING;
         }
 
         $properties = self::getProperties();
 
         // Check if the property exists in the properties array.
-        if( array_key_exists( $propertyName, $properties ) )
-        {
+        if (array_key_exists($propertyName, $properties)) {
 
             // Prepare the pattern to be matched.
             // Make sure we always deal with an array (string is converted).
-            $properties[$propertyName] = (array) $properties[$propertyName];
+            $properties[$propertyName] = (array)$properties[$propertyName];
 
-            foreach( $properties[$propertyName] as $propertyMatchString )
-            {
+            foreach ($properties[$propertyName] as $propertyMatchString) {
 
-                $propertyPattern = str_replace( '[VER]', self::VER, $propertyMatchString );
+                $propertyPattern = str_replace('[VER]', self::VER, $propertyMatchString);
 
                 // Escape the special character which is the delimiter.
-                $propertyPattern = str_replace( '/', '\/', $propertyPattern );
+                $propertyPattern = str_replace('/', '\/', $propertyPattern);
 
                 // Identify and extract the version.
-                preg_match( '/' . $propertyPattern . '/is', $this->userAgent, $match );
+                preg_match('/' . $propertyPattern . '/is', $this->userAgent, $match);
 
-                if( !empty( $match[1] ) )
-                {
-                    $version = ( $type==self::VERSION_TYPE_FLOAT ? $this->prepareVersionNo( $match[1] ) : $match[1] );
+                if (!empty($match[1])) {
+                    $version = ($type == self::VERSION_TYPE_FLOAT ? $this->prepareVersionNo($match[1]) : $match[1]);
 
                     return $version;
                 }
@@ -1090,90 +1043,87 @@ X497|SGH-X507|SGH-X600|SGH-X610|SGH-X620|SGH-X630|SGH-X700|SGH-X820|SGH-X890|SGH
     {
         $isMobile = $this->isMobile();
 
-        if(
-        // Apple iOS 3.2-5.1 - Tested on the original iPad (4.3 / 5.0), iPad 2 (4.3), iPad 3 (5.1), original iPhone (3.1), iPhone 3 (3.2), 3GS (4.3), 4 (4.3 / 5.0), and 4S (5.1)
-                $this->version( 'iPad', self::VERSION_TYPE_FLOAT )>=4.3||
-                $this->version( 'iPhone', self::VERSION_TYPE_FLOAT )>=3.1||
-                $this->version( 'iPod', self::VERSION_TYPE_FLOAT )>=3.1||
-                // Android 2.1-2.3 - Tested on the HTC Incredible (2.2), original Droid (2.2), HTC Aria (2.1), Google Nexus S (2.3). Functional on 1.5 & 1.6 but performance may be sluggish, tested on Google G1 (1.5)
-                // Android 3.1 (Honeycomb)  - Tested on the Samsung Galaxy Tab 10.1 and Motorola XOOM
-                // Android 4.0 (ICS)  - Tested on a Galaxy Nexus. Note: transition performance can be poor on upgraded devices
-                // Android 4.1 (Jelly Bean)  - Tested on a Galaxy Nexus and Galaxy 7
-                ( $this->version( 'Android', self::VERSION_TYPE_FLOAT )>2.1&&$this->is( 'Webkit' ) )||
-                // Windows Phone 7-7.5 - Tested on the HTC Surround (7.0) HTC Trophy (7.5), LG-E900 (7.5), Nokia Lumia 800
-                $this->version( 'Windows Phone OS', self::VERSION_TYPE_FLOAT )>=7.0||
-                // Blackberry 7 - Tested on BlackBerry® Torch 9810
-                // Blackberry 6.0 - Tested on the Torch 9800 and Style 9670
-                $this->is( 'BlackBerry' )&&$this->version( 'BlackBerry', self::VERSION_TYPE_FLOAT )>=6.0||
-                // Blackberry Playbook (1.0-2.0) - Tested on PlayBook
-                $this->match( 'Playbook.*Tablet' )||
-                // Palm WebOS (1.4-2.0) - Tested on the Palm Pixi (1.4), Pre (1.4), Pre 2 (2.0)
-                ( $this->version( 'webOS', self::VERSION_TYPE_FLOAT )>=1.4&&$this->match( 'Palm|Pre|Pixi' ) )||
-                // Palm WebOS 3.0  - Tested on HP TouchPad
-                $this->match( 'hp.*TouchPad' )||
-                // Firefox Mobile (12 Beta) - Tested on Android 2.3 device
-                ( $this->is( 'Firefox' )&&$this->version( 'Firefox', self::VERSION_TYPE_FLOAT )>=12 )||
-                // Chrome for Android - Tested on Android 4.0, 4.1 device
-                ( $this->is( 'Chrome' )&&$this->is( 'AndroidOS' )&&$this->version( 'Android', self::VERSION_TYPE_FLOAT )>=4.0 )||
-                // Skyfire 4.1 - Tested on Android 2.3 device
-                ( $this->is( 'Skyfire' )&&$this->version( 'Skyfire', self::VERSION_TYPE_FLOAT )>=4.1&&$this->is( 'AndroidOS' )&&$this->version( 'Android', self::VERSION_TYPE_FLOAT )>=2.3 )||
-                // Opera Mobile 11.5-12: Tested on Android 2.3
-                ( $this->is( 'Opera' )&&$this->version( 'Opera Mobi', self::VERSION_TYPE_FLOAT )>11&&$this->is( 'AndroidOS' ) )||
-                // Meego 1.2 - Tested on Nokia 950 and N9
-                $this->is( 'MeeGoOS' )||
-                // Tizen (pre-release) - Tested on early hardware
-                $this->is( 'Tizen' )||
-                // Samsung Bada 2.0 - Tested on a Samsung Wave 3, Dolphin browser
-                // @todo: more tests here!
-                $this->is( 'Dolfin' )&&$this->version( 'Bada', self::VERSION_TYPE_FLOAT )>=2.0||
-                // UC Browser - Tested on Android 2.3 device
-                ( ($this->is( 'UC Browser' )||$this->is( 'Dolfin' ))&&$this->version( 'Android', self::VERSION_TYPE_FLOAT )>=2.3 )||
-                // Kindle 3 and Fire  - Tested on the built-in WebKit browser for each
-                ( $this->match( 'Kindle Fire' )||
-                $this->is( 'Kindle' )&&$this->version( 'Kindle', self::VERSION_TYPE_FLOAT )>=3.0 )||
-                // Nook Color 1.4.1 - Tested on original Nook Color, not Nook Tablet
-                $this->is( 'AndroidOS' )&&$this->is( 'NookTablet' )||
-                // Chrome Desktop 11-21 - Tested on OS X 10.7 and Windows 7
-                $this->version( 'Chrome', self::VERSION_TYPE_FLOAT )>=11&&!$isMobile||
-                // Safari Desktop 4-5 - Tested on OS X 10.7 and Windows 7
-                $this->version( 'Safari', self::VERSION_TYPE_FLOAT )>=5.0&&!$isMobile||
-                // Firefox Desktop 4-13 - Tested on OS X 10.7 and Windows 7
-                $this->version( 'Firefox', self::VERSION_TYPE_FLOAT )>=4.0&&!$isMobile||
-                // Internet Explorer 7-9 - Tested on Windows XP, Vista and 7
-                $this->version( 'MSIE', self::VERSION_TYPE_FLOAT )>=7.0&&!$isMobile||
-                // Opera Desktop 10-12 - Tested on OS X 10.7 and Windows 7
-                // @reference: http://my.opera.com/community/openweb/idopera/
-                $this->version( 'Opera', self::VERSION_TYPE_FLOAT )>=10&&!$isMobile
-        )
-        {
+        if (
+            // Apple iOS 3.2-5.1 - Tested on the original iPad (4.3 / 5.0), iPad 2 (4.3), iPad 3 (5.1), original iPhone (3.1), iPhone 3 (3.2), 3GS (4.3), 4 (4.3 / 5.0), and 4S (5.1)
+            $this->version('iPad', self::VERSION_TYPE_FLOAT) >= 4.3 ||
+            $this->version('iPhone', self::VERSION_TYPE_FLOAT) >= 3.1 ||
+            $this->version('iPod', self::VERSION_TYPE_FLOAT) >= 3.1 ||
+            // Android 2.1-2.3 - Tested on the HTC Incredible (2.2), original Droid (2.2), HTC Aria (2.1), Google Nexus S (2.3). Functional on 1.5 & 1.6 but performance may be sluggish, tested on Google G1 (1.5)
+            // Android 3.1 (Honeycomb)  - Tested on the Samsung Galaxy Tab 10.1 and Motorola XOOM
+            // Android 4.0 (ICS)  - Tested on a Galaxy Nexus. Note: transition performance can be poor on upgraded devices
+            // Android 4.1 (Jelly Bean)  - Tested on a Galaxy Nexus and Galaxy 7
+            ($this->version('Android', self::VERSION_TYPE_FLOAT) > 2.1 && $this->is('Webkit')) ||
+            // Windows Phone 7-7.5 - Tested on the HTC Surround (7.0) HTC Trophy (7.5), LG-E900 (7.5), Nokia Lumia 800
+            $this->version('Windows Phone OS', self::VERSION_TYPE_FLOAT) >= 7.0 ||
+            // Blackberry 7 - Tested on BlackBerry® Torch 9810
+            // Blackberry 6.0 - Tested on the Torch 9800 and Style 9670
+            $this->is('BlackBerry') && $this->version('BlackBerry', self::VERSION_TYPE_FLOAT) >= 6.0 ||
+            // Blackberry Playbook (1.0-2.0) - Tested on PlayBook
+            $this->match('Playbook.*Tablet') ||
+            // Palm WebOS (1.4-2.0) - Tested on the Palm Pixi (1.4), Pre (1.4), Pre 2 (2.0)
+            ($this->version('webOS', self::VERSION_TYPE_FLOAT) >= 1.4 && $this->match('Palm|Pre|Pixi')) ||
+            // Palm WebOS 3.0  - Tested on HP TouchPad
+            $this->match('hp.*TouchPad') ||
+            // Firefox Mobile (12 Beta) - Tested on Android 2.3 device
+            ($this->is('Firefox') && $this->version('Firefox', self::VERSION_TYPE_FLOAT) >= 12) ||
+            // Chrome for Android - Tested on Android 4.0, 4.1 device
+            ($this->is('Chrome') && $this->is('AndroidOS') && $this->version('Android', self::VERSION_TYPE_FLOAT) >= 4.0) ||
+            // Skyfire 4.1 - Tested on Android 2.3 device
+            ($this->is('Skyfire') && $this->version('Skyfire', self::VERSION_TYPE_FLOAT) >= 4.1 && $this->is('AndroidOS') && $this->version('Android', self::VERSION_TYPE_FLOAT) >= 2.3) ||
+            // Opera Mobile 11.5-12: Tested on Android 2.3
+            ($this->is('Opera') && $this->version('Opera Mobi', self::VERSION_TYPE_FLOAT) > 11 && $this->is('AndroidOS')) ||
+            // Meego 1.2 - Tested on Nokia 950 and N9
+            $this->is('MeeGoOS') ||
+            // Tizen (pre-release) - Tested on early hardware
+            $this->is('Tizen') ||
+            // Samsung Bada 2.0 - Tested on a Samsung Wave 3, Dolphin browser
+            // @todo: more tests here!
+            $this->is('Dolfin') && $this->version('Bada', self::VERSION_TYPE_FLOAT) >= 2.0 ||
+            // UC Browser - Tested on Android 2.3 device
+            (($this->is('UC Browser') || $this->is('Dolfin')) && $this->version('Android', self::VERSION_TYPE_FLOAT) >= 2.3) ||
+            // Kindle 3 and Fire  - Tested on the built-in WebKit browser for each
+            ($this->match('Kindle Fire') ||
+                $this->is('Kindle') && $this->version('Kindle', self::VERSION_TYPE_FLOAT) >= 3.0) ||
+            // Nook Color 1.4.1 - Tested on original Nook Color, not Nook Tablet
+            $this->is('AndroidOS') && $this->is('NookTablet') ||
+            // Chrome Desktop 11-21 - Tested on OS X 10.7 and Windows 7
+            $this->version('Chrome', self::VERSION_TYPE_FLOAT) >= 11 && !$isMobile ||
+            // Safari Desktop 4-5 - Tested on OS X 10.7 and Windows 7
+            $this->version('Safari', self::VERSION_TYPE_FLOAT) >= 5.0 && !$isMobile ||
+            // Firefox Desktop 4-13 - Tested on OS X 10.7 and Windows 7
+            $this->version('Firefox', self::VERSION_TYPE_FLOAT) >= 4.0 && !$isMobile ||
+            // Internet Explorer 7-9 - Tested on Windows XP, Vista and 7
+            $this->version('MSIE', self::VERSION_TYPE_FLOAT) >= 7.0 && !$isMobile ||
+            // Opera Desktop 10-12 - Tested on OS X 10.7 and Windows 7
+            // @reference: http://my.opera.com/community/openweb/idopera/
+            $this->version('Opera', self::VERSION_TYPE_FLOAT) >= 10 && !$isMobile
+        ) {
             return self::MOBILE_GRADE_A;
         }
 
-        if(
-                $this->version( 'iPad', self::VERSION_TYPE_FLOAT )<4.3||
-                $this->version( 'iPhone', self::VERSION_TYPE_FLOAT )<3.1||
-                $this->version( 'iPod', self::VERSION_TYPE_FLOAT )<3.1||
-                // Blackberry 5.0: Tested on the Storm 2 9550, Bold 9770
-                $this->is( 'Blackberry' )&&$this->version( 'BlackBerry', self::VERSION_TYPE_FLOAT )>=5&&$this->version( 'BlackBerry', self::VERSION_TYPE_FLOAT )<6||
-                //Opera Mini (5.0-6.5) - Tested on iOS 3.2/4.3 and Android 2.3
-                ( $this->version( 'Opera Mini', self::VERSION_TYPE_FLOAT )>=5.0&&$this->version( 'Opera Mini', self::VERSION_TYPE_FLOAT )<=6.5&&
-                ($this->version( 'Android', self::VERSION_TYPE_FLOAT )>=2.3||$this->is( 'iOS' )) )||
-                // Nokia Symbian^3 - Tested on Nokia N8 (Symbian^3), C7 (Symbian^3), also works on N97 (Symbian^1)
-                $this->match( 'NokiaN8|NokiaC7|N97.*Series60|Symbian/3' )||
-                // @todo: report this (tested on Nokia N71)
-                $this->version( 'Opera Mobi', self::VERSION_TYPE_FLOAT )>=11&&$this->is( 'SymbianOS' )
-        )
-        {
+        if (
+            $this->version('iPad', self::VERSION_TYPE_FLOAT) < 4.3 ||
+            $this->version('iPhone', self::VERSION_TYPE_FLOAT) < 3.1 ||
+            $this->version('iPod', self::VERSION_TYPE_FLOAT) < 3.1 ||
+            // Blackberry 5.0: Tested on the Storm 2 9550, Bold 9770
+            $this->is('Blackberry') && $this->version('BlackBerry', self::VERSION_TYPE_FLOAT) >= 5 && $this->version('BlackBerry', self::VERSION_TYPE_FLOAT) < 6 ||
+            //Opera Mini (5.0-6.5) - Tested on iOS 3.2/4.3 and Android 2.3
+            ($this->version('Opera Mini', self::VERSION_TYPE_FLOAT) >= 5.0 && $this->version('Opera Mini', self::VERSION_TYPE_FLOAT) <= 6.5 &&
+                ($this->version('Android', self::VERSION_TYPE_FLOAT) >= 2.3 || $this->is('iOS'))) ||
+            // Nokia Symbian^3 - Tested on Nokia N8 (Symbian^3), C7 (Symbian^3), also works on N97 (Symbian^1)
+            $this->match('NokiaN8|NokiaC7|N97.*Series60|Symbian/3') ||
+            // @todo: report this (tested on Nokia N71)
+            $this->version('Opera Mobi', self::VERSION_TYPE_FLOAT) >= 11 && $this->is('SymbianOS')
+        ) {
             return self::MOBILE_GRADE_B;
         }
 
-        if(
-        // Blackberry 4.x - Tested on the Curve 8330
-                $this->version( 'BlackBerry', self::VERSION_TYPE_FLOAT )<5.0||
-                // Windows Mobile - Tested on the HTC Leo (WinMo 5.2)
-                $this->match( 'MSIEMobile|Windows CE.*Mobile' )||$this->version( 'Windows Mobile', self::VERSION_TYPE_FLOAT )<=5.2
-        )
-        {
+        if (
+            // Blackberry 4.x - Tested on the Curve 8330
+            $this->version('BlackBerry', self::VERSION_TYPE_FLOAT) < 5.0 ||
+            // Windows Mobile - Tested on the HTC Leo (WinMo 5.2)
+            $this->match('MSIEMobile|Windows CE.*Mobile') || $this->version('Windows Mobile', self::VERSION_TYPE_FLOAT) <= 5.2
+        ) {
             return self::MOBILE_GRADE_C;
         }
 

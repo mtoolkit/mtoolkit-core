@@ -1,4 +1,5 @@
 <?php
+
 namespace mtoolkit\core;
 
 /*
@@ -24,133 +25,137 @@ use mtoolkit\core\exception\MWrongTypeException;
 
 class MFileInfoList extends MList
 {
+    /**
+     * MFileInfoList constructor.
+     * @param array $list
+     */
     public function __construct(array $list = array())
     {
         parent::__construct($list, null);
     }
-    
+
     /**
      * Inserts <i>$value</i> at the end of the list.
-     * 
+     *
      * @param MFileInfo $value
      * @throws MWrongTypeException
      */
-    public function append( MFileInfo $value )
+    public function append(MFileInfo $value): void
     {
         parent::append($value);
     }
 
     /**
      * Inserts MList <i>$value</i> at the end of the list.
-     * 
+     *
      * @param MFileInfoList $value
      */
-    public function appendList( MFileInfoList $value )
+    public function appendList(MFileInfoList $value): void
     {
         parent::appendList($value);
     }
 
     /**
-     * Returns the item at index position <i>$i</i> in the list. <i>$i</i> must 
+     * Returns the item at index position <i>$i</i> in the list. <i>$i</i> must
      * be a valid index position in the list (i.e., 0 <= <i>$i</i> < size()).
-     * 
+     *
      * @param int $i
      * @return MFileInfo
      * @throws MWrongTypeException
      * @throws \OutOfBoundsException
      */
-    public function &at( int $i )
+    public function &at(int $i): MFileInfo
     {
         return parent::at($i);
     }
 
     /**
-     * This function is provided for STL compatibility. 
-     * It is equivalent to last(). 
-     * The list must not be empty. 
+     * This function is provided for STL compatibility.
+     * It is equivalent to last().
+     * The list must not be empty.
      * If the list can be empty, call isEmpty() before calling this function.
-     * 
+     *
      * @return MFileInfo
      * @throws \OutOfBoundsException
      */
-    public function back()
+    public function back(): MFileInfo
     {
         return parent::back();
     }
 
     /**
-     * Returns true if this list is not empty and its last item is equal to 
+     * Returns true if this list is not empty and its last item is equal to
      * <i>$value</i>; otherwise returns false.
-     * 
+     *
      * @param MFileInfo $value
      * @return boolean
      */
-    public function endsWith( MFileInfo $value ):bool
+    public function endsWith(MFileInfo $value): bool
     {
         return parent::endsWith($value);
     }
 
     /**
-     * Returns the value of the first item in the list. The list must not be 
-     * empty. If the list can be empty, call isEmpty() before calling this 
+     * Returns the value of the first item in the list. The list must not be
+     * empty. If the list can be empty, call isEmpty() before calling this
      * function.
-     * 
+     *
      * @return MFileInfo
      */
-    public function first()
+    public function first(): MFileInfo
     {
         return parent::first();
     }
 
     /**
-     * This function is provided for STL compatibility. It is equivalent to 
-     * first(). The list must not be empty. If the list can be empty, call 
+     * This function is provided for STL compatibility. It is equivalent to
+     * first(). The list must not be empty. If the list can be empty, call
      * isEmpty() before calling this function.
-     * 
+     *
      * @return MFileInfo
      */
-    public function front()
+    public function front(): MFileInfo
     {
         return parent::front();
     }
 
     /**
-     * Returns the index position of the first occurrence of <i>$value</i> in 
-     * the list, searching forward from index position <i>$from</i>. Returns -1 
+     * Returns the index position of the first occurrence of <i>$value</i> in
+     * the list, searching forward from index position <i>$from</i>. Returns -1
      * if no item matched.
-     * 
+     *
      * @param MFileInfo $value
      * @param int $from
      * @return int
      * @throws MWrongTypeException
      */
-    public function /* int */ indexOf( MFileInfo $value, int $from = 0 ):int
+    public function indexOf(MFileInfo $value, int $from = 0): int
     {
         return parent::indexOf($value, $from);
     }
 
     /**
-     * Inserts value at index position <i>$i</i> in the list. If i is 0, the 
-     * <i>$value</i> is prepended to the list. If i is size(), the value is appended to 
+     * Inserts value at index position <i>$i</i> in the list. If i is 0, the
+     * <i>$value</i> is prepended to the list. If i is size(), the value is appended to
      * the list.
-     * 
+     *
      * @param int $i
      * @param MFileInfo $value
      * @throws MWrongTypeException
      */
-    public function insert( int $i, MFileInfo $value )
-    {        
+    public function insert(int $i, MFileInfo $value): void
+    {
         parent::insert($i, $value);
     }
 
     /**
-     * Returns a reference to the last item in the list. The list must not be 
-     * empty. If the list can be empty, call isEmpty() before calling this 
+     * Returns a reference to the last item in the list. The list must not be
+     * empty. If the list can be empty, call isEmpty() before calling this
      * function.
-     * 
+     *
      * @return MFileInfo
      */
-    public function last()
+    public function last(): MFileInfo
     {
         return parent::last();
     }
@@ -160,7 +165,7 @@ class MFileInfoList extends MList
      * @param int $from
      * @return int
      */
-    public function lastIndexOf( MFileInfo $value, int $from = -1 ):int
+    public function lastIndexOf(MFileInfo $value, int $from = -1): int
     {
         return parent::lastIndexOf($value, $from);
     }
@@ -168,7 +173,7 @@ class MFileInfoList extends MList
     /**
      * @param MFileInfo $value
      */
-    public function prepend( MFileInfo $value )
+    public function prepend(MFileInfo $value)
     {
         parent::prepend($value);
     }
@@ -177,7 +182,7 @@ class MFileInfoList extends MList
      * @param MFileInfo $value
      * @return bool
      */
-    public function removeOne( MFileInfo $value ):bool
+    public function removeOne(MFileInfo $value): bool
     {
         return parent::removeOne($value);
     }
@@ -186,7 +191,7 @@ class MFileInfoList extends MList
      * @param int $i
      * @param MFileInfo $value
      */
-    public function replace( int $i, MFileInfo $value )
+    public function replace(int $i, MFileInfo $value): void
     {
         parent::replace($i, $value);
     }
@@ -195,16 +200,16 @@ class MFileInfoList extends MList
      * @param MFileInfo $value
      * @return bool
      */
-    public function startsWith( MFileInfo $value ):bool
+    public function startsWith(MFileInfo $value): bool
     {
         return false;
     }
-    
+
     /**
      * @param int $i
      * @return MFileInfo
      */
-    public function takeAt( int $i )
+    public function takeAt(int $i): MFileInfo
     {
         return parent::takeAt($i);
     }
@@ -212,7 +217,7 @@ class MFileInfoList extends MList
     /**
      * @return MFileInfo
      */
-    public function takeFirst()
+    public function takeFirst(): MFileInfo
     {
         return parent::takeFirst();
     }
@@ -220,7 +225,7 @@ class MFileInfoList extends MList
     /**
      * @return MFileInfo
      */
-    public function takeLast()
+    public function takeLast(): MFileInfo
     {
         return parent::takeLast();
     }
@@ -230,7 +235,7 @@ class MFileInfoList extends MList
      * @param MFileInfo $defaultValue
      * @return MFileInfo
      */
-    public function getValue( int $i, MFileInfo $defaultValue = null ):MFileInfo
+    public function getValue(int $i, MFileInfo $defaultValue = null): MFileInfo
     {
         return parent::getValue($i, $defaultValue);
     }
@@ -238,7 +243,7 @@ class MFileInfoList extends MList
     /**
      * @return MFileInfo
      */
-    public function &current()
+    public function &current(): MFileInfo
     {
         return parent::current();
     }

@@ -22,21 +22,21 @@
 namespace mtoolkit\core\device;
 
 /**
- * This enum is used by the permission() function to report the permissions and 
- * ownership of a file. The values may be OR-ed together to test multiple 
+ * This enum is used by the permission() function to report the permissions and
+ * ownership of a file. The values may be OR-ed together to test multiple
  * permissions and ownership values.
- * 
- * @const READ_OWNER	The file is readable by the owner of the file.
- * @const WRITE_OWNER	The file is writable by the owner of the file.
+ *
+ * @const READ_OWNER    The file is readable by the owner of the file.
+ * @const WRITE_OWNER    The file is writable by the owner of the file.
  * @const EXE_OWNER      The file is executable by the owner of the file.
  * @const READ_USER      The file is readable by the user.
- * @const WRITE_USER	The file is writable by the user.
+ * @const WRITE_USER    The file is writable by the user.
  * @const EXE_USER       The file is executable by the user.
- * @const READ_GROUP	The file is readable by the group.
- * @const WRITE_GROUP	The file is writable by the group.
+ * @const READ_GROUP    The file is readable by the group.
+ * @const WRITE_GROUP    The file is writable by the group.
  * @const EXE_GROUP      The file is executable by the group.
- * @const READ_OTHER	The file is readable by anyone.
- * @const WRITE_OTHER	The file is writable by anyone.
+ * @const READ_OTHER    The file is readable by anyone.
+ * @const WRITE_OTHER    The file is writable by anyone.
  * @const EXE_OTHER      The file is executable by anyone.
  */
 final class FilePermission

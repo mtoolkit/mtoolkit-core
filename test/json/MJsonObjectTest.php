@@ -1,4 +1,5 @@
 <?php
+
 namespace mtoolkit\core\test\json;
 
 use mtoolkit\core\json\MJsonObject;
@@ -7,7 +8,7 @@ class MJsonObjectTest extends \PHPUnit_Framework_TestCase
 {
     public function testToJson()
     {
-        $expectedJson01 = json_encode( array(
+        $expectedJson01 = json_encode(array(
             'property01' => array(
                 'property01' => 'property01',
                 'property02' => 2,
@@ -15,11 +16,11 @@ class MJsonObjectTest extends \PHPUnit_Framework_TestCase
                 'property04' => true,
             ),
             'property02' => 2
-        ) );
+        ));
 
         $obj = new A2();
         $json = $obj->toJson();
-        $this->assertEquals( $expectedJson01, $json );
+        $this->assertEquals($expectedJson01, $json);
     }
 }
 

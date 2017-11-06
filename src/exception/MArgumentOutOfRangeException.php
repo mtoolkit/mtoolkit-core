@@ -24,7 +24,7 @@ namespace mtoolkit\core\exception;
 class MArgumentOutOfRangeException extends \Exception
 {
 
-    public function __construct($message, $code=-1, $previous=null)
+    public function __construct($message, $code = -1, $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

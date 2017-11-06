@@ -23,10 +23,10 @@ namespace mtoolkit\core\enum;
 
 /**
  * This enum type defines what happens to the aspect ratio when scaling an rectangle.
- * 
+ *
  * @const IGNORE_ASPECT_RATIO The size is scaled freely. The aspect ratio is not preserved.
  * @const KEEP_ASPECT_RATIO The size is scaled to a rectangle as large as possible inside a given rectangle, preserving the aspect ratio.
- * @const KEEP_ASPECT_RATIO_BY_EXPANDING The size is scaled to a rectangle as small as possible outside a given rectangle, preserving the aspect ratio.    
+ * @const KEEP_ASPECT_RATIO_BY_EXPANDING The size is scaled to a rectangle as small as possible outside a given rectangle, preserving the aspect ratio.
  */
 final class AspectRatioMode
 {

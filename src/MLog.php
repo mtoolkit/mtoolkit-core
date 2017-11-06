@@ -2,6 +2,9 @@
 
 namespace mtoolkit\core;
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+
 /*
  * This file is part of MToolkit.
  *
@@ -26,199 +29,63 @@ namespace mtoolkit\core;
  * @const SIGNAL_ERROR_ENTERED This signal is emitted when an error message is added.
  * @const SIGNAL_WARNING_ENTERED This signal is emitted when an warning message is added.
  */
-final class MLog
+final class MLog extends MObject
 {
-    const MESSAGES = 'MToolkit\Core\MLog\Messages';
-    const INFO = "INFO";
-    const WARNING = "WARNING";
-    const ERROR = "ERROR";
+    public const SIGNAL_INFORMATION_ENTERED = 'SIGNAL_INFORMATION_ENTERED';
+    public const SIGNAL_ERROR_ENTERED = 'SIGNAL_ERROR_ENTERED';
+    public const SIGNAL_WARNING_ENTERED = 'SIGNAL_WARNING_ENTERED';
+
+    /**
+     * @var Logger
+     */
+    private $log;
+
+    /**
+     * MLog constructor.
+     * @param string $path
+     * @param int $logLevel
+     */
+    public function __construct(string $path, int $logLevel)
+    {
+        parent::__construct();
+        $this->log = new Logger(MCoreApplication::getApplicationName());
+        $this->log->pushHandler(new StreamHandler($path, $logLevel));
+    }
+
 
     /**
      * Add a information message.
-     * 
-     * @param string $tag
-     * @param string $text
+     *
+     * @param $text
+     * @param array $context
      */
-    public static function i( $tag, $text )
+    public function i($text, $context = array())
     {
-        self::addMessage( MLog::INFO, $tag, $text );
+        $this->log->info($text, $context);
+        $this->emit(self::SIGNAL_INFORMATION_ENTERED);
     }
 
     /**
      * Add a warning message.
-     * 
-     * @param string $tag
-     * @param string $text
+     *
+     * @param $text
+     * @param array $context
      */
-    public static function w( $tag, $text )
+    public function w($text, $context = array())
     {
-        self::addMessage( MLog::WARNING, $tag, $text );
+        $this->log->warn($text, $context);
+        $this->emit(self::SIGNAL_WARNING_ENTERED);
     }
 
     /**
      * Add a error message.
-     * 
-     * @param string $tag
-     * @param string $text
+     *
+     * @param $text
+     * @param array $context
      */
-    public static function e( $tag, $text )
+    public function e($text, $context = array())
     {
-        self::addMessage( MLog::ERROR, $tag, $text );
+        $this->log->error($text, $context);
+        $this->emit(self::SIGNAL_ERROR_ENTERED);
     }
-
-    /**
-     * @param string $type
-     * @param string $tag
-     * @param string $text
-     */
-    private static function addMessage( $type, $tag, $text )
-    {
-        if( !MCoreApplication::isDebug() )
-        {
-            return;
-        }
-
-        if( $text instanceof MList || $text instanceof MMap )
-        {
-            $text = json_encode( $text->__toArray() );
-        }
-        
-        if( is_array( $text ) )
-        {
-            $text = json_encode( $text );
-        }
-
-        /* @var $messages MList */
-        $messages = self::getMessages();
-
-        $message = new MLogMessage();
-        $message->setType( $type )
-                ->setTag( $tag )
-                ->setText( $text );
-
-        $messages->append( $message );
-
-        $_SESSION[self::MESSAGES] = serialize( $messages );
-    }
-
-    /**
-     * Return the message at position <i>$i</i>.
-     * 
-     * @return MList<MLogMessage>
-     */
-    public static function getMessages()
-    {
-        /* @var $messages MList */
-        $messages = new MList();
-        if( isset( $_SESSION[self::MESSAGES] ) )
-        {
-            $messages = unserialize( $_SESSION[self::MESSAGES] );
-        }
-
-        return $messages;
-    }
-
-    /**
-     * Remove all stored messages.
-     */
-    public static function clearAllMessages()
-    {
-        $_SESSION[self::MESSAGES] = serialize( new MList() );
-    }
-
-}
-
-/**
- * <b>Don't istantiate an object of type MLogMessage.</b>
- * It is used only from <i>MLog</i> class to store a MLogMessage
- */
-final class MLogMessage
-{
-    /**
-     * @var string
-     */
-    private $type = null;
-
-    /**
-     * @var string
-     */
-    private $tag = null;
-
-    /**
-     * @var string
-     */
-    private $text = null;
-
-    /**
-     * @var \DateTime
-     */
-    private $time = null;
-
-    public function __construct()
-    {
-        $this->time = new \DateTime();
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     * @return \MToolkit\Core\MLogMessage
-     */
-    public function setType( $type )
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTag()
-    {
-        return $this->tag;
-    }
-
-    /**
-     * @param string $tag
-     * @return \MToolkit\Core\MLogMessage
-     */
-    public function setTag( $tag )
-    {
-        $this->tag = $tag;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * @param string $text
-     * @return \MToolkit\Core\MLogMessage
-     */
-    public function setText( $text )
-    {
-        $this->text = $text;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getTime()
-    {
-        return $this->time;
-    }
-
 }

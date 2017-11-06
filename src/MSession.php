@@ -2,8 +2,7 @@
 
 namespace mtoolkit\core;
 
-if (session_id() == '')
-{
+if (session_id() == '') {
     @session_start();
 }
 
@@ -31,44 +30,42 @@ class MSession
 
     /**
      * Return the value saved in <i>$_SESSION</i> with <i>$key</i>.
-     * 
+     *
      * @param string $key
      * @return mixed
      */
-    public static function get( $key )
+    public static function get($key)
     {
-        if (isset( $_SESSION[$key] ) === false)
-        {
+        if (isset($_SESSION[$key]) === false) {
             return null;
         }
 
-        return unserialize( $_SESSION[$key] );
+        return unserialize($_SESSION[$key]);
     }
 
     /**
      * Save the <i>$value</i> in <i>$_SESSION</i> with <i>$key</i>.
-     * 
+     *
      * @param string $key
      * @param mixed $value
      */
-    public static function set( $key, $value )
+    public static function set($key, $value)
     {
-        $_SESSION[$key] = serialize( $value );
+        $_SESSION[$key] = serialize($value);
     }
 
     /**
      * Delete the value in <i>$_SESSION</i> with <i>$key</i>.
-     * 
+     *
      * @param string $key
      */
-    public static function delete( $key )
+    public static function delete($key)
     {
-        if (isset( $_SESSION[$key] ) === false)
-        {
+        if (isset($_SESSION[$key]) === false) {
             return;
         }
 
-        unset( $_SESSION[$key] );
+        unset($_SESSION[$key]);
     }
 
     /**

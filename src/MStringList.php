@@ -29,48 +29,48 @@ class MStringList extends MList
     {
         parent::__construct($list, null);
     }
-    
+
     /**
      * Inserts <i>$value</i> at the end of the list.
-     * 
+     *
      * @param MString $value
      * @throws MWrongTypeException
      */
-    public function append( MString $value )
+    public function append(MString $value)
     {
         parent::append($value);
     }
 
     /**
      * Inserts MList <i>$value</i> at the end of the list.
-     * 
+     *
      * @param MStringList $value
      */
-    public function appendList( MStringList $value )
+    public function appendList(MStringList $value)
     {
         parent::appendList($value);
     }
 
     /**
-     * Returns the item at index position <i>$i</i> in the list. <i>$i</i> must 
+     * Returns the item at index position <i>$i</i> in the list. <i>$i</i> must
      * be a valid index position in the list (i.e., 0 <= <i>$i</i> < size()).
-     * 
+     *
      * @param int $i
      * @return MString
      * @throws MWrongTypeException
      * @throws \OutOfBoundsException
      */
-    public function &at( int $i )
+    public function &at(int $i)
     {
         return parent::at($i);
     }
 
     /**
-     * This function is provided for STL compatibility. 
-     * It is equivalent to last(). 
-     * The list must not be empty. 
+     * This function is provided for STL compatibility.
+     * It is equivalent to last().
+     * The list must not be empty.
      * If the list can be empty, call isEmpty() before calling this function.
-     * 
+     *
      * @return MString
      * @throws \OutOfBoundsException
      */
@@ -80,22 +80,22 @@ class MStringList extends MList
     }
 
     /**
-     * Returns true if this list is not empty and its last item is equal to 
+     * Returns true if this list is not empty and its last item is equal to
      * <i>$value</i>; otherwise returns false.
-     * 
+     *
      * @param MString $value
      * @return boolean
      */
-    public function endsWith( MString $value ):bool
+    public function endsWith(MString $value): bool
     {
         return parent::endsWith($value);
     }
 
     /**
-     * Returns the value of the first item in the list. The list must not be 
-     * empty. If the list can be empty, call isEmpty() before calling this 
+     * Returns the value of the first item in the list. The list must not be
+     * empty. If the list can be empty, call isEmpty() before calling this
      * function.
-     * 
+     *
      * @return MString
      */
     public function first()
@@ -104,10 +104,10 @@ class MStringList extends MList
     }
 
     /**
-     * This function is provided for STL compatibility. It is equivalent to 
-     * first(). The list must not be empty. If the list can be empty, call 
+     * This function is provided for STL compatibility. It is equivalent to
+     * first(). The list must not be empty. If the list can be empty, call
      * isEmpty() before calling this function.
-     * 
+     *
      * @return MString
      */
     public function front()
@@ -116,39 +116,40 @@ class MStringList extends MList
     }
 
     /**
-     * Returns the index position of the first occurrence of <i>$value</i> in 
-     * the list, searching forward from index position <i>$from</i>. Returns -1 
+     * Returns the index position of the first occurrence of <i>$value</i> in
+     * the list, searching forward from index position <i>$from</i>. Returns -1
      * if no item matched.
-     * 
+     *
      * @param MString $value
      * @param int $from
      * @return int
      * @throws MWrongTypeException
      */
-    public function /* int */ indexOf( MString $value, $from = 0 ):int
+    public function /* int */
+    indexOf(MString $value, $from = 0): int
     {
         return parent::indexOf($value, $from);
     }
 
     /**
-     * Inserts value at index position <i>$i</i> in the list. If i is 0, the 
-     * <i>$value</i> is prepended to the list. If i is size(), the value is appended to 
+     * Inserts value at index position <i>$i</i> in the list. If i is 0, the
+     * <i>$value</i> is prepended to the list. If i is size(), the value is appended to
      * the list.
-     * 
+     *
      * @param int $i
      * @param MString $value
      * @throws MWrongTypeException
      */
-    public function insert( int $i, MString $value )
-    {        
+    public function insert(int $i, MString $value)
+    {
         parent::insert($i, $value);
     }
 
     /**
-     * Returns a reference to the last item in the list. The list must not be 
-     * empty. If the list can be empty, call isEmpty() before calling this 
+     * Returns a reference to the last item in the list. The list must not be
+     * empty. If the list can be empty, call isEmpty() before calling this
      * function.
-     * 
+     *
      * @return MString
      */
     public function last()
@@ -161,7 +162,7 @@ class MStringList extends MList
      * @param int $from
      * @return int
      */
-    public function lastIndexOf( MString $value, $from = -1 ):int
+    public function lastIndexOf(MString $value, $from = -1): int
     {
         return parent::lastIndexOf($value, $from);
     }
@@ -169,7 +170,7 @@ class MStringList extends MList
     /**
      * @param MString $value
      */
-    public function prepend( MString $value )
+    public function prepend(MString $value)
     {
         parent::prepend($value);
     }
@@ -178,7 +179,7 @@ class MStringList extends MList
      * @param MString $value
      * @return bool
      */
-    public function removeOne( MString $value ):bool
+    public function removeOne(MString $value): bool
     {
         return parent::removeOne($value);
     }
@@ -187,7 +188,7 @@ class MStringList extends MList
      * @param int $i
      * @param MString $value
      */
-    public function replace( int $i, MString $value )
+    public function replace(int $i, MString $value)
     {
         parent::replace($i, $value);
     }
@@ -196,16 +197,16 @@ class MStringList extends MList
      * @param MString $value
      * @return bool
      */
-    public function startsWith( MString $value ):bool
+    public function startsWith(MString $value): bool
     {
         return false;
     }
-    
+
     /**
      * @param int $i
      * @return MString
      */
-    public function takeAt( int $i )
+    public function takeAt(int $i)
     {
         return parent::takeAt($i);
     }
@@ -231,7 +232,7 @@ class MStringList extends MList
      * @param MString $defaultValue
      * @return MString
      */
-    public function getValue( int $i, MString $defaultValue = null ):MString
+    public function getValue(int $i, MString $defaultValue = null): MString
     {
         return parent::getValue($i, $defaultValue);
     }

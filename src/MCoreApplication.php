@@ -32,12 +32,51 @@ require_once __DIR__ . '/MCore.php';
  */
 class MCoreApplication
 {
-    const APPLICATION_NAME = 'MToolkit\Core\MCoreApplication\ApplicationName';
-    const APPLICATION_VERSION = 'MToolkit\Core\MCoreApplication\ApplicationVersion';
-    const ORGANIZATION_DOMAIN = 'MToolkit\Core\MCoreApplication\OrganizationDomain';
-    const ORGANIZATION_NAME = 'MToolkit\Core\MCoreApplication\OrganizationName';
-    const APPLICATION_DIR_PATH = "MToolkit\Core\MCoreApplication\ApplicationDirPath";
-    const DEBUG = "MToolkit\Core\MObject\IsDebug";
+    private const APPLICATION_NAME = 'MToolkit\Core\MCoreApplication\ApplicationName';
+    private const APPLICATION_VERSION = 'MToolkit\Core\MCoreApplication\ApplicationVersion';
+    private const ORGANIZATION_DOMAIN = 'MToolkit\Core\MCoreApplication\OrganizationDomain';
+    private const ORGANIZATION_NAME = 'MToolkit\Core\MCoreApplication\OrganizationName';
+    private const APPLICATION_DIR_PATH = "MToolkit\Core\MCoreApplication\ApplicationDirPath";
+    private const DEBUG = "MToolkit\Core\MObject\IsDebug";
+
+    /**
+     * @var bool
+     */
+    private static $IS_DEBUG = false;
+
+    /**
+     * @var ?MApplicationDir
+     */
+    private static $APPLICATION_DIR_PATH = null;
+
+    /**
+     * @var ?string
+     */
+    private static $APPLICATION_NAME = null;
+
+    /**
+     * @var ?string
+     */
+    private static $APPLICATION_VERSION = null;
+
+    /**
+     * @var ?string
+     */
+    private static $ORGANIZATION_DOMAIN = null;
+
+    /**
+     * @var ?string
+     */
+    private static $ORGANIZATION_NAME = null;
+
+    /**
+     * Returns true if the app is a cli app
+     * @return bool
+     */
+    public static function isCliApp(): bool
+    {
+        return php_sapi_name() == 'cli';
+    }
 
     /**
      * Set the debug mode.
@@ -46,7 +85,11 @@ class MCoreApplication
      */
     public static function setIsDebug(bool $bool): void
     {
-        MSession::set(MCoreApplication::DEBUG, $bool);
+        if (self::isCliApp()) {
+            self::$IS_DEBUG = $bool;
+        } else {
+            MSession::set(MCoreApplication::DEBUG, $bool);
+        }
     }
 
     /**
@@ -57,6 +100,10 @@ class MCoreApplication
      */
     public static function isDebug(): bool
     {
+        if (self::isCliApp()) {
+            return self::$IS_DEBUG;
+        }
+
         $debug = MSession::get(MCoreApplication::DEBUG);
 
         if ($debug === null) {
@@ -88,7 +135,11 @@ class MCoreApplication
         $applicationDir->setPath($path);
         $applicationDir->setNamespace($namespace);
 
-        MSession::set(MCoreApplication::APPLICATION_DIR_PATH, $applicationDir);
+        if (self::isCliApp()) {
+            self::$APPLICATION_DIR_PATH = $applicationDir;
+        } else {
+            MSession::set(MCoreApplication::APPLICATION_DIR_PATH, $applicationDir);
+        }
     }
 
     /**
@@ -98,8 +149,11 @@ class MCoreApplication
      */
     public static function getApplicationDirPath():?MApplicationDir
     {
-        $rootPath = MSession::get(MCoreApplication::APPLICATION_DIR_PATH);
-        return $rootPath;
+        if (self::isCliApp()) {
+            return self::$APPLICATION_DIR_PATH;
+        }
+
+        return MSession::get(MCoreApplication::APPLICATION_DIR_PATH);
     }
 
     /**
@@ -112,6 +166,10 @@ class MCoreApplication
      */
     public static function getApplicationName():?string
     {
+        if (self::isCliApp()) {
+            return self::$APPLICATION_NAME;
+        }
+
         return MSession::get(MCoreApplication::APPLICATION_NAME);
     }
 
@@ -122,6 +180,10 @@ class MCoreApplication
      */
     public static function getApplicationVersion():?string
     {
+        if (self::isCliApp()) {
+            return self::$APPLICATION_VERSION;
+        }
+
         return MSession::get(MCoreApplication::APPLICATION_VERSION);
     }
 
@@ -130,12 +192,16 @@ class MCoreApplication
      * this application.<br />
      * The value is used by the MSettings class when it is constructed using the
      * empty constructor. This saves having to repeat this information each time
-     * a MSettings object is created.
+     * a {@link MSettings} object is created.
      *
      * @return string
      */
-    public static function getOrganizationDomain(): string
+    public static function getOrganizationDomain(): ?string
     {
+        if (self::isCliApp()) {
+            return self::$ORGANIZATION_DOMAIN;
+        }
+
         return MSession::get(MCoreApplication::ORGANIZATION_DOMAIN);
     }
 
@@ -150,6 +216,10 @@ class MCoreApplication
      */
     public static function getOrganizationName(): string
     {
+        if (self::isCliApp()) {
+            return self::$ORGANIZATION_NAME;
+        }
+
         return MSession::get(MCoreApplication::ORGANIZATION_NAME);
     }
 
@@ -163,7 +233,11 @@ class MCoreApplication
      */
     public static function setApplicationName(string $application): void
     {
-        MSession::set(MCoreApplication::APPLICATION_NAME, $application);
+        if (self::isCliApp()) {
+            self::$APPLICATION_NAME = $application;
+        } else {
+            MSession::set(MCoreApplication::APPLICATION_NAME, $application);
+        }
     }
 
     /**
@@ -173,7 +247,11 @@ class MCoreApplication
      */
     public static function setApplicationVersion(string $version): void
     {
-        MSession::set(MCoreApplication::APPLICATION_VERSION, $version);
+        if (self::isCliApp()) {
+            self::$APPLICATION_VERSION = $version;
+        } else {
+            MSession::set(MCoreApplication::APPLICATION_VERSION, $version);
+        }
     }
 
     /**
@@ -187,7 +265,11 @@ class MCoreApplication
      */
     public static function setOrganizationDomain(string $orgDomain): void
     {
-        MSession::set(MCoreApplication::ORGANIZATION_DOMAIN, $orgDomain);
+        if (self::isCliApp()) {
+            self::$ORGANIZATION_DOMAIN = $orgDomain;
+        } else {
+            MSession::set(MCoreApplication::ORGANIZATION_DOMAIN, $orgDomain);
+        }
     }
 
     /**
@@ -201,6 +283,10 @@ class MCoreApplication
      */
     public static function setOrganizationName(string $orgName): void
     {
-        MSession::set(MCoreApplication::ORGANIZATION_NAME, $orgName);
+        if (self::isCliApp()) {
+            self::$ORGANIZATION_NAME = $orgName;
+        } else {
+            MSession::set(MCoreApplication::ORGANIZATION_NAME, $orgName);
+        }
     }
 }
