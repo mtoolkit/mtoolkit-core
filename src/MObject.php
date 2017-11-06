@@ -65,11 +65,11 @@ class MObject
      *
      * @param \MToolkit\Core\MObject $parent
      */
-    public function __construct( MObject $parent = null )
+    public function __construct(MObject $parent = null)
     {
         $this->parent = $parent;
-        $reflect = new \ReflectionClass( $this );
-        $this->toString = uniqid( $reflect->getShortName() . "_", true );
+        $reflect = new \ReflectionClass($this);
+        $this->toString = uniqid($reflect->getShortName() . "_", true);
     }
 
     /**
@@ -91,7 +91,7 @@ class MObject
      * @param bool $signalsBlocked
      * @return \MToolkit\Core\MObject
      */
-    public function setSignalsBlocked( $signalsBlocked )
+    public function setSignalsBlocked($signalsBlocked)
     {
         $this->signalsBlocked = $signalsBlocked;
         return $this;
@@ -103,32 +103,30 @@ class MObject
      * @param \MToolkit\Core\MObject $receiver
      * @param string $method
      */
-    public function connect( MObject $sender, $signal, MObject $receiver, $method )
+    public function connect(MObject $sender, $signal, MObject $receiver, $method)
     {
-        if( $sender !== $this )
-        {
-            $sender->connect( $sender, $signal, $receiver, $method );
+        if ($sender !== $this) {
+            $sender->connect($sender, $signal, $receiver, $method);
             return;
         }
 
         $slot = new MSlot();
-        $slot->setMethod( $method )
-            ->setReceiver( $receiver );
+        $slot->setMethod($method)
+            ->setReceiver($receiver);
 
         $this->signals[$signal][] = $slot;
     }
 
-    public function connectClosure( MObject $sender, $signal, \Closure $callback )
+    public function connectClosure(MObject $sender, $signal, \Closure $callback)
     {
-        if( $sender !== $this )
-        {
-            $sender->connectClosure( $sender, $signal, $callback );
+        if ($sender !== $this) {
+            $sender->connectClosure($sender, $signal, $callback);
             return;
         }
 
         $slot = new MSlot();
-        $slot->setMethod( $callback )
-            ->setReceiver( null );
+        $slot->setMethod($callback)
+            ->setReceiver(null);
 
         $this->signals[$signal][] = $slot;
     }
@@ -144,16 +142,14 @@ class MObject
      * @param string $method
      * @return bool
      */
-    public function disconnect( MObject $sender, $signal, MObject $receiver, $method )
+    public function disconnect(MObject $sender, $signal, MObject $receiver, $method)
     {
-        if( $this !== $sender )
-        {
-            $sender->disconnect( $sender, $signal, $receiver, $method );
+        if ($this !== $sender) {
+            $sender->disconnect($sender, $signal, $receiver, $method);
             return false;
         }
 
-        if( !isset($this->signals[$signal]) )
-        {
+        if (!isset($this->signals[$signal])) {
             return false;
         }
 
@@ -168,47 +164,35 @@ class MObject
      * @param string $signal
      * @param mixed $args
      */
-    public function emit( $signal, $args = null )
+    public function emit($signal, $args = null)
     {
-        if( $this->signalsBlocked )
-        {
+        if ($this->signalsBlocked) {
             return;
         }
 
-        if( isset($this->signals[$signal]) === false )
-        {
+        if (isset($this->signals[$signal]) === false) {
             return;
         }
 
         /* @var $slots MSlot[] */
         $slots = $this->signals[$signal];
 
-        foreach( $slots as /* @var $slot MSlot */
-                 $slot )
-        {
+        foreach ($slots as /* @var $slot MSlot */
+                 $slot) {
             $method = $slot->getMethod();
             $object = $slot->getReceiver();
 
-            if( $args == null )
-            {
-                if( $object == null )
-                {
+            if ($args == null) {
+                if ($object == null) {
                     $method();
-                }
-                else
-                {
+                } else {
                     $object->$method();
                 }
-            }
-            else
-            {
-                if( $object == null )
-                {
-                    $method( $args );
-                }
-                else
-                {
-                    $object->$method( $args );
+            } else {
+                if ($object == null) {
+                    $method($args);
+                } else {
+                    $object->$method($args);
                 }
             }
         }
@@ -232,7 +216,7 @@ class MObject
         return $this->parent;
     }
 
-    public function setParent( MObject $parent )
+    public function setParent(MObject $parent)
     {
         $this->parent = $parent;
         return $this;
@@ -243,10 +227,9 @@ class MObject
      * @param string $key
      * @return string|null
      */
-    public function post( $key )
+    public function post($key)
     {
-        if( isset($_POST[$key]) === false )
-        {
+        if (isset($_POST[$key]) === false) {
             return null;
         }
 
@@ -258,10 +241,9 @@ class MObject
      * @param string $key
      * @return string|null
      */
-    public function get( $key )
+    public function get($key)
     {
-        if( isset($_GET[$key]) === false )
-        {
+        if (isset($_GET[$key]) === false) {
             return null;
         }
 
@@ -275,8 +257,7 @@ class MObject
      */
     public static function getPost()
     {
-        if( MObject::$post == null )
-        {
+        if (MObject::$post == null) {
             MObject::$post = new MPost();
         }
 
@@ -290,8 +271,7 @@ class MObject
      */
     public static function getGet()
     {
-        if( MObject::$get == null )
-        {
+        if (MObject::$get == null) {
             MObject::$get = new MGet();
         }
 
@@ -305,9 +285,9 @@ class MObject
      * @param string $name
      * @return mixed
      */
-    public function __get( $name )
+    public function __get($name)
     {
-        return $this->getProperty( $name );
+        return $this->getProperty($name);
     }
 
     /**
@@ -317,9 +297,9 @@ class MObject
      * @param string $name
      * @param mixed $value
      */
-    public function __set( $name, $value )
+    public function __set($name, $value)
     {
-        $this->setProperty( $name, $value );
+        $this->setProperty($name, $value);
     }
 
     /**
@@ -328,10 +308,9 @@ class MObject
      * @param string $name
      * @return mixed
      */
-    public function getProperty( $name )
+    public function getProperty($name)
     {
-        if( property_exists( $this, $name ) )
-        {
+        if (property_exists($this, $name)) {
             return $this->$name;
         }
 
@@ -344,10 +323,9 @@ class MObject
      * @param string $name
      * @param mixed $value
      */
-    public function setProperty( $name, $value )
+    public function setProperty($name, $value)
     {
-        if( property_exists( $this, $name ) )
-        {
+        if (property_exists($this, $name)) {
             $this->$name = $value;
             return;
         }
@@ -359,9 +337,9 @@ class MObject
      * @param bool $obj
      * @return boolean
      */
-    public function equals( $obj )
+    public function equals($obj)
     {
-        return MObject::areEquals( $this, $obj );
+        return MObject::areEquals($this, $obj);
     }
 
     /**
@@ -370,15 +348,13 @@ class MObject
      * @return boolean
      * @throws \Exception
      */
-    public static function areEquals( $obj1, $obj2 )
+    public static function areEquals($obj1, $obj2)
     {
-        if( gettype( $obj1 ) != gettype( $obj2 ) )
-        {
+        if (gettype($obj1) != gettype($obj2)) {
             return false;
         }
 
-        switch( gettype( $obj1 ) )
-        {
+        switch (gettype($obj1)) {
             case "boolean":
                 return ($obj1 === $obj2);
                 break;
@@ -388,7 +364,7 @@ class MObject
                 return ($obj1 == $obj2);
                 break;
             case "array":
-                return (count( array_diff( $obj1, $obj2 ) ) == 0);
+                return (count(array_diff($obj1, $obj2)) == 0);
                 break;
             case "object":
                 // Do nothing
@@ -397,41 +373,37 @@ class MObject
                 return true;
                 break;
             default:
-                throw new \Exception( 'Types like "resource" and "unknown type" are incomparable.' );
+                throw new \Exception('Types like "resource" and "unknown type" are incomparable.');
                 break;
         }
 
-        if( get_class( $obj1 ) != get_class( $obj2 ) )
-        {
+        if (get_class($obj1) != get_class($obj2)) {
             return false;
         }
 
-        $reflectObj1 = new \ReflectionClass( $obj1 );
-        $reflectObj2 = new \ReflectionClass( $obj2 );
+        $reflectObj1 = new \ReflectionClass($obj1);
+        $reflectObj2 = new \ReflectionClass($obj2);
 
         /* @var $propertiesThis \ReflectionProperty[] */
         $propertiesObj1 = $reflectObj1->getProperties();
         /* @var $propertiesObj \ReflectionProperty[] */
         $propertiesObj2 = $reflectObj2->getProperties();
 
-        if( count( $propertiesObj1 ) != count( $propertiesObj2 ) )
-        {
+        if (count($propertiesObj1) != count($propertiesObj2)) {
             return false;
         }
 
-        for( $i = 0; $i < count( $obj1 ); $i++ )
-        {
+        for ($i = 0; $i < count($obj1); $i++) {
             /* @var $propertyObj1 \ReflectionProperty */
             $propertyObj1 = $propertiesObj1[$i];
             /* @var $propertyObj2 \ReflectionProperty */
             $propertyObj2 = $propertiesObj2[$i];
 
-            $propertyObj1->setAccessible( true );
-            $propertyObj2->setAccessible( true );
+            $propertyObj1->setAccessible(true);
+            $propertyObj2->setAccessible(true);
 
-            $areEquals = MObject::areEquals( $propertyObj1->getValue( $obj1 ), $propertyObj2->getValue( $obj2 ) );
-            if( $areEquals === false )
-            {
+            $areEquals = MObject::areEquals($propertyObj1->getValue($obj1), $propertyObj2->getValue($obj2));
+            if ($areEquals === false) {
                 return false;
             }
         }
@@ -473,7 +445,7 @@ final class MSlot
      * @param \MToolkit\Core\MObject $receiver
      * @return \MToolkit\Core\MSlot
      */
-    public function setReceiver( $receiver )
+    public function setReceiver($receiver)
     {
         $this->receiver = $receiver;
         return $this;
@@ -484,7 +456,7 @@ final class MSlot
         return $this->method;
     }
 
-    public function setMethod( $method )
+    public function setMethod($method)
     {
         $this->method = $method;
         return $this;

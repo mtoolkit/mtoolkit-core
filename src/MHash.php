@@ -20,6 +20,7 @@
  */
 
 namespace mtoolkit\core;
+
 use mtoolkit\core\enum\HashAlgorithm;
 use mtoolkit\core\exception\InvalidHashAlgorithmException;
 use mtoolkit\core\exception\MWrongTypeException;
@@ -55,8 +56,7 @@ class MHash
      */
     public function __construct(string $hashAlgorithm)
     {
-        if (in_array($hashAlgorithm, hash_algos()) == false)
-        {
+        if (in_array($hashAlgorithm, hash_algos()) == false) {
             throw new InvalidHashAlgorithmException($hashAlgorithm);
         }
 
@@ -67,7 +67,7 @@ class MHash
      * @param string $text
      * @return string
      */
-    public function getHash(string $text):string
+    public function getHash(string $text): string
     {
         return hash($this->hashAlgorithm, $text);
     }
@@ -76,7 +76,8 @@ class MHash
      * @param HashAlgorithm|string $hashAlgorithm
      * @return MHash
      */
-    public static function generate($hashAlgorithm):MHash{
+    public static function generate($hashAlgorithm): MHash
+    {
         return new MHash($hashAlgorithm);
     }
 
@@ -84,7 +85,8 @@ class MHash
      * @param string $text
      * @return string
      */
-    public function of($text){
+    public function of($text): string
+    {
         return $this->getHash($text);
     }
 }

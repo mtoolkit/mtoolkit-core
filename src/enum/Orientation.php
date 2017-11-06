@@ -1,4 +1,5 @@
 <?php
+
 namespace mtoolkit\core\enum;
 
 /*
@@ -22,13 +23,13 @@ namespace mtoolkit\core\enum;
 
 /**
  * The <i>Orientation</i> defines the kinds of case orientation.
- * 
+ *
  * @const HORIZONTAL
  * @const VERTICAL
  */
 final class Orientation
 {
-    const HORIZONTAL=1;
-    const VERTICAL=2;
+    const HORIZONTAL = 1;
+    const VERTICAL = 2;
 }
 

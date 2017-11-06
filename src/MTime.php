@@ -1,4 +1,5 @@
 <?php
+
 namespace mtoolkit\core;
 
 /*
@@ -58,7 +59,7 @@ class MTime
      * than the time of this object (or earlier if ms is negative).
      *
      * @param int $ms
-     * @return MTime 
+     * @return MTime
      */
     public function addMSecs($ms)
     {

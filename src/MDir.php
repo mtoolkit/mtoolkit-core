@@ -59,6 +59,10 @@ class MDir
     private $filters = Filter::NO_FILTER;
     private $sorting = SortFlag::NO_SORT;
 
+    /**
+     * MDir constructor.
+     * @param string $path
+     */
     public function __construct($path = '.')
     {
         $this->setPath($path);
@@ -192,7 +196,7 @@ class MDir
      * @return \MToolkit\Core\MFileInfoList
      * @throws \Exception
      */
-    public function getEntryInfoList(MStringList $nameFilters = null, $filters = Filter::NO_FILTER, $sort = SortFlag::NO_SORT)
+    public function getEntryInfoList(MStringList $nameFilters = null, $filters = Filter::NO_FILTER, $sort = SortFlag::NO_SORT): MFileInfoList
     {
         if ($this->fileInfo->exists() === false || $this->fileInfo->isReadable() === false) {
             return new MFileInfoList();
@@ -417,7 +421,7 @@ class MDir
      * @param SortFlag|int $sort
      * @return \MToolkit\Core\MStringList
      */
-    public function getEntryList(MStringList $nameFilters = null, $filters = Filter::NO_FILTER, $sort = SortFlag::NO_SORT)
+    public function getEntryList(MStringList $nameFilters = null, $filters = Filter::NO_FILTER, $sort = SortFlag::NO_SORT): MStringList
     {
         $fileInfoList = $this->getEntryInfoList($nameFilters, $filters, $sort);
 
@@ -840,7 +844,7 @@ class MDir
      * @param SortFlag|int $sorting
      * @return \MToolkit\Core\MDir
      */
-    public function setSorting($sorting)
+    public function setSorting($sorting): MDir
     {
         $this->sorting = $sorting;
         return $this;

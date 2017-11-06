@@ -43,7 +43,7 @@ class MGet extends MMap
      *
      * @throws MReadOnlyObjectException
      */
-    public function clear()
+    public function clear(): void
     {
         throw new MReadOnlyObjectException('MGet', 'clear()');
     }
@@ -54,7 +54,7 @@ class MGet extends MMap
      * @param string $pos
      * @throws MReadOnlyObjectException
      */
-    public function erase(string $pos)
+    public function erase(string $pos): void
     {
         throw new MReadOnlyObjectException('MGet', 'erase( $pos )');
     }

@@ -159,7 +159,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      *
      * @return int
      */
-    public function count():int
+    public function count(): int
     {
         return count($this->list);
     }
@@ -169,7 +169,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      *
      * @return boolean
      */
-    public function isEmpty():bool
+    public function isEmpty(): bool
     {
         return (count($this->list) <= 0);
     }
@@ -181,7 +181,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param mixed $value
      * @return boolean
      */
-    public function endsWith($value):bool
+    public function endsWith($value): bool
     {
         if ($this->count() <= 0) {
             return false;
@@ -234,7 +234,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @return int
      * @throws MWrongTypeException
      */
-    public function indexOf($value, int $from = 0):int
+    public function indexOf($value, int $from = 0): int
     {
         if ($this->isValidType($value) === false) {
             throw new MWrongTypeException("\$value", $this->getType(), $value);
@@ -294,7 +294,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param int $from
      * @return int
      */
-    public function lastIndexOf($value, int $from = -1):int
+    public function lastIndexOf($value, int $from = -1): int
     {
         if ($this->isValidType($value) === false) {
             throw new MWrongTypeException("\$value", $this->getType(), $value);
@@ -321,7 +321,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      *
      * @return int
      */
-    public function length():int
+    public function length(): int
     {
         return $this->count();
     }
@@ -473,7 +473,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param $value mixed
      * @return bool
      */
-    public function removeOne($value):bool
+    public function removeOne($value): bool
     {
         if ($this->isValidType($value) === false) {
             throw new MWrongTypeException("\$value", $this->getType(), $value);
@@ -523,7 +523,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param mixed $value
      * @return bool
      */
-    public function startsWith($value):bool
+    public function startsWith($value): bool
     {
         if ($this->isValidType($value) === false) {
             throw new MWrongTypeException("\$value", $this->getType(), $value);
@@ -650,7 +650,7 @@ class MList extends MAbstractTemplate implements \ArrayAccess, \Iterator
      * @param int $offset
      * @return bool
      */
-    public function offsetExists($offset):bool
+    public function offsetExists($offset): bool
     {
         MDataType::mustBe(array(MDataType::INT));
 

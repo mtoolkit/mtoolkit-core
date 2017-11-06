@@ -32,13 +32,12 @@ abstract class MThread extends MObject
     private $isRunning = false;
     private $isFinished = false;
 
-    public function __construct( MObject $parent = null )
+    public function __construct(MObject $parent = null)
     {
-        parent::__construct( $parent );
+        parent::__construct($parent);
 
-        if( function_exists( 'pcntl_fork' ) === false )
-        {
-            throw new \Exception( 'You have to compile the CGI or CLI version of PHP with --enable-pcntl configuration option when compiling PHP to use MThread' );
+        if (function_exists('pcntl_fork') === false) {
+            throw new \Exception('You have to compile the CGI or CLI version of PHP with --enable-pcntl configuration option when compiling PHP to use MThread');
         }
     }
 
@@ -84,34 +83,30 @@ abstract class MThread extends MObject
     {
         $this->pid = \pcntl_fork();
 
-        if( $this->pid == -1 )
-        {
-            throw new MThreadException( 'Impossible to start thread', 1 );
+        if ($this->pid == -1) {
+            throw new MThreadException('Impossible to start thread', 1);
         }
 
-        if( $this->pid )
-        {
+        if ($this->pid) {
             //\pcntl_wait( $status );
-        }
-        else
-        {
+        } else {
             $this->isRunning = true;
 
-            $this->emit( MThread::STARTED );
+            $this->emit(MThread::STARTED);
 
             $this->run();
 
             $this->isRunning = false;
             $this->isFinished = true;
 
-            $this->emit( MThread::FINISHED );
+            $this->emit(MThread::FINISHED);
             exit();
         }
     }
 
     public function wait()
     {
-        \pcntl_wait( $status );
+        \pcntl_wait($status);
     }
 
     /**
@@ -119,8 +114,8 @@ abstract class MThread extends MObject
      *
      * @param int $seconds
      */
-    public static function sleep( $seconds )
+    public static function sleep($seconds)
     {
-        \sleep( $seconds );
+        \sleep($seconds);
     }
 }

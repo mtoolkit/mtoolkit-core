@@ -40,12 +40,11 @@ class MString
      * @param MString|string $text
      * @throws MWrongTypeException
      */
-    public function __construct( $text = MString::EMPTY_STRING )
+    public function __construct($text = MString::EMPTY_STRING)
     {
-        if(is_null($text)){
+        if (is_null($text)) {
             $this->text = $text;
-        }
-        else {
+        } else {
             $this->text = (string)$text;
         }
     }
@@ -63,11 +62,11 @@ class MString
      * @param mixed $args [optional]
      * @return MString
      */
-    public function append( string $str, $args = null ):MString
+    public function append(string $str, $args = null): MString
     {
-        $this->text .= sprintf( $str, $args );
+        $this->text .= sprintf($str, $args);
 
-        return new MString( $this->text );
+        return new MString($this->text);
     }
 
     public function toString()
@@ -88,12 +87,11 @@ class MString
      * @return string|null
      * @throws MWrongTypeException
      */
-    public function at( $i )
+    public function at($i)
     {
-        $result = substr( $this->text, $i, 1 );
+        $result = substr($this->text, $i, 1);
 
-        if( $result === false )
-        {
+        if ($result === false) {
             return null;
         }
 
@@ -107,18 +105,16 @@ class MString
      * @param int $n
      * @throws MWrongTypeException
      */
-    public function chop( $n )
+    public function chop($n)
     {
-        if( $n >= $this->size() )
-        {
+        if ($n >= $this->size()) {
             $this->text = "";
             return;
         }
 
-        $result = substr( $this->text, 0, strlen( $this->text ) - $n );
+        $result = substr($this->text, 0, strlen($this->text) - $n);
 
-        if( $result !== false )
-        {
+        if ($result !== false) {
             $this->text = $result;
         }
     }
@@ -141,26 +137,25 @@ class MString
      * @param int|CaseSensitivity $cs
      * @return int
      */
-    public function compare( $other, $cs = CaseSensitivity::CASE_SENSITIVE )
+    public function compare($other, $cs = CaseSensitivity::CASE_SENSITIVE)
     {
         $text = (string)$this->text;
         $o = (string)$other;
 
-        switch( $cs )
-        {
+        switch ($cs) {
             case CaseSensitivity::CASE_SENSITIVE:
 
                 break;
             case CaseSensitivity::CASE_INSENSITIVE:
-                $o = strtolower( $other );
-                $text = strtolower( $this->text );
+                $o = strtolower($other);
+                $text = strtolower($this->text);
                 break;
             default:
-                throw new MWrongTypeException( "\$cs", "CaseSensitivity", $cs );
+                throw new MWrongTypeException("\$cs", "CaseSensitivity", $cs);
                 break;
         }
 
-        return strcmp( $text, $o );
+        return strcmp($text, $o);
     }
 
     /**
@@ -170,21 +165,20 @@ class MString
      * @param int|CaseSensitivity $cs
      * @return bool
      */
-    public function contains( $str, $cs = CaseSensitivity::CASE_SENSITIVE )
+    public function contains($str, $cs = CaseSensitivity::CASE_SENSITIVE)
     {
         $text = (string)$this->text;
         $s = (string)$str;
 
-        switch( $cs )
-        {
+        switch ($cs) {
             case CaseSensitivity::CASE_SENSITIVE:
-                $result = strpos( $text, $s );
+                $result = strpos($text, $s);
                 break;
             case CaseSensitivity::CASE_INSENSITIVE:
-                $result = stripos( $text, $s );
+                $result = stripos($text, $s);
                 break;
             default:
-                throw new MWrongTypeException( "\$cs", "CaseSensitivity", $cs );
+                throw new MWrongTypeException("\$cs", "CaseSensitivity", $cs);
                 break;
         }
 
@@ -199,7 +193,7 @@ class MString
      */
     public function size()
     {
-        return strlen( $this->text );
+        return strlen($this->text);
     }
 
     public function count()
@@ -216,25 +210,23 @@ class MString
      * @param int|CaseSensitivity $cs
      * @return int
      */
-    public function indexOf( $str, $from = 0, $cs = CaseSensitivity::CASE_INSENSITIVE )
+    public function indexOf($str, $from = 0, $cs = CaseSensitivity::CASE_INSENSITIVE)
     {
         $toSearch = (string)$str;
 
-        switch( $cs )
-        {
+        switch ($cs) {
             case CaseSensitivity::CASE_INSENSITIVE:
-                $pos = stripos( $this->text, $toSearch, $from );
+                $pos = stripos($this->text, $toSearch, $from);
                 break;
             case CaseSensitivity::CASE_SENSITIVE:
-                $pos = strpos( $this->text, $toSearch, $from );
+                $pos = strpos($this->text, $toSearch, $from);
                 break;
             default:
-                throw new MWrongTypeException( "\$cs", "CaseSensitivity", $cs );
+                throw new MWrongTypeException("\$cs", "CaseSensitivity", $cs);
                 break;
         }
 
-        if( $pos === false )
-        {
+        if ($pos === false) {
             return -1;
         }
 
@@ -252,25 +244,23 @@ class MString
      * @param int|CaseSensitivity $cs
      * @return int
      */
-    public function lastIndexOf( $str, $from = 0, $cs = CaseSensitivity::CASE_INSENSITIVE )
+    public function lastIndexOf($str, $from = 0, $cs = CaseSensitivity::CASE_INSENSITIVE)
     {
         $toSearch = (string)$str;
 
-        switch( $cs )
-        {
+        switch ($cs) {
             case CaseSensitivity::CASE_INSENSITIVE:
-                $pos = strripos( $this->text, $toSearch, $from );
+                $pos = strripos($this->text, $toSearch, $from);
                 break;
             case CaseSensitivity::CASE_SENSITIVE:
-                $pos = strrpos( $this->text, $toSearch, $from );
+                $pos = strrpos($this->text, $toSearch, $from);
                 break;
             default:
-                throw new MWrongTypeException( "\$cs", "CaseSensitivity", $cs );
+                throw new MWrongTypeException("\$cs", "CaseSensitivity", $cs);
                 break;
         }
 
-        if( $pos === false )
-        {
+        if ($pos === false) {
             return -1;
         }
 
@@ -284,13 +274,13 @@ class MString
      * @param string|MString $str
      * @return MString
      */
-    public function insert( $position, $str )
+    public function insert($position, $str)
     {
         $string = (string)$str;
 
-        $string = substr_replace( $this->text, $string, $position, 0 );
+        $string = substr_replace($this->text, $string, $position, 0);
 
-        return new MString( $string );
+        return new MString($string);
     }
 
     /**
@@ -304,22 +294,21 @@ class MString
      * @param int|CaseSensitivity $cs
      * @return MString
      */
-    public function replace( $before, $after, $cs = CaseSensitivity::CASE_SENSITIVE )
+    public function replace($before, $after, $cs = CaseSensitivity::CASE_SENSITIVE)
     {
-        switch( $cs )
-        {
+        switch ($cs) {
             case CaseSensitivity::CASE_SENSITIVE:
-                $string = str_replace( (string)$before, (string)$after, (string)$this );
+                $string = str_replace((string)$before, (string)$after, (string)$this);
                 break;
             case CaseSensitivity::CASE_INSENSITIVE:
-                $string = str_ireplace( (string)$before, (string)$after, (string)$this );
+                $string = str_ireplace((string)$before, (string)$after, (string)$this);
                 break;
             default:
-                throw new MWrongTypeException( "\$cs", "CaseSensitivity", $cs );
+                throw new MWrongTypeException("\$cs", "CaseSensitivity", $cs);
                 break;
         }
 
-        return new MString( $string );
+        return new MString($string);
     }
 
     /**
@@ -329,21 +318,19 @@ class MString
      * @param int $n
      * @return null|MString
      */
-    public function left( $n )
+    public function left($n)
     {
-        if( $n < 0 || $n > $this->size() )
-        {
-            return new MString( $this->text );
+        if ($n < 0 || $n > $this->size()) {
+            return new MString($this->text);
         }
 
-        $result = substr( $this->text, 0, $n );
+        $result = substr($this->text, 0, $n);
 
-        if( $result === false )
-        {
+        if ($result === false) {
             return null;
         }
 
-        return new MString( $result );
+        return new MString($result);
     }
 
     /**
@@ -353,29 +340,27 @@ class MString
      * @param int $n
      * @return MString|null
      */
-    public function right( $n )
+    public function right($n)
     {
-        if( $n < 0 || $n > $this->size() )
-        {
-            return new MString( $this->text );
+        if ($n < 0 || $n > $this->size()) {
+            return new MString($this->text);
         }
 
         $pos = $n * -1;
-        $result = substr( $this->text, $pos );
+        $result = substr($this->text, $pos);
 
-        if( $result === false )
-        {
+        if ($result === false) {
             return null;
         }
 
-        return new MString( $result );
+        return new MString($result);
     }
 
     /**
      * @param string|MString $string
      * @return bool
      */
-    public static function isNullOrEmpty( $string )
+    public static function isNullOrEmpty($string)
     {
         $str = (string)$string;
 
@@ -414,20 +399,17 @@ class MString
      * @param int $n
      * @return null|MString
      */
-    public function mid( $position, $n = -1 )
+    public function mid($position, $n = -1)
     {
         $str = null;
 
-        if( $n == -1 )
-        {
-            $str = substr( $this->text, $position );
-        }
-        else
-        {
-            $str = substr( $this->text, $position, $n );
+        if ($n == -1) {
+            $str = substr($this->text, $position);
+        } else {
+            $str = substr($this->text, $position, $n);
         }
 
-        return new MString( $str );
+        return new MString($str);
     }
 
     /**
@@ -436,13 +418,13 @@ class MString
      * @param string|MString $str
      * @return MString
      */
-    public function prepend( $str )
+    public function prepend($str)
     {
         $string = (string)$str;
 
         $string = $string . $this->text;
 
-        return new MString( $string );
+        return new MString($string);
     }
 
     /**
@@ -456,10 +438,10 @@ class MString
      * @param int $n
      * @return \MToolkit\Core\MString
      */
-    public function remove( $pos, $n )
+    public function remove($pos, $n)
     {
-        $subString = substr( (string)$this, $pos, $n );
-        return $this->replace( $subString, MString::EMPTY_STRING );
+        $subString = substr((string)$this, $pos, $n);
+        return $this->replace($subString, MString::EMPTY_STRING);
     }
 
     /**
@@ -473,9 +455,9 @@ class MString
      * @param int|CaseSensitivity $cs
      * @return MString
      */
-    public function removeOccurences( $string, $cs = CaseSensitivity::CASE_SENSITIVE )
+    public function removeOccurences($string, $cs = CaseSensitivity::CASE_SENSITIVE)
     {
-        return $this->replace( $string, MString::EMPTY_STRING, $cs );
+        return $this->replace($string, MString::EMPTY_STRING, $cs);
     }
 
     /**
@@ -486,9 +468,9 @@ class MString
      * @param int $position
      * @return \MToolkit\Core\MString
      */
-    public function truncate( $position )
+    public function truncate($position)
     {
-        return new MString( substr( (string)$this, 0, $position ) );
+        return new MString(substr((string)$this, 0, $position));
     }
 
     /**
@@ -498,7 +480,7 @@ class MString
      */
     public function toUpper()
     {
-        return new MString( strtoupper( (string)$this ) );
+        return new MString(strtoupper((string)$this));
     }
 
     /**
@@ -508,7 +490,7 @@ class MString
      */
     public function toLower()
     {
-        return new MString( strtolower( (string)$this ) );
+        return new MString(strtolower((string)$this));
     }
 
     /**
@@ -519,9 +501,9 @@ class MString
      * @param MString|string $charlist
      * @return \MToolkit\Core\MString
      */
-    public function trimmed( $charlist = null )
+    public function trimmed($charlist = null)
     {
-        return new MString( trim( (string)$this, (string)$charlist ) );
+        return new MString(trim((string)$this, (string)$charlist));
     }
 
     /**
@@ -530,9 +512,9 @@ class MString
      * @param string $needle
      * @return bool
      */
-    public function startsWith( $needle )
+    public function startsWith($needle)
     {
-        return $needle === "" || strpos( $this->text, $needle ) === 0;
+        return $needle === "" || strpos($this->text, $needle) === 0;
     }
 
     /**
@@ -541,9 +523,9 @@ class MString
      * @param string $needle
      * @return bool
      */
-    public function endsWith( $needle )
+    public function endsWith($needle)
     {
-        return $needle === "" || substr( $this->text, -strlen( $needle ) ) === $needle;
+        return $needle === "" || substr($this->text, -strlen($needle)) === $needle;
     }
 
 }

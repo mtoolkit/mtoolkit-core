@@ -1,4 +1,5 @@
 <?php
+
 namespace mtoolkit\core\enum;
 
 /*
@@ -22,12 +23,12 @@ namespace mtoolkit\core\enum;
 
 /**
  * The <i>CaseSensitivity</i> defines the kinds of case sensitivity.
- * 
+ *
  * @const CASE_INSENSITIVE
  * @const CASE_SENSITIVE
  */
 final class CaseSensitivity
 {
-    const CASE_INSENSITIVE=0;
-    const CASE_SENSITIVE=1;
+    const CASE_INSENSITIVE = 0;
+    const CASE_SENSITIVE = 1;
 }

@@ -70,7 +70,7 @@ class MListTest extends \PHPUnit_Framework_TestCase
     {
         try {
             $countPreAppend = $this->list->count();
-            $newPerson=RandomPersonGenerator::builderALot(40);
+            $newPerson = RandomPersonGenerator::builderALot(40);
 
             $this->list->appendArray($newPerson);
             $this->assertTrue(true);
@@ -92,7 +92,7 @@ class MListTest extends \PHPUnit_Framework_TestCase
     {
         try {
             $countPreAppend = $this->untypedList->count();
-            $newPerson=RandomPersonGenerator::builderALot(40);
+            $newPerson = RandomPersonGenerator::builderALot(40);
 
             $this->untypedList->appendArray($newPerson);
             $this->assertTrue(true);
@@ -118,7 +118,7 @@ class MListTest extends \PHPUnit_Framework_TestCase
     {
         try {
             $countPreAppend = $this->list->count();
-            $new=RandomPersonGenerator::builderALot(40);
+            $new = RandomPersonGenerator::builderALot(40);
 
             $this->list->appendList(new MList($new, Person::class));
             $this->assertTrue(true);
@@ -140,7 +140,7 @@ class MListTest extends \PHPUnit_Framework_TestCase
     {
         try {
             $countPreAppend = $this->untypedList->count();
-            $new=RandomPersonGenerator::builderALot(40);
+            $new = RandomPersonGenerator::builderALot(40);
 
             $this->untypedList->appendList(new MList($new));
             $this->assertTrue(true);
@@ -162,21 +162,21 @@ class MListTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testAt(){
+    public function testAt()
+    {
         $this->untypedList->clear();
-        $new=RandomPersonGenerator::builderALot(40);
+        $new = RandomPersonGenerator::builderALot(40);
         $this->untypedList->appendArray($new);
 
-        for($k=0;$k<10;$k++){
-            $pos=rand(0, count($new)-1);
+        for ($k = 0; $k < 10; $k++) {
+            $pos = rand(0, count($new) - 1);
             $this->assertEquals($new[$pos], $this->untypedList->at($pos));
         }
 
-        try{
+        try {
             $this->untypedList->at(count($new));
             $this->assertTrue(false);
-        }
-        catch(MOutOfBoundsException $ex){
+        } catch (MOutOfBoundsException $ex) {
             $this->assertTrue(true);
         }
     }
