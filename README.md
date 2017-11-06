@@ -2,6 +2,8 @@ MToolkit - Core
 ===============
 The core module of [MToolkit](https://github.com/mtoolkit/mtoolkit) framework.
 
+[![Build Status](https://travis-ci.org/mtoolkit/mtoolkit-core.svg?branch=master)](https://travis-ci.org/mtoolkit/mtoolkit-core)
+
 #Summary
 - [Install](#install)
 - [Into](#intro)
